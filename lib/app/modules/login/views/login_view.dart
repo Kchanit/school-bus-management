@@ -1,90 +1,60 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:school_bus/app/widgets/utils/my_textfield.dart';
+import 'package:school_bus/app/routes/app_pages.dart';
+import 'package:school_bus/app/widgets/utils/custom_button.dart';
+import 'package:school_bus/app/widgets/utils/custom_textfield.dart';
 
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-  const LoginView({Key? key}) : super(key: key);
+  LoginView({Key? key}) : super(key: key);
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      body: SafeArea(
-        child: Center(
-          child: Form(
-            key: Get.find<LoginController>().formKey,
-            child: ListView(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 50),
-                    Text(
-                      'Register',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 25),
-
-                    // email textfield
-                    MyTextField(
-                      controller: Get.find<LoginController>().emailController,
-                      hintText: 'Email',
-                      obscureText: false,
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    // password textfield
-                    MyTextField(
-                      controller:
-                          Get.find<LoginController>().passwordController,
-                      hintText: 'Password',
-                      obscureText: true,
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    // register in button
-                    ElevatedButton(
-                      onPressed: () {
-                        Get.find<LoginController>()
-                            .login(); // Call the registerUser method
-                      },
-
-                      child: const Text('Login'), // Button text
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    // Login button
-                    TextButton(
-                        onPressed: () {
-                          Get.offAllNamed('/register');
-                        },
-                        child: const Text('Register')),
-
-                    const SizedBox(height: 25),
-
-                    // Login button
-                    TextButton(
-                        onPressed: () {
-                          Get.offAllNamed('/dashboard');
-                        },
-                        child: const Text('Dashboard')),
-
-                    const SizedBox(height: 50),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
+        toolbarHeight: 80,
       ),
+      body: Center(
+          child: Column(
+        children: [
+          const Text(
+            'Login',
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+          ),
+          const SizedBox(height: 50),
+          _emailTextField(emailController),
+          const SizedBox(height: 25),
+          _passwordTextField(passwordController),
+          const SizedBox(height: 50),
+          const CustomButton(
+            buttonText: 'Login',
+            routes: Routes.HOME,
+          )
+        ],
+      )),
     );
   }
+}
+
+Widget _emailTextField(TextEditingController textEditingController) {
+  return CustomTextFormField(
+    textEditingController: textEditingController,
+    labelText: 'Email',
+    hintText: 'Enter Email',
+  );
+}
+
+Widget _passwordTextField(TextEditingController textEditingController) {
+  return CustomTextFormField(
+    textEditingController: textEditingController,
+    labelText: 'Password',
+    hintText: 'Enter Password',
+  );
 }

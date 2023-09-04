@@ -40,7 +40,7 @@ class LoginController extends GetxController {
         print(response['message']);
       }
     } catch (e) {
-      Get.snackbar('Error2', e.toString());
+      Get.snackbar('Error', e.toString());
       print(e.toString());
     }
   }
