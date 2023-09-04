@@ -4,12 +4,15 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController textEditingController;
   final String labelText;
   final String? hintText;
+  final bool obscureText;
 
-  const CustomTextFormField(
-      {super.key,
-      required this.textEditingController,
-      required this.labelText,
-      this.hintText});
+  const CustomTextFormField({
+    super.key,
+    required this.textEditingController,
+    required this.labelText,
+    this.hintText,
+    required this.obscureText,
+  });
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -27,8 +30,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         // ),
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.85,
-          child: TextFormField(
+          child: TextField(
             controller: widget.textEditingController,
+            obscureText: widget.obscureText,
             decoration: InputDecoration(
                 labelText: widget.labelText,
                 labelStyle: const TextStyle(color: Colors.black),

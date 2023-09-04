@@ -6,10 +6,12 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.buttonText,
     this.routes,
+    this.onPressed,
   });
 
   final String buttonText;
   final String? routes;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class CustomButton extends StatelessWidget {
       height: 50,
       child: ElevatedButton(
         onPressed: () {
-          Get.toNamed(routes!);
+          onPressed!();
         },
         style: ButtonStyle(
             elevation: MaterialStateProperty.all(0),

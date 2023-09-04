@@ -9,10 +9,11 @@ class RegisterController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   final count = 0.obs;
 
-  Future<void> registerUser() async {
+  void registerUser() async {
     try {
       // Validate the Form
       if (!formKey.currentState!.validate()) {
@@ -32,15 +33,18 @@ class RegisterController extends GetxController {
 
       if (response['success'] == true) {
         print('User Registered Successfully');
+        print(response['message']);
         Get.snackbar('Success', response['message']);
-        Get.offAllNamed('/home');
+        Get.offAllNamed('/dashboard');
       } else {
         print('User Registered Failed');
+        print(response['message']);
         Get.snackbar('Error', response['message']);
       }
     } catch (e) {
       print('User Registered Error');
-      Get.snackbar('Error', e.toString());
+      print(e.toString());
+      Get.snackbar('Error2', e.toString());
     }
   }
 

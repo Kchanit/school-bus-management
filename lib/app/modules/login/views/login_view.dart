@@ -28,15 +28,22 @@ class LoginView extends GetView<LoginController> {
             'Login',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
           ),
-          const SizedBox(height: 50),
-          _emailTextField(emailController),
-          const SizedBox(height: 25),
-          _passwordTextField(passwordController),
-          const SizedBox(height: 50),
-          const CustomButton(
-            buttonText: 'Login',
-            routes: Routes.HOME,
-          )
+          Form(
+              key: controller.formKey,
+              child: Column(
+                children: [
+                  const SizedBox(height: 50),
+                  _emailTextField(controller.emailController),
+                  const SizedBox(height: 25),
+                  _passwordTextField(controller.passwordController),
+                  const SizedBox(height: 50),
+                  CustomButton(
+                    buttonText: 'Login',
+                    routes: Routes.HOME,
+                    onPressed: controller.login,
+                  )
+                ],
+              )),
         ],
       )),
     );
@@ -48,6 +55,7 @@ Widget _emailTextField(TextEditingController textEditingController) {
     textEditingController: textEditingController,
     labelText: 'Email',
     hintText: 'Enter Email',
+    obscureText: false,
   );
 }
 
@@ -56,5 +64,6 @@ Widget _passwordTextField(TextEditingController textEditingController) {
     textEditingController: textEditingController,
     labelText: 'Password',
     hintText: 'Enter Password',
+    obscureText: true,
   );
 }

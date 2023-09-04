@@ -15,7 +15,9 @@ class ApiService extends GetConnect {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
-      throw Exception('Failed to post data to the API');
+      final responseBody = json.decode(response.body);
+      throw Exception(
+          'Failed to post data to the API. Response: $responseBody');
     }
   }
 

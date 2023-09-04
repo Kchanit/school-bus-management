@@ -33,18 +33,27 @@ class RegisterView extends GetView<RegisterController> {
               'Register',
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
             ),
-            const SizedBox(height: 50),
-            _nameTextField(nameController),
-            const SizedBox(height: 25),
-            _emailTextField(emailController),
-            const SizedBox(height: 25),
-            _passwordTextField(passwordController),
-            const SizedBox(height: 25),
-            _confirmPasswordTextField(confirmPasswordController),
-            const SizedBox(height: 50),
-            const CustomButton(
-              buttonText: 'Register',
-              routes: Routes.HOME,
+            Form(
+              key: controller.formKey,
+              child: Column(
+                children: [
+                  const SizedBox(height: 50),
+                  _nameTextField(controller.nameController),
+                  const SizedBox(height: 25),
+                  _emailTextField(controller.emailController),
+                  const SizedBox(height: 25),
+                  _passwordTextField(controller.passwordController),
+                  const SizedBox(height: 25),
+                  _confirmPasswordTextField(
+                      controller.confirmPasswordController),
+                  const SizedBox(height: 50),
+                  CustomButton(
+                    buttonText: 'Register',
+                    routes: Routes.HOME,
+                    onPressed: controller.registerUser,
+                  ),
+                ],
+              ),
             )
           ],
         )),
@@ -53,34 +62,38 @@ class RegisterView extends GetView<RegisterController> {
   }
 }
 
-Widget _nameTextField(TextEditingController textEditingController) {
+Widget _nameTextField(TextEditingController controller) {
   return CustomTextFormField(
-    textEditingController: textEditingController,
+    textEditingController: controller,
     labelText: 'Name',
     hintText: 'Enter Name',
+    obscureText: false,
   );
 }
 
-Widget _emailTextField(TextEditingController textEditingController) {
+Widget _emailTextField(TextEditingController controller) {
   return CustomTextFormField(
-    textEditingController: textEditingController,
+    textEditingController: controller,
     labelText: 'Email',
     hintText: 'Enter Email',
+    obscureText: false,
   );
 }
 
-Widget _passwordTextField(TextEditingController textEditingController) {
+Widget _passwordTextField(TextEditingController controller) {
   return CustomTextFormField(
-    textEditingController: textEditingController,
+    textEditingController: controller,
     labelText: 'Password',
     hintText: 'Enter Password',
+    obscureText: true,
   );
 }
 
-Widget _confirmPasswordTextField(TextEditingController textEditingController) {
+Widget _confirmPasswordTextField(TextEditingController controller) {
   return CustomTextFormField(
-    textEditingController: textEditingController,
+    textEditingController: controller,
     labelText: 'Confirm Password',
     hintText: 'Enter Confirm Password',
+    obscureText: true,
   );
 }
