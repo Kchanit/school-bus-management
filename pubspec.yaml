@@ -12,6 +12,7 @@ dependencies:
   flutter: 
     sdk: flutter
   get_cli: ^1.8.1
+  flutter_secure_storage: ^9.0.0
 
 dev_dependencies: 
   flutter_lints: ^2.0.0

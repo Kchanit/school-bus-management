@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/services/api_service.dart';
 
@@ -27,6 +28,11 @@ class LoginController extends GetxController {
 
       if (response['success'] == true) {
         // Handle successful login
+        final String accessToken = response['token'];
+        // Store the token in the secure storage
+        final storage = FlutterSecureStorage();
+        await storage.write(key: 'access_token', value: accessToken);
+
         Get.snackbar('Success', response['message']);
         Get.offAllNamed('/dashboard');
       } else {

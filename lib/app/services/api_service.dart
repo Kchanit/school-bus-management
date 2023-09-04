@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get_connect.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -21,6 +22,27 @@ class ApiService extends GetConnect {
   Future<Map<String, dynamic>> getData(String apiUrl) async {
     final fullUrl = apiBaseUrl + apiUrl;
     final response = await http.get(Uri.parse(fullUrl), headers: _setHeaders());
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      print('API Request Failed with Status Code: ${response.statusCode}');
+      print('API Response Body: ${response.body}');
+      throw Exception('Failed to get data from the API');
+    }
+  }
+
+  Future<Map<String, dynamic>> getUserData() async {
+    var fullUrl = '$apiBaseUrl/user';
+    final String? accessToken =
+        await const FlutterSecureStorage().read(key: 'access_token');
+    final headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization':
+          'Bearer $accessToken', // Include the token in the headers
+    };
+    final response = await http.get(Uri.parse(fullUrl), headers: headers);
 
     if (response.statusCode == 200) {
       return json.decode(response.body);

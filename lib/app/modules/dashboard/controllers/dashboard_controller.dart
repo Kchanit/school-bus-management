@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/models/user_model.dart';
 
@@ -11,12 +8,12 @@ class DashboardController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchUsers();
+    fetchAllUsers();
+    // fetchUserData();
   }
 
-  Future<void> fetchUsers() async {
-    ApiService apiService = ApiService();
-    final response = await apiService.getData('/users');
+  Future<void> fetchAllUsers() async {
+    final response = await ApiService().getData('/users');
 
     if (response['users'] != null) {
       // Parse the JSON response and convert it to a list of User objects
@@ -26,6 +23,18 @@ class DashboardController extends GetxController {
 
       // Update the users list with the parsed data
       users.assignAll(userList);
+    }
+  }
+
+  Future<void> fetchUserData() async {
+    try {
+      final response = await ApiService().getUserData();
+      final userData = response['user'];
+      users.add(User.fromJson(userData));
+      // Now you can use userData as the logged-in user's data
+      print('User Data: $userData');
+    } catch (e) {
+      print('Error fetching user data: $e');
     }
   }
 
