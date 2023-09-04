@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/widgets/utils/my_textfield.dart';
 
-import '../controllers/register_controller.dart';
+import '../controllers/login_controller.dart';
 
-class RegisterView extends GetView<RegisterController> {
-  RegisterView({Key? key}) : super(key: key);
-
+class LoginView extends GetView<LoginController> {
+  const LoginView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +14,7 @@ class RegisterView extends GetView<RegisterController> {
       body: SafeArea(
         child: Center(
           child: Form(
-            key: Get.find<RegisterController>().formKey,
+            key: Get.find<LoginController>().formKey,
             child: ListView(
               children: [
                 Column(
@@ -31,19 +30,9 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                     const SizedBox(height: 25),
 
-                    // username textfield
-                    MyTextField(
-                      controller: Get.find<RegisterController>().nameController,
-                      hintText: 'Username',
-                      obscureText: false,
-                    ),
-
-                    const SizedBox(height: 10),
-
                     // email textfield
                     MyTextField(
-                      controller:
-                          Get.find<RegisterController>().emailController,
+                      controller: Get.find<LoginController>().emailController,
                       hintText: 'Email',
                       obscureText: false,
                     ),
@@ -53,7 +42,7 @@ class RegisterView extends GetView<RegisterController> {
                     // password textfield
                     MyTextField(
                       controller:
-                          Get.find<RegisterController>().passwordController,
+                          Get.find<LoginController>().passwordController,
                       hintText: 'Password',
                       obscureText: true,
                     ),
@@ -63,11 +52,11 @@ class RegisterView extends GetView<RegisterController> {
                     // register in button
                     ElevatedButton(
                       onPressed: () {
-                        Get.find<RegisterController>()
-                            .registerUser(); // Call the registerUser method
+                        Get.find<LoginController>()
+                            .login(); // Call the registerUser method
                       },
 
-                      child: const Text('Register'), // Button text
+                      child: const Text('Login'), // Button text
                     ),
 
                     const SizedBox(height: 25),
@@ -75,9 +64,9 @@ class RegisterView extends GetView<RegisterController> {
                     // Login button
                     TextButton(
                         onPressed: () {
-                          Get.offAllNamed('/login');
+                          Get.offAllNamed('/register');
                         },
-                        child: const Text('Login')),
+                        child: const Text('Register')),
 
                     const SizedBox(height: 50),
                   ],

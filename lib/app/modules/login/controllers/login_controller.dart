@@ -1,18 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/services/api_service.dart';
 
-class RegisterController extends GetxController {
-  //TODO: Implement RegisterController
-
+class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  final count = 0.obs;
-
-  Future<void> registerUser() async {
+  void login() async {
     try {
       // Validate the Form
       if (!formKey.currentState!.validate()) {
@@ -23,24 +18,24 @@ class RegisterController extends GetxController {
 
       // Payload for API request
       var data = {
-        'name': nameController.text,
         'email': emailController.text,
         'password': passwordController.text,
       };
 
-      final response = await ApiService().postData(data, '/register');
+      // Make the login API request using your ApiService
+      final response = await ApiService().postData(data, '/login');
 
       if (response['success'] == true) {
-        print('User Registered Successfully');
+        // Handle successful login
         Get.snackbar('Success', response['message']);
         Get.offAllNamed('/home');
       } else {
-        print('User Registered Failed');
         Get.snackbar('Error', response['message']);
+        print(response['message']);
       }
     } catch (e) {
-      print('User Registered Error');
-      Get.snackbar('Error', e.toString());
+      Get.snackbar('Error2', e.toString());
+      print(e.toString());
     }
   }
 
@@ -58,6 +53,4 @@ class RegisterController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
