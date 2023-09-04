@@ -13,8 +13,7 @@ class RegisterView extends GetView<RegisterController> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class RegisterView extends GetView<RegisterController> {
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
             ),
             Form(
-              key: controller.formKey,
+              key: controller.registerformKey,
               child: Column(
                 children: [
                   const SizedBox(height: 50),
