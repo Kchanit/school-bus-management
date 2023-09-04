@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomButton extends StatelessWidget {
-  const CustomButton({
+class CustomLightButton extends StatelessWidget {
+  const CustomLightButton({
     super.key,
     required this.buttonText,
     this.routes,
   });
-
   final String buttonText;
   final String? routes;
 
@@ -22,12 +21,15 @@ class CustomButton extends StatelessWidget {
         },
         style: ButtonStyle(
             elevation: MaterialStateProperty.all(0),
-            backgroundColor: const MaterialStatePropertyAll(Colors.black),
+            backgroundColor: const MaterialStatePropertyAll(Colors.white),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-            ))),
-        child: Text(buttonText),
+                    borderRadius: BorderRadius.circular(8.0),
+                    side: const BorderSide(color: Colors.black26)))),
+        child: Text(
+          buttonText,
+          style: const TextStyle(color: Colors.black),
+        ),
       ),
     );
   }
