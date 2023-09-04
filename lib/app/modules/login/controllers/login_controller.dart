@@ -28,7 +28,7 @@ class LoginController extends GetxController {
       if (response['success'] == true) {
         // Handle successful login
         Get.snackbar('Success', response['message']);
-        Get.offAllNamed('/home');
+        Get.offAllNamed('/dashboard');
       } else {
         Get.snackbar('Error', response['message']);
         print(response['message']);

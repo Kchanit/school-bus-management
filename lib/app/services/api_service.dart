@@ -25,6 +25,8 @@ class ApiService extends GetConnect {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
+      print('API Request Failed with Status Code: ${response.statusCode}');
+      print('API Response Body: ${response.body}');
       throw Exception('Failed to get data from the API');
     }
   }

@@ -68,6 +68,15 @@ class LoginView extends GetView<LoginController> {
                         },
                         child: const Text('Register')),
 
+                    const SizedBox(height: 25),
+
+                    // Login button
+                    TextButton(
+                        onPressed: () {
+                          Get.offAllNamed('/dashboard');
+                        },
+                        child: const Text('Dashboard')),
+
                     const SizedBox(height: 50),
                   ],
                 ),
