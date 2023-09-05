@@ -22,7 +22,6 @@ class LoginController extends GetxController {
         'email': emailController.text,
         'password': passwordController.text,
       };
-
       // Make the login API request using your ApiService
       final response = await ApiService().postData(data, '/login');
 
@@ -40,7 +39,7 @@ class LoginController extends GetxController {
         print(response['message']);
       }
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar('Error2', e.toString());
       print(e.toString());
     }
   }
