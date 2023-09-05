@@ -78,23 +78,17 @@ Widget _nameTextField(TextEditingController controller) {
   );
 }
 
-//onSaved: (value) {
-//  controller.email=value!
-//},
-// validator: (value) {
-//   return controller.validateEmail(value!);
-// }
-
 Widget _emailTextField(TextEditingController controller) {
   return CustomTextFormField(
     textEditingController: controller,
     labelText: 'Email',
     hintText: 'Enter Email',
     obscureText: false,
-    // TAM ADD
     validateFunc: (value){
       if (value!.isEmpty) {
         return 'Email is required';
+      } else if (!GetUtils.isEmail(value)) {
+        return "Provide valid Email";
       }
       return null;
     }
@@ -107,11 +101,12 @@ Widget _passwordTextField(TextEditingController controller) {
     labelText: 'Password',
     hintText: 'Enter Password',
     obscureText: true,
-    // TAM ADD
     validateFunc: (value){
       if (value!.isEmpty) {
         return 'Password is required';
-      }
+      } else if (value.length < 4) {
+        return "Password must be of 4 characters or more";
+      } 
       return null;
     }
   );
@@ -126,7 +121,12 @@ Widget _confirmPasswordTextField(TextEditingController controller) {
     validateFunc: (value){
       if (value!.isEmpty) {
         return 'Confirm Password is required to match the Password';
-      }
+      } else if (value.length<=4) {
+        return "Password must be of 4 characters or more";
+      } 
+      // else if () {
+      //   return "Password is not match";
+      // }
       return null;
     }
   );
