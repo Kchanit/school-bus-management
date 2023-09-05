@@ -30,9 +30,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         // ),
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.85,
-          child: TextField(
+          child: TextFormField(
             controller: widget.textEditingController,
             obscureText: widget.obscureText,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Please enter ${widget.labelText}';
+              }
+              return null;
+            },
             decoration: InputDecoration(
                 labelText: widget.labelText,
                 labelStyle: const TextStyle(color: Colors.black),
