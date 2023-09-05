@@ -35,6 +35,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           child: TextFormField(
             controller: widget.textEditingController,
             obscureText: widget.obscureText,
+            // validator: (value) {
+            //   if (value!.isEmpty) {
+            //     return 'Please enter ${widget.labelText}';
+            //   }
+            //   return null;
+            // },
             decoration: InputDecoration(
                 labelText: widget.labelText,
                 labelStyle: const TextStyle(color: Colors.black),

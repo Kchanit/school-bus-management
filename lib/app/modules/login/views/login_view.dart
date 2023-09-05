@@ -39,7 +39,6 @@ class LoginView extends GetView<LoginController> {
                   const SizedBox(height: 50),
                   CustomButton(
                     buttonText: 'Login',
-                    routes: Routes.HOME,
                     onPressed: controller.login,
                   )
                 ],
@@ -50,18 +49,18 @@ class LoginView extends GetView<LoginController> {
   }
 }
 
-Widget _emailTextField(TextEditingController textEditingController) {
+Widget _emailTextField(TextEditingController controller) {
   return CustomTextFormField(
-    textEditingController: textEditingController,
+    textEditingController: controller,
     labelText: 'Email',
     hintText: 'Enter Email',
     obscureText: false,
   );
 }
 
-Widget _passwordTextField(TextEditingController textEditingController) {
+Widget _passwordTextField(TextEditingController controller) {
   return CustomTextFormField(
-    textEditingController: textEditingController,
+    textEditingController: controller,
     labelText: 'Password',
     hintText: 'Enter Password',
     obscureText: true,

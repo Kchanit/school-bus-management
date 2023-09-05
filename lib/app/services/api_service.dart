@@ -7,6 +7,7 @@ class ApiService extends GetConnect {
   // static const String apiBaseUrl = 'http://192.168.2.44/api'; // Laravel API URL
   static const String apiBaseUrl = 'http://192.168.1.114/api'; // Laravel API URL [TAM]
 
+
   Future<Map<String, dynamic>> postData(
       Map<String, dynamic> data, String apiUrl) async {
     final fullUrl = apiBaseUrl + apiUrl;
@@ -18,7 +19,7 @@ class ApiService extends GetConnect {
     } else {
       final responseBody = json.decode(response.body);
       throw Exception(
-          'Failed to post data to the API. Response: $responseBody');
+          'Status code: ${response.statusCode} Failed to post data to the API. Response: $responseBody');
     }
   }
 
