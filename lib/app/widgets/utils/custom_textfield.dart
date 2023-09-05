@@ -5,13 +5,15 @@ class CustomTextFormField extends StatefulWidget {
   final String labelText;
   final String? hintText;
   final bool obscureText;
+  String? Function(String? value)? validateFunc;
 
-  const CustomTextFormField({
+  CustomTextFormField({
     super.key,
     required this.textEditingController,
     required this.labelText,
     this.hintText,
     required this.obscureText,
+    this.validateFunc,
   });
 
   @override
@@ -30,7 +32,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         // ),
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.85,
-          child: TextField(
+          child: TextFormField(
             controller: widget.textEditingController,
             obscureText: widget.obscureText,
             decoration: InputDecoration(
@@ -42,6 +44,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     borderRadius: BorderRadius.circular(8)),
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+                validator: widget.validateFunc ?? (value) => null,
           ),
         )
       ],

@@ -13,9 +13,9 @@ class RegisterController extends GetxController {
   TextEditingController confirmPasswordController = TextEditingController();
 
   final count = 0.obs;
-  //TAM ADD
-  var email='';
-  var password='';
+  // //TAM ADD
+  // var email='';
+  // var password='';
 
   void registerUser() async {
     try {
@@ -57,9 +57,9 @@ class RegisterController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    //TAM ADD
-    emailController=TextEditingController();
-    passwordController=TextEditingController();
+    // //TAM ADD
+    // emailController=TextEditingController();
+    // passwordController=TextEditingController();
   }
 
   @override
@@ -70,29 +70,29 @@ class RegisterController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    //TAM ADD
-    emailController.dispose();
-    passwordController.dispose();
+    // //TAM ADD
+    // emailController.dispose();
+    // passwordController.dispose();
   }
 
-  //TAM ADD
-  String? ValidateEmail(String value) 
-  {
-    if (!GetUtils.isEmail(value))
-      {
-        return "Provide valid Email";
-      }
-      return null;
-  }
+  // //TAM ADD
+  // String? validateEmail(String value) 
+  // {
+  //   if (!GetUtils.isEmail(value))
+  //     {
+  //       return "Provide valid Email";
+  //     }
+  //     return null;
+  // }
 
-  String? ValidatePassword(String value) 
-  {
-    if (value.length<=4)
-      {
-        return "Password must be of 4 characters";
-      }
-      return null;
-  }
+  // String? ValidatePassword(String value) 
+  // {
+  //   if (value.length<=4)
+  //     {
+  //       return "Password must be of 4 characters";
+  //     }
+  //     return null;
+  // }
 
   void increment() => count.value++;
 }

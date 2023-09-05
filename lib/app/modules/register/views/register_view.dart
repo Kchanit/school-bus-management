@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -67,8 +69,21 @@ Widget _nameTextField(TextEditingController controller) {
     labelText: 'Name',
     hintText: 'Enter Name',
     obscureText: false,
+    validateFunc: (value){
+      if (value!.isEmpty) {
+        return 'Name is required';
+      }
+      return null;
+    }
   );
 }
+
+//onSaved: (value) {
+//  controller.email=value!
+//},
+// validator: (value) {
+//   return controller.validateEmail(value!);
+// }
 
 Widget _emailTextField(TextEditingController controller) {
   return CustomTextFormField(
@@ -76,6 +91,13 @@ Widget _emailTextField(TextEditingController controller) {
     labelText: 'Email',
     hintText: 'Enter Email',
     obscureText: false,
+    // TAM ADD
+    validateFunc: (value){
+      if (value!.isEmpty) {
+        return 'Email is required';
+      }
+      return null;
+    }
   );
 }
 
@@ -85,6 +107,13 @@ Widget _passwordTextField(TextEditingController controller) {
     labelText: 'Password',
     hintText: 'Enter Password',
     obscureText: true,
+    // TAM ADD
+    validateFunc: (value){
+      if (value!.isEmpty) {
+        return 'Password is required';
+      }
+      return null;
+    }
   );
 }
 
@@ -94,5 +123,11 @@ Widget _confirmPasswordTextField(TextEditingController controller) {
     labelText: 'Confirm Password',
     hintText: 'Enter Confirm Password',
     obscureText: true,
+    validateFunc: (value){
+      if (value!.isEmpty) {
+        return 'Confirm Password is required to match the Password';
+      }
+      return null;
+    }
   );
 }
