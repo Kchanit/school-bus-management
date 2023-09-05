@@ -24,10 +24,11 @@ class LoginController extends GetxController {
       };
       // Make the login API request using your ApiService
       final response = await ApiService().postData(data, '/login');
-
+      print(response);
       if (response['success'] == true) {
         // Handle successful login
         final String accessToken = response['token'];
+
         // Store the token in the secure storage
         final storage = FlutterSecureStorage();
         await storage.write(key: 'access_token', value: accessToken);
