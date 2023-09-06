@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
+import '../modules/googlemap/bindings/googlemap_binding.dart';
+import '../modules/googlemap/views/googlemap_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/initial/bindings/initial_binding.dart';
@@ -18,7 +20,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.REGISTER;
+  static const INITIAL = Routes.GOOGLEMAP;
 
   static final routes = [
     GetPage(
@@ -50,6 +52,11 @@ class AppPages {
       name: _Paths.TEST,
       page: () => const TestView(),
       binding: TestBinding(),
+    ),
+    GetPage(
+      name: _Paths.GOOGLEMAP,
+      page: () => const GooglemapView(),
+      binding: GooglemapBinding(),
     ),
   ];
 }

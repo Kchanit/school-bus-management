@@ -121,7 +121,7 @@ Widget _confirmPasswordTextField(TextEditingController controller) {
     validateFunc: (value){
       if (value!.isEmpty) {
         return 'Confirm Password is required to match the Password';
-      } else if (value.length<=4) {
+      } else if (value.length < 4) {
         return "Password must be of 4 characters or more";
       } 
       // else if () {
