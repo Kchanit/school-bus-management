@@ -21,6 +21,7 @@ class AppPages {
   AppPages._();
 
   static const INITIAL = Routes.GOOGLEMAP;
+  // static const INITIAL = Routes.REGISTER;
 
   static final routes = [
     GetPage(
@@ -55,7 +56,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.GOOGLEMAP,
-      page: () => const GooglemapView(),
+      //page: () => const GooglemapView(),
+      page: () => GooglemapView(),
       binding: GooglemapBinding(),
     ),
   ];

@@ -101,14 +101,14 @@ Widget _passwordTextField(TextEditingController controller) {
     labelText: 'Password',
     hintText: 'Enter Password',
     obscureText: true,
-    validateFunc: (value){
+    validateFunc: (value) {
       if (value!.isEmpty) {
         return 'Password is required';
       } else if (value.length < 4) {
-        return "Password must be of 4 characters or more";
+        return "Password must be at least 4 characters long";
       }
       return null;
-    }
+    },
   );
 }
 
@@ -118,16 +118,14 @@ Widget _confirmPasswordTextField(TextEditingController controller) {
     labelText: 'Confirm Password',
     hintText: 'Enter Confirm Password',
     obscureText: true,
-    validateFunc: (value){
+    validateFunc: (value) {
       if (value!.isEmpty) {
-        return 'Confirm Password is required to match the Password';
-      } else if (value.length < 4) {
-        return "Password must be of 4 characters or more";
+        return 'Confirm Password is required';
       } 
-      // else if () {
-      //   return "Password is not match";
+      // else if (value != controller.text) {
+      //   return 'Passwords do not match';
       // }
       return null;
-    }
+    },
   );
 }

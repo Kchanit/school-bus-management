@@ -6,6 +6,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? hintText;
   final bool obscureText;
   String? Function(String? value)? validateFunc;
+  // final TextEditingController? passwordController;
 
   CustomTextFormField({
     super.key,
@@ -14,6 +15,7 @@ class CustomTextFormField extends StatefulWidget {
     this.hintText,
     required this.obscureText,
     this.validateFunc,
+    // this.passwordController,
   });
 
   @override
