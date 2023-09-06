@@ -106,7 +106,7 @@ Widget _passwordTextField(TextEditingController controller) {
         return 'Password is required';
       } else if (value.length < 4) {
         return "Password must be of 4 characters or more";
-      } 
+      }
       return null;
     }
   );

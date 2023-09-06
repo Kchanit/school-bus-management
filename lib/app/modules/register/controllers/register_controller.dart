@@ -13,7 +13,7 @@ class RegisterController extends GetxController {
   TextEditingController confirmPasswordController = TextEditingController();
 
   final count = 0.obs;
-  var email=''; //???
+  var email=''; 
  
 
   void registerUser() async {
