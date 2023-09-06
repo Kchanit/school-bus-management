@@ -4,6 +4,8 @@ import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/info2/bindings/info2_binding.dart';
+import '../modules/info2/views/info2_view.dart';
 import '../modules/initial/bindings/initial_binding.dart';
 import '../modules/initial/views/initial_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -18,7 +20,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.INFO2;
 
   static final routes = [
     GetPage(
@@ -50,6 +52,11 @@ class AppPages {
       name: _Paths.TEST,
       page: () => const TestView(),
       binding: TestBinding(),
+    ),
+    GetPage(
+      name: _Paths.INFO2,
+      page: () => const Info2View(),
+      binding: Info2Binding(),
     ),
   ];
 }

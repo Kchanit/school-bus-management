@@ -2,23 +2,29 @@ name: school_bus
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
-  sdk: '>=3.0.5 <4.0.0'
+environment:
+  sdk: ">=3.0.5 <4.0.0"
 
-dependencies: 
+dependencies:
   cupertino_icons: ^1.0.2
-  http: ^1.1.0
+  http: ^0.13.6
   get: 4.6.5
-  flutter: 
+  flutter:
     sdk: flutter
   get_cli: ^1.8.1
   flutter_secure_storage: ^9.0.0
+  geolocator: ^10.0.0
+  geocoding: ^2.0.5
+  latlong2: ^0.8.1
+  google_maps_flutter: ^2.5.0
+  lottie: ^1.4.2
 
-dev_dependencies: 
+dev_dependencies:
   flutter_lints: ^2.0.0
-  flutter_test: 
+  flutter_test:
     sdk: flutter
 
-flutter: 
+flutter:
   uses-material-design: true
-
+  assets:
+    - assets/pin.json
