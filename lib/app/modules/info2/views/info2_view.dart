@@ -71,7 +71,6 @@ class Info2View extends GetView<Info2Controller> {
             child: Row(
               children: [
                 Expanded(child: locationSearchBox()),
-                
               ],
             ),
           ),
@@ -85,7 +84,7 @@ class Info2View extends GetView<Info2Controller> {
               padding: const EdgeInsets.symmetric(horizontal: 70),
               child: ElevatedButton(
                 child: const Text('Save'),
-                onPressed: () {},
+                onPressed: () => controller.saveData(),
               ),
             )),
       ]),

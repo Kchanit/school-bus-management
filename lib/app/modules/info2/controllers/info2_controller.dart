@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:school_bus/app/services/api_service.dart';
+import 'package:school_bus/models/user_model.dart';
 import 'package:school_bus/user_controller.dart';
 
 class Info2Controller extends GetxController {
@@ -12,6 +15,7 @@ class Info2Controller extends GetxController {
   late LatLng draggedLatlng;
   RxString draggedAddress = "".obs;
   Position? currentPosition;
+  User? currentUser;
 
   @override
   void onInit() {
@@ -20,14 +24,29 @@ class Info2Controller extends GetxController {
     defaultLatLng = LatLng(11, 104);
     draggedLatlng = defaultLatLng;
     cameraPosition = CameraPosition(target: defaultLatLng, zoom: 17.5);
+    currentUser = Get.find<UserController>().currentUser.value;
 
     //map will redirect to my current location when loaded
     _gotoUserCurrentPosition();
   }
 
-  saveData() {
-    // UserController().currentUser.value.latitude = currentPosition!.latitude;
-    // UserController().currentUser.value.longitude = currentPosition!.longitude;
+  saveData() async {
+    currentUser!.home_latitude = currentPosition!.latitude;
+    currentUser!.home_longitude = currentPosition!.longitude;
+    // UserController().currentUser.value!.home_address = draggedAddress.value;
+    // UserController().currentUser.refresh();
+    var data = currentUser!.toJson();
+    print(data);
+    var response =
+        await ApiService().putData(data, '/users/${currentUser!.id}');
+    if (response['success'] == true) {
+      print('User updated Successfully');
+      Get.snackbar('Success', response['message']);
+      Get.offAllNamed('/dashboard');
+    } else {
+      print('User update Failed');
+      Get.snackbar('Error', response['message']);
+    }
   }
 
   //get address from dragged pin

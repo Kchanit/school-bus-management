@@ -35,6 +35,34 @@ class ApiService extends GetConnect {
     }
   }
 
+  Future<Map<String, dynamic>> putData(
+      Map<String, dynamic> data, String apiUrl) async {
+    final fullUrl = apiBaseUrl + apiUrl;
+    final String? accessToken =
+        await const FlutterSecureStorage().read(key: 'access_token');
+    final headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $accessToken',
+    };
+    print('Bearer $accessToken');
+    print(jsonEncode(data));
+    try {
+      final response = await http.put(Uri.parse(fullUrl),
+          body: jsonEncode(data), headers: headers);
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        final responseBody = json.decode(response.body);
+        throw Exception(
+            'Status code: ${response.statusCode} Failed to put data to the API. Response: $responseBody');
+      }
+    } catch (e) {
+      print(e);
+      throw Exception('Failed to put data to the API');
+    }
+  }
+
   Future<Map<String, dynamic>> getUserData() async {
     var fullUrl = '$apiBaseUrl/user';
     final String? accessToken =
@@ -42,8 +70,7 @@ class ApiService extends GetConnect {
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'Authorization':
-          'Bearer $accessToken', // Include the token in the headers
+      'Authorization': 'Bearer $accessToken',
     };
     final response = await http.get(Uri.parse(fullUrl), headers: headers);
 
