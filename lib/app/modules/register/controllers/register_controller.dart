@@ -13,17 +13,19 @@ class RegisterController extends GetxController {
   TextEditingController confirmPasswordController = TextEditingController();
 
   final count = 0.obs;
+  String password = '';
  
   void registerUser() async {
     try {
       // if the form is "not" valid
       if (!registerformKey.currentState!.validate()) {
+        // password = passwordController.text;
+        // print(password);
         return;
       }
       // if the form is valid 
       registerformKey.currentState!.save();
-      
-      // email = emailController.text;
+
 
       // Payload for API request
       var data = {

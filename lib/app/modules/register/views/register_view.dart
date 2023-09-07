@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
@@ -46,7 +46,7 @@ class RegisterView extends GetView<RegisterController> {
                   _passwordTextField(controller.passwordController),
                   const SizedBox(height: 25),
                   _confirmPasswordTextField(
-                      controller.confirmPasswordController),
+                      controller.confirmPasswordController, controller.passwordController),
                   const SizedBox(height: 50),
                   CustomButton(
                     buttonText: 'Register',
@@ -112,7 +112,7 @@ Widget _passwordTextField(TextEditingController controller) {
   );
 }
 
-Widget _confirmPasswordTextField(TextEditingController controller) {
+Widget _confirmPasswordTextField(TextEditingController controller, passwordController){
   return CustomTextFormField(
     textEditingController: controller,
     labelText: 'Confirm Password',
@@ -122,9 +122,9 @@ Widget _confirmPasswordTextField(TextEditingController controller) {
       if (value!.isEmpty) {
         return 'Confirm Password is required';
       } 
-      // else if (value != controller.text) {
-      //   return 'Passwords do not match';
-      // }
+      else if (value != passwordController.text) {
+        return 'Passwords do not match';
+      }
       return null;
     },
   );
