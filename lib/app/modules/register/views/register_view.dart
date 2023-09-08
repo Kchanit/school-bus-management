@@ -50,7 +50,7 @@ class RegisterView extends GetView<RegisterController> {
                   CustomButton(
                     buttonText: 'Next',
                     routes: Routes.HOME,
-                    onPressed: controller.registerUser,
+                    onPressed: () => controller.goNext(),
                   ),
                   ElevatedButton(
                     onPressed: () {

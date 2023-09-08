@@ -48,7 +48,7 @@ class RegisterAddressView extends GetView<RegisterAddressController> {
                   const SizedBox(height: 50),
                   CustomButton(
                     buttonText: 'Confirm',
-                    onPressed: () => controller.updateData(),
+                    onPressed: () => controller.registerData(),
                   ),
                 ],
               ),

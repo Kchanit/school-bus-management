@@ -25,10 +25,10 @@ class User {
       role: json['role'],
       address: json['address'],
       home_latitude: json['home_latitude'] != null
-          ? double.parse(json['home_latitude'])
+          ? double.parse(json['home_latitude'].toString())
           : null,
       home_longitude: json['home_longitude'] != null
-          ? double.parse(json['home_longitude'])
+          ? double.parse(json['home_longitude'].toString())
           : null,
     );
   }
