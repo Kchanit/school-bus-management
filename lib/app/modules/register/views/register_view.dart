@@ -10,11 +10,11 @@ import '../controllers/register_controller.dart';
 class RegisterView extends GetView<RegisterController> {
   RegisterView({Key? key}) : super(key: key);
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  // final TextEditingController nameController = TextEditingController();
+  // final TextEditingController emailController = TextEditingController();
+  // final TextEditingController passwordController = TextEditingController();
+  // final TextEditingController confirmPasswordController =
+  //     TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +48,24 @@ class RegisterView extends GetView<RegisterController> {
                       controller.confirmPasswordController),
                   const SizedBox(height: 50),
                   CustomButton(
-                    buttonText: 'Register',
+                    buttonText: 'Next',
                     routes: Routes.HOME,
                     onPressed: controller.registerUser,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.toNamed('/login');
+                    },
+                    style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(0),
+                        backgroundColor:
+                            const MaterialStatePropertyAll(Colors.black),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ))),
+                    child: const Text('Login'),
                   ),
                 ],
               ),

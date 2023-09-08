@@ -4,14 +4,16 @@ import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-import '../modules/info2/bindings/info2_binding.dart';
-import '../modules/info2/views/info2_view.dart';
 import '../modules/initial/bindings/initial_binding.dart';
 import '../modules/initial/views/initial_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/pick_address/bindings/pick_address_binding.dart';
+import '../modules/pick_address/views/pick_address_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/register_address/bindings/register_address_binding.dart';
+import '../modules/register_address/views/register_address_view.dart';
 import '../modules/test/bindings/test_binding.dart';
 import '../modules/test/views/test_view.dart';
 
@@ -20,7 +22,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.REGISTER;
 
   static final routes = [
     GetPage(
@@ -54,9 +56,14 @@ class AppPages {
       binding: TestBinding(),
     ),
     GetPage(
-      name: _Paths.INFO2,
-      page: () => const Info2View(),
-      binding: Info2Binding(),
+      name: _Paths.REGISTER_ADDRESS,
+      page: () => const RegisterAddressView(),
+      binding: RegisterAddressBinding(),
+    ),
+    GetPage(
+      name: _Paths.PICK_ADDRESS,
+      page: () => const PickAddressView(),
+      binding: PickAddressBinding(),
     ),
   ];
 }

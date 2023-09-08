@@ -3,6 +3,7 @@ class User {
   final String name;
   final String email;
   final String role;
+  String? address;
   double? home_latitude;
   double? home_longitude;
 
@@ -11,6 +12,7 @@ class User {
     required this.name,
     required this.email,
     required this.role,
+    this.address,
     this.home_latitude,
     this.home_longitude,
   });
@@ -21,8 +23,13 @@ class User {
       name: json['name'],
       email: json['email'],
       role: json['role'],
-      home_latitude: double.parse(json['home_latitude']),
-      home_longitude: double.parse(json['home_longitude']),
+      address: json['address'],
+      home_latitude: json['home_latitude'] != null
+          ? double.parse(json['home_latitude'])
+          : null,
+      home_longitude: json['home_longitude'] != null
+          ? double.parse(json['home_longitude'])
+          : null,
     );
   }
 
@@ -32,6 +39,7 @@ class User {
       'name': name,
       'email': email,
       'role': role,
+      'address': address,
       'home_latitude': home_latitude,
       'home_longitude': home_longitude,
     };

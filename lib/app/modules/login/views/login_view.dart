@@ -39,7 +39,22 @@ class LoginView extends GetView<LoginController> {
                   CustomButton(
                     buttonText: 'Login',
                     onPressed: controller.login,
-                  )
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.toNamed('/register');
+                    },
+                    style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(0),
+                        backgroundColor:
+                            const MaterialStatePropertyAll(Colors.black),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ))),
+                    child: const Text('Register'),
+                  ),
                 ],
               )),
         ],

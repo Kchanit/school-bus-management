@@ -45,7 +45,6 @@ class ApiService extends GetConnect {
       'Accept': 'application/json',
       'Authorization': 'Bearer $accessToken',
     };
-    print('Bearer $accessToken');
     print(jsonEncode(data));
     try {
       final response = await http.put(Uri.parse(fullUrl),

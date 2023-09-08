@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart';
-import '../controllers/info2_controller.dart';
 
-class Info2View extends GetView<Info2Controller> {
-  const Info2View({Key? key}) : super(key: key);
+import '../controllers/pick_address_controller.dart';
 
+class PickAddressView extends GetView<PickAddressController> {
+  const PickAddressView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +49,7 @@ class Info2View extends GetView<Info2Controller> {
         Container(
           width: MediaQuery.of(context).size.width,
           height: 60,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.blue,
           ),
           child: Center(

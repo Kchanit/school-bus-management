@@ -1,14 +1,12 @@
+import 'package:get/get.dart';
 import 'dart:async';
-import 'dart:convert';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/models/user_model.dart';
 import 'package:school_bus/user_controller.dart';
 
-class Info2Controller extends GetxController {
+class PickAddressController extends GetxController {
   Completer<GoogleMapController> googleMapController = Completer();
   CameraPosition? cameraPosition;
   late LatLng defaultLatLng;
@@ -31,22 +29,7 @@ class Info2Controller extends GetxController {
   }
 
   saveData() async {
-    currentUser!.home_latitude = currentPosition!.latitude;
-    currentUser!.home_longitude = currentPosition!.longitude;
-    // UserController().currentUser.value!.home_address = draggedAddress.value;
-    // UserController().currentUser.refresh();
-    var data = currentUser!.toJson();
-    print(data);
-    var response =
-        await ApiService().putData(data, '/users/${currentUser!.id}');
-    if (response['success'] == true) {
-      print('User updated Successfully');
-      Get.snackbar('Success', response['message']);
-      Get.offAllNamed('/dashboard');
-    } else {
-      print('User update Failed');
-      Get.snackbar('Error', response['message']);
-    }
+    Get.offAllNamed("/register-address");
   }
 
   //get address from dragged pin
@@ -56,7 +39,7 @@ class Info2Controller extends GetxController {
         await placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark address = placemarks[0]; // get only first and closest address
     String addresStr =
-        "${address.street}, ${address.locality}, ${address.administrativeArea}, ${address.country}";
+        "${address.street}, ${address.subLocality}, ${address.administrativeArea} ${address.postalCode}";
     // setState
     draggedAddress.value = addresStr;
   }
@@ -73,10 +56,11 @@ class Info2Controller extends GetxController {
     GoogleMapController mapController = await googleMapController.future;
     mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(target: position, zoom: 17.5)));
-    //every time that we dragged pin , it will list down the address here
+    // when dragged pin, print info
     print("============================================");
     print("latitude: ${position.latitude}");
     print("longtitude: ${position.longitude}");
+    print("address: ${draggedAddress.value}");
     print("============================================");
     await getAddress(position);
   }
