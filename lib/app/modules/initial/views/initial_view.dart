@@ -23,8 +23,8 @@ class InitialView extends GetView<InitialController> {
           SizedBox(
             height: 18,
           ),
-          CustomButton(
-            buttonText: "Register",
+          CustomLightButton(
+            buttonText: 'Register',
             routes: Routes.REGISTER,
           )
         ],

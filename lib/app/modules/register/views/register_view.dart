@@ -39,7 +39,7 @@ class RegisterView extends GetView<RegisterController> {
                   _passwordTextField(controller.passwordController),
                   const SizedBox(height: 25),
                   _confirmPasswordTextField(
-                      controller.confirmPasswordController),
+                      controller.confirmPasswordController,controller.passwordController),
                   const SizedBox(height: 50),
                   CustomButton(
                     buttonText: 'Next',
@@ -117,7 +117,7 @@ Widget _passwordTextField(TextEditingController controller) {
       });
 }
 
-Widget _confirmPasswordTextField(TextEditingController controller) {
+Widget _confirmPasswordTextField(TextEditingController controller, passwordController) {
   return CustomTextFormField(
       textEditingController: controller,
       labelText: 'Confirm Password',
@@ -128,10 +128,9 @@ Widget _confirmPasswordTextField(TextEditingController controller) {
           return 'Confirm Password is required to match the Password';
         } else if (value.length < 3) {
           return "Password must be of 4 characters or more";
+        } else if (value != passwordController.text) {
+          return "Password is not match";
         }
-        // else if () {
-        //   return "Password is not match";
-        // }
         return null;
       });
 }
