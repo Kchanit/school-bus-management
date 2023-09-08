@@ -4,8 +4,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService extends GetConnect {
-  static const String apiBaseUrl = 'http://192.168.2.44/api'; // Laravel API URL
-  // static const String apiBaseUrl = 'http://10.31.105.196/api'; // Laravel API URL
+  static const String apiBaseUrl =
+      'http://192.168.2.44/api'; // Laravel API KURL
+  // static const String apiBaseUrl = 'http://10.31.105.196/api'; // Laravel API KURL
 
   Future<Map<String, dynamic>> postData(
       Map<String, dynamic> data, String apiUrl) async {

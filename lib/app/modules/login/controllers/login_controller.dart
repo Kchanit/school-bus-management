@@ -38,7 +38,7 @@ class LoginController extends GetxController {
       await storage.write(key: 'access_token', value: accessToken);
 
       Get.snackbar('Success', response['message']);
-      Get.offAllNamed('/info2');
+      Get.offAllNamed('/dashboard');
     } else {
       Get.snackbar('Error', response['message']);
       print(response['message']);

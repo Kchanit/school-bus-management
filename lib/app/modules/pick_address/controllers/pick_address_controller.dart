@@ -32,18 +32,6 @@ class PickAddressController extends GetxController {
     Get.offAllNamed("/register-address");
   }
 
-  //get address from dragged pin
-  getAddress(LatLng position) async {
-    //this will list down all address around the position
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-    Placemark address = placemarks[0]; // get only first and closest address
-    String addresStr =
-        "${address.street}, ${address.subLocality}, ${address.administrativeArea} ${address.postalCode}";
-    // setState
-    draggedAddress.value = addresStr;
-  }
-
   //get user's current location and set the map's camera to that location
   Future _gotoUserCurrentPosition() async {
     currentPosition = await _determineUserCurrentPosition();
@@ -51,17 +39,28 @@ class PickAddressController extends GetxController {
         LatLng(currentPosition!.latitude, currentPosition!.longitude));
   }
 
-  //go to specific position by latlng
-  Future _gotoSpecificPosition(LatLng position) async {
-    GoogleMapController mapController = await googleMapController.future;
-    mapController.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(target: position, zoom: 17.5)));
+  //get address from dragged pin
+  getAddress(LatLng position) async {
+    //this will list down all address around the position
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    Placemark address = placemarks[0]; // get only first and closest address
+    String fullAddress =
+        "${address.street}, ${address.subLocality}, ${address.administrativeArea} ${address.postalCode}";
+    draggedAddress.value = fullAddress;
     // when dragged pin, print info
     print("============================================");
     print("latitude: ${position.latitude}");
     print("longtitude: ${position.longitude}");
     print("address: ${draggedAddress.value}");
     print("============================================");
+  }
+
+  //go to specific position by latlng
+  Future _gotoSpecificPosition(LatLng position) async {
+    GoogleMapController mapController = await googleMapController.future;
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: position, zoom: 17.5)));
     await getAddress(position);
   }
 

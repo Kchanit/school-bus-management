@@ -43,26 +43,6 @@ class RegisterAddressController extends GetxController {
     }
   }
 
-  // updateData() async {
-  //   currentUser!.home_latitude =
-  //       Get.find<PickAddressController>().currentPosition!.latitude;
-  //   currentUser!.home_longitude =
-  //       Get.find<PickAddressController>().currentPosition!.longitude;
-  //   currentUser!.address =
-  //       Get.find<PickAddressController>().draggedAddress.value;
-  //   var data = currentUser!.toJson();
-  //   var response =
-  //       await ApiService().putData(data, '/users/${currentUser!.id}');
-  //   if (response['success'] == true) {
-  //     print('User updated Successfully');
-  //     Get.snackbar('Success', response['message']);
-  //     Get.offAllNamed('/dashboard');
-  //   } else {
-  //     print('User update Failed');
-  //     Get.snackbar('Error', response['message']);
-  //   }
-  // }
-
   @override
   void onReady() {
     super.onReady();
