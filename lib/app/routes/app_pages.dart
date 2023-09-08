@@ -8,8 +8,12 @@ import '../modules/initial/bindings/initial_binding.dart';
 import '../modules/initial/views/initial_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/pick_address/bindings/pick_address_binding.dart';
+import '../modules/pick_address/views/pick_address_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/register_address/bindings/register_address_binding.dart';
+import '../modules/register_address/views/register_address_view.dart';
 import '../modules/test/bindings/test_binding.dart';
 import '../modules/test/views/test_view.dart';
 
@@ -18,7 +22,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.REGISTER;
+  static const INITIAL = Routes.INITIAL;
 
   static final routes = [
     GetPage(
@@ -50,6 +54,16 @@ class AppPages {
       name: _Paths.TEST,
       page: () => const TestView(),
       binding: TestBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGISTER_ADDRESS,
+      page: () => const RegisterAddressView(),
+      binding: RegisterAddressBinding(),
+    ),
+    GetPage(
+      name: _Paths.PICK_ADDRESS,
+      page: () => const PickAddressView(),
+      binding: PickAddressBinding(),
     ),
   ];
 }

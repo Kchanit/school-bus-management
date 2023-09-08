@@ -13,10 +13,19 @@ class TestView extends GetView<TestController> {
         title: const Text('TestView'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'TestView is working',
-          style: TextStyle(fontSize: 20),
+      body: Center(
+        child: Column(
+          children: [
+            TextButton(
+                onPressed: controller.fetchPosition,
+                child: const Text('Get Location')),
+            ElevatedButton(
+              onPressed: () {
+                Get.toNamed('/info2');
+              },
+              child: const Text('Go to Map'),
+            )
+          ],
         ),
       ),
     );

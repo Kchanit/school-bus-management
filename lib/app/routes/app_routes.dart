@@ -9,6 +9,8 @@ abstract class Routes {
   static const DASHBOARD = _Paths.DASHBOARD;
   static const INITIAL = _Paths.INITIAL;
   static const TEST = _Paths.TEST;
+  static const REGISTER_ADDRESS = _Paths.REGISTER_ADDRESS;
+  static const PICK_ADDRESS = _Paths.PICK_ADDRESS;
 }
 
 abstract class _Paths {
@@ -19,4 +21,6 @@ abstract class _Paths {
   static const DASHBOARD = '/dashboard';
   static const INITIAL = '/initial';
   static const TEST = '/test';
+  static const REGISTER_ADDRESS = '/register-address';
+  static const PICK_ADDRESS = '/pick-address';
 }

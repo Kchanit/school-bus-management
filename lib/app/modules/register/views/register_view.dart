@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -10,12 +8,7 @@ import '../../../widgets/utils/custom_textfield.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
-  RegisterView({Key? key}) : super(key: key);
-
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  const RegisterView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +28,7 @@ class RegisterView extends GetView<RegisterController> {
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
             ),
             Form(
-              key: controller.registerformKey,
+              key: controller.formKey,
               child: Column(
                 children: [
                   const SizedBox(height: 50),
@@ -49,9 +42,24 @@ class RegisterView extends GetView<RegisterController> {
                       controller.confirmPasswordController),
                   const SizedBox(height: 50),
                   CustomButton(
-                    buttonText: 'Register',
+                    buttonText: 'Next',
                     routes: Routes.HOME,
-                    onPressed: controller.registerUser,
+                    onPressed: () => controller.goNext(),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.toNamed('/login');
+                    },
+                    style: ButtonStyle(
+                        elevation: MaterialStateProperty.all(0),
+                        backgroundColor:
+                            const MaterialStatePropertyAll(Colors.black),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ))),
+                    child: const Text('Login'),
                   ),
                 ],
               ),
@@ -65,69 +73,65 @@ class RegisterView extends GetView<RegisterController> {
 
 Widget _nameTextField(TextEditingController controller) {
   return CustomTextFormField(
-    textEditingController: controller,
-    labelText: 'Name',
-    hintText: 'Enter Name',
-    obscureText: false,
-    validateFunc: (value){
-      if (value!.isEmpty) {
-        return 'Name is required';
-      }
-      return null;
-    }
-  );
+      textEditingController: controller,
+      labelText: 'Name',
+      hintText: 'Enter Name',
+      obscureText: false,
+      validateFunc: (value) {
+        if (value!.isEmpty) {
+          return 'Name is required';
+        }
+        return null;
+      });
 }
 
 Widget _emailTextField(TextEditingController controller) {
   return CustomTextFormField(
-    textEditingController: controller,
-    labelText: 'Email',
-    hintText: 'Enter Email',
-    obscureText: false,
-    validateFunc: (value){
-      if (value!.isEmpty) {
-        return 'Email is required';
-      } else if (!GetUtils.isEmail(value)) {
-        return "Provide valid Email";
-      }
-      return null;
-    }
-  );
+      textEditingController: controller,
+      labelText: 'Email',
+      hintText: 'Enter Email',
+      obscureText: false,
+      validateFunc: (value) {
+        if (value!.isEmpty) {
+          return 'Email is required';
+        } else if (!GetUtils.isEmail(value)) {
+          return "Provide valid Email";
+        }
+        return null;
+      });
 }
 
 Widget _passwordTextField(TextEditingController controller) {
   return CustomTextFormField(
-    textEditingController: controller,
-    labelText: 'Password',
-    hintText: 'Enter Password',
-    obscureText: true,
-    validateFunc: (value){
-      if (value!.isEmpty) {
-        return 'Password is required';
-      } else if (value.length < 4) {
-        return "Password must be of 4 characters or more";
-      }
-      return null;
-    }
-  );
+      textEditingController: controller,
+      labelText: 'Password',
+      hintText: 'Enter Password',
+      obscureText: true,
+      validateFunc: (value) {
+        if (value!.isEmpty) {
+          return 'Password is required';
+        } else if (value.length < 4) {
+          return "Password must be of 4 characters or more";
+        }
+        return null;
+      });
 }
 
 Widget _confirmPasswordTextField(TextEditingController controller) {
   return CustomTextFormField(
-    textEditingController: controller,
-    labelText: 'Confirm Password',
-    hintText: 'Enter Confirm Password',
-    obscureText: true,
-    validateFunc: (value){
-      if (value!.isEmpty) {
-        return 'Confirm Password is required to match the Password';
-      } else if (value.length<=4) {
-        return "Password must be of 4 characters or more";
-      } 
-      // else if () {
-      //   return "Password is not match";
-      // }
-      return null;
-    }
-  );
+      textEditingController: controller,
+      labelText: 'Confirm Password',
+      hintText: 'Enter Confirm Password',
+      obscureText: true,
+      validateFunc: (value) {
+        if (value!.isEmpty) {
+          return 'Confirm Password is required to match the Password';
+        } else if (value.length <= 4) {
+          return "Password must be of 4 characters or more";
+        }
+        // else if () {
+        //   return "Password is not match";
+        // }
+        return null;
+      });
 }

@@ -20,7 +20,8 @@ class DashboardView extends GetView<DashboardController> {
           itemBuilder: (context, index) {
             return ListTile(
               title: Text(controller.users[index].name),
-              subtitle: Text(controller.users[index].email),
+              subtitle: Text(
+                  '${controller.users[index].email} | latitude: ${controller.users[index].home_latitude}, longitude: ${controller.users[index].home_longitude}'),
             );
           },
         ),
