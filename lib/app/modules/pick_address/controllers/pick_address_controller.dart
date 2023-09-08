@@ -16,16 +16,17 @@ class PickAddressController extends GetxController {
   User? currentUser;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    //map will redirect to my current location when loaded
+    _gotoUserCurrentPosition();
     //set default latlng for camera position
-    defaultLatLng = LatLng(11, 104);
+    currentPosition = await _determineUserCurrentPosition();
+    defaultLatLng =
+        LatLng(currentPosition!.latitude, currentPosition!.longitude);
     draggedLatlng = defaultLatLng;
     cameraPosition = CameraPosition(target: defaultLatLng, zoom: 17.5);
     currentUser = Get.find<UserController>().currentUser.value;
-
-    //map will redirect to my current location when loaded
-    _gotoUserCurrentPosition();
   }
 
   saveData() async {
@@ -35,6 +36,8 @@ class PickAddressController extends GetxController {
   //get user's current location and set the map's camera to that location
   Future _gotoUserCurrentPosition() async {
     currentPosition = await _determineUserCurrentPosition();
+    defaultLatLng =
+        LatLng(currentPosition!.latitude, currentPosition!.longitude);
     _gotoSpecificPosition(
         LatLng(currentPosition!.latitude, currentPosition!.longitude));
   }
