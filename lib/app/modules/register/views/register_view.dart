@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -27,6 +29,29 @@ class RegisterView extends GetView<RegisterController> {
               'Register',
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
             ),
+          // IMAGE PART
+           Column(
+                children: [
+                  Container(
+                    child: Obx(() {
+                      return controller.image.value == null
+                          ? Text('No Image Selected')
+                          : Image.file(
+                              controller.image.value!,
+                              width: 150,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            );
+                    }),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.camera),
+                    onPressed: () {
+                      controller.choiceImage();
+                    },
+                  ),
+                ],
+              ),
             Form(
               key: controller.formKey,
               child: Column(
@@ -44,8 +69,9 @@ class RegisterView extends GetView<RegisterController> {
                   CustomButton(
                     buttonText: 'Next',
                     routes: Routes.HOME,
-                    onPressed: () => controller.goNext(),
+                    onPressed: () => controller.register(),
                   ),
+
                   ElevatedButton(
                     onPressed: () {
                       Get.toNamed('/login');
