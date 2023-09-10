@@ -21,28 +21,8 @@ class RegisterController extends GetxController {
     var pickerImage = await picker.pickImage(source: ImageSource.gallery);
     if (pickerImage != null) {
       image.value = File(pickerImage.path);
-    } else {
-      Get.snackbar('Fail', 'No Image selected',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white);
-    }
+    } 
   }
-
-  // Future uploadImage() async {
-  //   final uri = Uri.parse("");
-  //   var request = http.MultipartRequest('POST',uri);
-  //   request.fields['name'] = nameController.text;
-  //   var pic = await http.MultipartFile.fromPath("image", image!.path);
-  //   request.files.add(pic);
-  //   var response = await request.send();
-
-  //   if (response.statusCode == 200) {
-  //     print('Image Uploaded');
-  //   } else {
-  //     print('Image Not Uploaded');
-  //   }
-  // }
 
   void register() {
     // Validate the Form

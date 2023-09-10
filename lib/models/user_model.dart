@@ -3,7 +3,7 @@ class User {
   final String name;
   final String email;
   final String role;
-  String? imagePath;
+  String? image;
   String? address;
   double? home_latitude;
   double? home_longitude;
@@ -13,7 +13,7 @@ class User {
     required this.name,
     required this.email,
     required this.role,
-    this.imagePath,
+    this.image,
     this.address,
     this.home_latitude,
     this.home_longitude,
@@ -32,7 +32,7 @@ class User {
       home_longitude: json['home_longitude'] != null
           ? double.parse(json['home_longitude'].toString())
           : null,
-      imagePath: json['image'],
+      image: json['image'],
     );
   }
 
@@ -42,7 +42,7 @@ class User {
       'name': name,
       'email': email,
       'role': role,
-      'image': imagePath,
+      'image': image,
       'address': address,
       'home_latitude': home_latitude,
       'home_longitude': home_longitude,
