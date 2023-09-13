@@ -16,6 +16,8 @@ class RegisterAddressController extends GetxController {
   }
 
   registerData() async {
+    String imageUrl = await Get.find<RegisterController>().saveImage();
+
     var data = {
       "name": Get.find<RegisterController>().nameController.text,
       "email": Get.find<RegisterController>().emailController.text,
@@ -25,6 +27,7 @@ class RegisterAddressController extends GetxController {
           Get.find<PickAddressController>().currentPosition!.latitude,
       "home_longitude":
           Get.find<PickAddressController>().currentPosition!.longitude,
+      "image_url": imageUrl,
     };
     print(data);
 

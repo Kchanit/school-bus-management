@@ -10,12 +10,6 @@ import '../controllers/register_controller.dart';
 class RegisterView extends GetView<RegisterController> {
   RegisterView({Key? key}) : super(key: key);
 
-  // final TextEditingController nameController = TextEditingController();
-  // final TextEditingController emailController = TextEditingController();
-  // final TextEditingController passwordController = TextEditingController();
-  // final TextEditingController confirmPasswordController =
-  //     TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +32,37 @@ class RegisterView extends GetView<RegisterController> {
               child: Column(
                 children: [
                   const SizedBox(height: 50),
+                  // Obx(() => CircleAvatar(
+                  //       radius: 50,
+                  //       backgroundImage: controller.image.value != null
+                  //           ? FileImage(controller.image.value!)
+                  //           : const AssetImage('assets/images/user.png')
+                  //               as ImageProvider,
+                  //     )),
+                  Obx(
+                    () => Center(
+                        child: controller.imageBytes.value == null
+                            ? const Text('No image selected.')
+                            : Stack(
+                                children: [
+                                  Image.memory(controller.imageBytes.value!),
+                                ],
+                              )),
+                  ),
+
+                  const SizedBox(height: 25),
+                  ElevatedButton(
+                      onPressed: () => controller.getImage(),
+                      child: const Text('Select Image')),
+                  // const SizedBox(height: 25),
+                  // Center(
+                  //   child: CircleAvatar(
+                  //     radius: 40,
+                  //     backgroundImage: NetworkImage(
+                  //         'https://storage.googleapis.com/download/storage/v1/b/school-bus-bucket/o/85b49bdc-85a5-4d32-a73e-8c6d81b17ef18141413224892747460.jpg?generation=1694613051915343&alt=media'),
+                  //   ),
+                  // ),
+                  const SizedBox(height: 25),
                   _nameTextField(controller.nameController),
                   const SizedBox(height: 25),
                   _emailTextField(controller.emailController),

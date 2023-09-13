@@ -18,10 +18,27 @@ class DashboardView extends GetView<DashboardController> {
         () => ListView.builder(
           itemCount: controller.users.length,
           itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(controller.users[index].name),
-              subtitle: Text(
-                  '${controller.users[index].email} | latitude: ${controller.users[index].home_latitude}, longitude: ${controller.users[index].home_longitude}'),
+            return Container(
+              child: Column(
+                children: [
+                  controller.users[index].image_url == null
+                      ? const Text('No image selected.')
+                      : CircleAvatar(
+                          radius: 50,
+                          backgroundImage:
+                              NetworkImage(controller.users[index].image_url!),
+                        ),
+                  const SizedBox(height: 25),
+                  Text(controller.users[index].name),
+                  const SizedBox(height: 25),
+                  Text('${controller.users[index].email} '),
+                  const SizedBox(height: 25),
+                  Text('${controller.users[index].address} '),
+                  const SizedBox(height: 25),
+                  Text(
+                      'latitude: ${controller.users[index].home_latitude}, longitude: ${controller.users[index].home_longitude} '),
+                ],
+              ),
             );
           },
         ),
