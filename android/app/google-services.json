@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "451418679007",
+    "project_id": "schoolbusnotification-61158",
+    "storage_bucket": "schoolbusnotification-61158.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451418679007:android:1c59edff7fe4d947efab6a",
+        "android_client_info": {
+          "package_name": "com.example.school_bus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV35_jRaDd3dy4zhE1s1kVyzoQ_RlSDrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
