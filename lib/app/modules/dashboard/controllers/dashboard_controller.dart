@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/models/user_model.dart';
@@ -10,6 +11,14 @@ class DashboardController extends GetxController {
     super.onInit();
     fetchAllUsers();
     // fetchUserData();
+    // for firebase notification token
+    checkPreference();
+  }
+
+  Future<Null> checkPreference() async{
+      FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+      String? token = await firebaseMessaging.getToken();
+      print('token ======> $token');
   }
 
   Future<void> fetchAllUsers() async {
