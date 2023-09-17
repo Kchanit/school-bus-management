@@ -6,6 +6,7 @@ class User {
   String? address;
   double? home_latitude;
   double? home_longitude;
+  String? fbtoken;
 
   User({
     required this.id,
@@ -15,6 +16,7 @@ class User {
     this.address,
     this.home_latitude,
     this.home_longitude,
+    this.fbtoken,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -30,6 +32,7 @@ class User {
       home_longitude: json['home_longitude'] != null
           ? double.parse(json['home_longitude'].toString())
           : null,
+      fbtoken: json['fbtoken'],
     );
   }
 
@@ -42,6 +45,7 @@ class User {
       'address': address,
       'home_latitude': home_latitude,
       'home_longitude': home_longitude,
+      'fbtoken' : fbtoken,
     };
   }
 }

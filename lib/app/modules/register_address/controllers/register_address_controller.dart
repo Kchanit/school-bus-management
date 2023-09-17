@@ -25,6 +25,7 @@ class RegisterAddressController extends GetxController {
           Get.find<PickAddressController>().currentPosition!.latitude,
       "home_longitude":
           Get.find<PickAddressController>().currentPosition!.longitude,
+      "image": null,
     };
     print(data);
 
