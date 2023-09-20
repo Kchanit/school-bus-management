@@ -6,7 +6,7 @@ import 'dart:convert';
 class ApiService extends GetConnect {
   static const String apiBaseUrl =
       'http://192.168.2.44/api'; // Laravel API KURL
-  // static const String apiBaseUrl = 'http://10.31.105.196/api'; // Laravel API KURL
+  // static const String apiBaseUrl = 'http://10.31.105.196/api'; // Laravel API KURL2
 
   Future<Map<String, dynamic>> postData(
       Map<String, dynamic> data, String apiUrl) async {
@@ -75,7 +75,10 @@ class ApiService extends GetConnect {
     final response = await http.get(Uri.parse(fullUrl), headers: headers);
 
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      print("Get user data success");
+      final responseData = json.decode(response.body);
+      final userData = responseData['user'];
+      return json.decode(userData);
     } else {
       print('API Request Failed with Status Code: ${response.statusCode}');
       print('API Response Body: ${response.body}');

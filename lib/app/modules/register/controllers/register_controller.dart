@@ -23,8 +23,8 @@ class RegisterController extends GetxController {
   CloudApi? api;
   String? imageUrl;
 
-  void getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+  void getImage(ImageSource source) async {
+    final pickedFile = await picker.pickImage(source: source);
     if (pickedFile != null) {
       image.value = File(pickedFile.path);
       imageBytes.value = image.value!.readAsBytesSync();
@@ -39,6 +39,41 @@ class RegisterController extends GetxController {
     imageUrl = response.downloadLink.toString();
     print(imageUrl);
     return imageUrl!;
+  }
+
+  showImageSourceSelection() {
+    Get.bottomSheet(
+      Container(
+        decoration: const ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            )),
+        child: Wrap(
+          children: <Widget>[
+            ListTile(
+              leading: const Icon(Icons.camera),
+              title: const Text('Camera'),
+              onTap: () {
+                getImage(ImageSource.camera);
+                Get.back();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.image),
+              title: const Text('Gallery'),
+              onTap: () {
+                getImage(ImageSource.gallery);
+                Get.back();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void goNext() {

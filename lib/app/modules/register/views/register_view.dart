@@ -52,16 +52,9 @@ class RegisterView extends GetView<RegisterController> {
 
                   const SizedBox(height: 25),
                   ElevatedButton(
-                      onPressed: () => controller.getImage(),
+                      onPressed: () => controller.showImageSourceSelection(),
                       child: const Text('Select Image')),
-                  // const SizedBox(height: 25),
-                  // Center(
-                  //   child: CircleAvatar(
-                  //     radius: 40,
-                  //     backgroundImage: NetworkImage(
-                  //         'https://storage.googleapis.com/download/storage/v1/b/school-bus-bucket/o/85b49bdc-85a5-4d32-a73e-8c6d81b17ef18141413224892747460.jpg?generation=1694613051915343&alt=media'),
-                  //   ),
-                  // ),
+                 
                   const SizedBox(height: 25),
                   _nameTextField(controller.nameController),
                   const SizedBox(height: 25),
