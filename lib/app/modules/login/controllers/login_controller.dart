@@ -11,7 +11,6 @@ class LoginController extends GetxController {
   TextEditingController passwordController = TextEditingController();
 
   void login() async {
-    // try {
     // Validate the Form
     if (!formKey.currentState!.validate()) {
       return;
@@ -32,7 +31,6 @@ class LoginController extends GetxController {
       final String accessToken = response['token'];
       User currentUser = User.fromJson(response['user']);
       Get.find<UserController>().setCurrentUser(currentUser);
-      print(Get.find<UserController>().currentUser.value!.name);
       // Store the token in the secure storage
       final storage = FlutterSecureStorage();
       await storage.write(key: 'access_token', value: accessToken);
@@ -43,10 +41,6 @@ class LoginController extends GetxController {
       Get.snackbar('Error', response['message']);
       print(response['message']);
     }
-    // } catch (e) {
-    //   Get.snackbar('Error2', e.toString());
-    //   print(e.toString());
-    // }
   }
 
   @override

@@ -8,7 +8,7 @@ import '../../../widgets/utils/custom_textfield.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
-  const RegisterView({Key? key}) : super(key: key);
+  RegisterView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +32,30 @@ class RegisterView extends GetView<RegisterController> {
               child: Column(
                 children: [
                   const SizedBox(height: 50),
+                  // Obx(() => CircleAvatar(
+                  //       radius: 50,
+                  //       backgroundImage: controller.image.value != null
+                  //           ? FileImage(controller.image.value!)
+                  //           : const AssetImage('assets/images/user.png')
+                  //               as ImageProvider,
+                  //     )),
+                  Obx(
+                    () => Center(
+                        child: controller.imageBytes.value == null
+                            ? const Text('No image selected.')
+                            : Stack(
+                                children: [
+                                  Image.memory(controller.imageBytes.value!),
+                                ],
+                              )),
+                  ),
+
+                  const SizedBox(height: 25),
+                  ElevatedButton(
+                      onPressed: () => controller.showImageSourceSelection(),
+                      child: const Text('Select Image')),
+                 
+                  const SizedBox(height: 25),
                   _nameTextField(controller.nameController),
                   const SizedBox(height: 25),
                   _emailTextField(controller.emailController),
