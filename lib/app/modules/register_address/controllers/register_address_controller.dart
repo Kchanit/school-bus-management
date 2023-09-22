@@ -9,6 +9,7 @@ import 'package:school_bus/user_controller.dart';
 class RegisterAddressController extends GetxController {
   final formKey = GlobalKey<FormState>();
   User? currentUser;
+  var isLoading = false.obs;
 
   @override
   void onInit() {
@@ -16,6 +17,7 @@ class RegisterAddressController extends GetxController {
   }
 
   registerData() async {
+    isLoading.value = true;
     String imageUrl = await Get.find<RegisterController>().saveImage();
 
     var data = {
@@ -37,9 +39,11 @@ class RegisterAddressController extends GetxController {
       print(response);
       currentUser = User.fromJson(response['user']);
       Get.find<UserController>().setCurrentUser(currentUser!);
+      isLoading.value = false;
       Get.snackbar('Success', response['message']);
       Get.offAllNamed('/dashboard');
     } else {
+      isLoading.value = false;
       print('User Registered Failed');
       print(response['message']);
       Get.snackbar('Error', response['message']);

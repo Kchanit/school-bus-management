@@ -35,9 +35,9 @@ class RegisterController extends GetxController {
   }
 
   Future<String> saveImage() async {
+    print("saving image");
     final response = await api!.save(imageName!, imageBytes.value!);
     imageUrl = response.downloadLink.toString();
-    print(imageUrl);
     return imageUrl!;
   }
 

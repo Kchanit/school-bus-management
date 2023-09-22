@@ -2,11 +2,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get_connect.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_config_plus/flutter_config_plus.dart';
 
 class ApiService extends GetConnect {
-  static const String apiBaseUrl =
-      'http://192.168.2.44/api'; // Laravel API KURL
-  // static const String apiBaseUrl = 'http://10.31.105.196/api'; // Laravel API KURL2
+  static String apiBaseUrl = FlutterConfigPlus.get('API_URL');
 
   Future<Map<String, dynamic>> postData(
       Map<String, dynamic> data, String apiUrl) async {
