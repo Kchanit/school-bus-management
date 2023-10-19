@@ -21,22 +21,22 @@ class DashboardView extends GetView<DashboardController> {
             return Container(
               child: Column(
                 children: [
-                  controller.users[index].image_url == null
+                  controller.users[index].imageUrl == null
                       ? const Text('No image selected.')
                       : CircleAvatar(
                           radius: 50,
                           backgroundImage:
-                              NetworkImage(controller.users[index].image_url!),
+                              NetworkImage(controller.users[index].imageUrl!),
                         ),
                   const SizedBox(height: 25),
-                  Text(controller.users[index].name),
+                  Text(controller.users[index].firstName),
                   const SizedBox(height: 25),
                   Text('${controller.users[index].email} '),
-                  const SizedBox(height: 25),
-                  Text('${controller.users[index].address} '),
-                  const SizedBox(height: 25),
-                  Text(
-                      'latitude: ${controller.users[index].home_latitude}, longitude: ${controller.users[index].home_longitude} '),
+                  // const SizedBox(height: 25),
+                  // Text('${controller.users[index].address} '),
+                  // const SizedBox(height: 25),
+                  // Text(
+                  //     'latitude: ${controller.users[index].home_latitude}, longitude: ${controller.users[index].home_longitude} '),
                 ],
               ),
             );

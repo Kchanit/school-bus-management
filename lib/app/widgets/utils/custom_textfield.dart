@@ -5,6 +5,7 @@ class CustomTextFormField extends StatefulWidget {
   final String labelText;
   final String? hintText;
   final bool obscureText;
+  var keyboardType;
   String? Function(String? value)? validateFunc;
 
   CustomTextFormField({
@@ -13,6 +14,7 @@ class CustomTextFormField extends StatefulWidget {
     required this.labelText,
     this.hintText,
     required this.obscureText,
+    this.keyboardType,
     this.validateFunc,
   });
 
@@ -35,6 +37,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           child: TextFormField(
             controller: widget.textEditingController,
             obscureText: widget.obscureText,
+            keyboardType: widget.keyboardType,
             // validator: (value) {
             //   if (value!.isEmpty) {
             //     return 'Please enter ${widget.labelText}';
@@ -50,7 +53,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     borderRadius: BorderRadius.circular(8)),
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-                validator: widget.validateFunc ?? (value) => null,
+            validator: widget.validateFunc ?? (value) => null,
           ),
         )
       ],

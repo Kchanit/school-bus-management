@@ -14,6 +14,10 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/register_address/bindings/register_address_binding.dart';
 import '../modules/register_address/views/register_address_view.dart';
+import '../modules/register_student/bindings/register_student_binding.dart';
+import '../modules/register_student/views/register_student_view.dart';
+import '../modules/select_student/bindings/select_student_binding.dart';
+import '../modules/select_student/views/select_student_view.dart';
 import '../modules/test/bindings/test_binding.dart';
 import '../modules/test/views/test_view.dart';
 
@@ -22,7 +26,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.INITIAL;
+  static const INITIAL = Routes.SELECT_STUDENT;
 
   static final routes = [
     GetPage(
@@ -64,6 +68,16 @@ class AppPages {
       name: _Paths.PICK_ADDRESS,
       page: () => const PickAddressView(),
       binding: PickAddressBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGISTER_STUDENT,
+      page: () => const RegisterStudentView(),
+      binding: RegisterStudentBinding(),
+    ),
+    GetPage(
+      name: _Paths.SELECT_STUDENT,
+      page: () => const SelectStudentView(),
+      binding: SelectStudentBinding(),
     ),
   ];
 }

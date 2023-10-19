@@ -10,7 +10,9 @@ abstract class Routes {
   static const INITIAL = _Paths.INITIAL;
   static const TEST = _Paths.TEST;
   static const REGISTER_ADDRESS = _Paths.REGISTER_ADDRESS;
+  static const REGISTER_STUDENT = _Paths.REGISTER_STUDENT;
   static const PICK_ADDRESS = _Paths.PICK_ADDRESS;
+  static const SELECT_STUDENT = _Paths.SELECT_STUDENT;
 }
 
 abstract class _Paths {
@@ -22,5 +24,7 @@ abstract class _Paths {
   static const INITIAL = '/initial';
   static const TEST = '/test';
   static const REGISTER_ADDRESS = '/register-address';
+  static const REGISTER_STUDENT = '/register-student';
   static const PICK_ADDRESS = '/pick-address';
+  static const SELECT_STUDENT = '/select-student';
 }

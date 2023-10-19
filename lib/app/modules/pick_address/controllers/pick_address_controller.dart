@@ -4,7 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:school_bus/models/user_model.dart';
-import 'package:school_bus/user_controller.dart';
+import 'package:school_bus/controllers/user_controller.dart';
 
 class PickAddressController extends GetxController {
   Completer<GoogleMapController> googleMapController = Completer();
@@ -56,6 +56,7 @@ class PickAddressController extends GetxController {
     print("latitude: ${position.latitude}");
     print("longtitude: ${position.longitude}");
     print("address: ${draggedAddress.value}");
+    print("full address: $fullAddress");
     print("============================================");
   }
 

@@ -10,7 +10,9 @@ import 'package:school_bus/models/user_model.dart';
 
 class RegisterController extends GetxController {
   final formKey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController citizenIdController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -23,59 +25,6 @@ class RegisterController extends GetxController {
   CloudApi? api;
   String? imageUrl;
 
-  void getImage(ImageSource source) async {
-    final pickedFile = await picker.pickImage(source: source);
-    if (pickedFile != null) {
-      image.value = File(pickedFile.path);
-      imageBytes.value = image.value!.readAsBytesSync();
-      imageName = image.value!.path.split('/').last;
-    } else {
-      print('No image selected.');
-    }
-  }
-
-  Future<String> saveImage() async {
-    print("saving image");
-    final response = await api!.save(imageName!, imageBytes.value!);
-    imageUrl = response.downloadLink.toString();
-    return imageUrl!;
-  }
-
-  showImageSourceSelection() {
-    Get.bottomSheet(
-      Container(
-        decoration: const ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            )),
-        child: Wrap(
-          children: <Widget>[
-            ListTile(
-              leading: const Icon(Icons.camera),
-              title: const Text('Camera'),
-              onTap: () {
-                getImage(ImageSource.camera);
-                Get.back();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.image),
-              title: const Text('Gallery'),
-              onTap: () {
-                getImage(ImageSource.gallery);
-                Get.back();
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   void goNext() {
     // Validate the Form
     if (!formKey.currentState!.validate()) {
@@ -83,7 +32,7 @@ class RegisterController extends GetxController {
     } else {
       formKey.currentState!.save();
     }
-    Get.toNamed('/register-address');
+    Get.toNamed('/select-student');
   }
 
   @override

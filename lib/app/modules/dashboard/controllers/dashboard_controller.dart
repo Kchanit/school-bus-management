@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/models/user_model.dart';
-import 'package:school_bus/user_controller.dart';
+import 'package:school_bus/controllers/user_controller.dart';
 
 class DashboardController extends GetxController {
   RxList<User> users = <User>[].obs;
