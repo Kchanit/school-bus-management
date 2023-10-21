@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/modules/pick_address/controllers/pick_address_controller.dart';
 import 'package:school_bus/app/modules/register/controllers/register_controller.dart';
+import 'package:school_bus/app/modules/register_address/controllers/register_address_controller.dart';
+import 'package:school_bus/app/modules/register_student/controllers/register_student_controller.dart';
 import 'package:school_bus/app/modules/test/controllers/test_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 import 'package:flutter_config_plus/flutter_config_plus.dart';
@@ -13,6 +15,8 @@ void main() async {
   await FlutterConfigPlus.loadEnvVariables();
   Get.put(UserController());
   Get.put(RegisterController());
+  Get.put(RegisterStudentController());
+  Get.put(RegisterAddressController());
   Get.put(PickAddressController());
   Get.put(TestController());
   runApp(
@@ -20,7 +24,6 @@ void main() async {
       title: "Application",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      initialBinding: BindingsBuilder.put(() => TestController()),
     ),
   );
 }

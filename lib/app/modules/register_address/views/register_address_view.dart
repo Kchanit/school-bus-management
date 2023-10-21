@@ -31,7 +31,7 @@ class RegisterAddressView extends GetView<RegisterAddressController> {
                             fontWeight: FontWeight.w600, fontSize: 24),
                       ),
                       Form(
-                        key: controller.formKey,
+                        // key: controller.formKey,
                         child: Column(
                           children: [
                             const SizedBox(height: 50),

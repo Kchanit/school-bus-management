@@ -7,14 +7,16 @@ class SelectStudentController extends GetxController {
   // User currentUser = Get.find<UserController>().currentUser.value!;
   RxList<Student> myStudents = <Student>[].obs;
   RxList<Student> selectedStudents = <Student>[].obs;
-  
+  var isLoading = false.obs;
+
   List<Student> tmpSelectedStudents = <Student>[
     Student(
-        id: 1,
-        firstName: 'John',
-        lastName: 'Doe',
-        imageUrl:
-            'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'),
+      id: 1,
+      firstName: 'John',
+      lastName: 'Doe',
+      // imageUrl:
+      // 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'),
+    ),
     Student(
       id: 2,
       firstName: 'Jane',
@@ -27,6 +29,7 @@ class SelectStudentController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    isLoading.value = true;
     var data = {
       "citizen_id": Get.find<RegisterController>().citizenIdController.text,
     };
@@ -38,7 +41,9 @@ class SelectStudentController extends GetxController {
           .map((studentJson) => Student.fromJson(studentJson))
           .toList();
       myStudents.assignAll(studentList);
+      isLoading.value = false;
     } else {
+      isLoading.value = false;
       Get.snackbar('Error', 'Cannot get student data');
     }
   }
