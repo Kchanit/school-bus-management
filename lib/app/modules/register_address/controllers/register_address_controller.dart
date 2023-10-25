@@ -1,11 +1,8 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/modules/pick_address/controllers/pick_address_controller.dart';
 import 'package:school_bus/app/modules/register/controllers/register_controller.dart';
-import 'package:school_bus/app/modules/register_student/controllers/register_student_controller.dart';
 import 'package:school_bus/app/modules/select_student/controllers/select_student_controller.dart';
 import 'package:school_bus/app/services/api_service.dart';
-import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 import 'package:school_bus/models/student_model.dart';
 import 'package:school_bus/models/user_model.dart';
@@ -26,31 +23,19 @@ class RegisterAddressController extends GetxController {
     final enrollResponse = await _enrollStudent();
     print(enrollResponse);
 
-    if (parentResponse['success'] &&
-        addressResponse['success'] &&
-        enrollResponse['success']) {
+    if (parentResponse['success'] && addressResponse['success']) {
       Get.snackbar('Success', 'User Registered Successfully');
       Get.offAllNamed('/dashboard');
     } else {
-      Get.snackbar(
-          'Error', 'Registration failed: ${parentResponse['message']}');
+      final errorMessage = parentResponse['message'] ??
+          addressResponse['message'] ??
+          'Unknown error occurred';
+
+      Get.snackbar('Error', 'Registration failed: $errorMessage');
     }
 
     isLoading.value = false;
   }
-
-  // _registerEntity(data, String apiPath) async {
-  //   try {
-  //     final response = await ApiService().postData(data, apiPath);
-  //     if (response['success'] == true) {
-  //       return response;
-  //     } else {
-  //       return {'success': false, 'message': response['message']};
-  //     }
-  //   } catch (e) {
-  //     return {'success': false, 'message': 'An error occurred.'};
-  //   }
-  // }
 
   _registerParent() async {
     final parentData = {
@@ -59,7 +44,7 @@ class RegisterAddressController extends GetxController {
       "citizen_id": Get.find<RegisterController>().citizenIdController.text,
       "email": Get.find<RegisterController>().emailController.text,
       "password": Get.find<RegisterController>().passwordController.text,
-      "role": "parent",
+      "role": "PARENT",
     };
     print("Sending parent data");
     print(parentData);
@@ -117,21 +102,64 @@ class RegisterAddressController extends GetxController {
   }
 
   _enrollStudent() async {
-    final students_id = Get.find<SelectStudentController>()
-        .selectedStudents
-        .map((student) => student.id)
-        .toList();
-    final studentData = {
-      "students_id": students_id,
-      "parent_id": currentUser!.id,
-      "address_id": address['id'],
-    };
+    final parent_id = currentUser!.id;
+    final address_id = address['id'];
+    final successfulEnrollments = [];
+    final unsuccessfulEnrollments = [];
+    for (final student
+        in Get.find<SelectStudentController>().selectedStudents) {
+      final studentData = {
+        "student_id": student.id,
+        "parent_id": parent_id,
+        "address_id": address_id,
+      };
 
-    print("Sending enroll data");
-    print(studentData);
-    var response = await ApiService().postData(studentData, '/students/enroll');
-    print(response);
-    return response;
+      print("Enrolling student with ID: ${student.id}");
+      print(studentData);
+
+      var response =
+          await ApiService().postData(studentData, '/students/enroll');
+      print(response);
+
+      if (response['success']) {
+        successfulEnrollments.add(student);
+      } else {
+        unsuccessfulEnrollments.add({
+          "student": student,
+          "message": response['message'],
+        });
+      }
+    }
+    handleSuccessfulEnrollments(successfulEnrollments);
+    handleUnsuccessfulEnrollments(unsuccessfulEnrollments);
+    print("All students enrolled successfully");
+  }
+
+  void handleSuccessfulEnrollments(List<dynamic> successfulEnrollments) {
+    if (successfulEnrollments.isNotEmpty) {
+      // Display a success message for the students who were enrolled successfully.
+      Get.snackbar(
+        'Success',
+        'Successfully enrolled ${successfulEnrollments.length} students',
+      );
+    }
+  }
+
+  void handleUnsuccessfulEnrollments(List<dynamic> unsuccessfulEnrollments) {
+    if (unsuccessfulEnrollments.isNotEmpty) {
+      for (final enrollment in unsuccessfulEnrollments) {
+        final student = enrollment['student'];
+        final errorMessage = enrollment['error_message'];
+
+        // Handle the unsuccessful enrollment.
+        print("Enrollment failed for student ${student.id}: $errorMessage");
+        // Display an error message to the user.
+        Get.snackbar(
+          'Error',
+          'Enrollment failed for student ${student.id}: $errorMessage',
+        );
+      }
+    }
   }
 
   @override
