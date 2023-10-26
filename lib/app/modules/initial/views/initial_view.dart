@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:school_bus/app/routes/app_pages.dart';
-import 'package:school_bus/app/widgets/utils/custom_button.dart';
 import 'package:school_bus/app/widgets/utils/custom_light_button.dart';
 
 import '../controllers/initial_controller.dart';

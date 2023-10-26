@@ -4,7 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:school_bus/models/user_model.dart';
-import 'package:school_bus/user_controller.dart';
+import 'package:school_bus/controllers/user_controller.dart';
 
 class PickAddressController extends GetxController {
   Completer<GoogleMapController> googleMapController = Completer();
@@ -14,6 +14,9 @@ class PickAddressController extends GetxController {
   RxString draggedAddress = "".obs;
   Position? currentPosition;
   User? currentUser;
+  RxString district = "".obs;
+  RxString street = "".obs;
+  RxString fullAddress = "".obs;
 
   @override
   void onInit() async {
@@ -30,7 +33,7 @@ class PickAddressController extends GetxController {
   }
 
   saveData() async {
-    Get.offAllNamed("/register-address");
+    Get.toNamed("/register-address");
   }
 
   //get user's current location and set the map's camera to that location
@@ -48,14 +51,19 @@ class PickAddressController extends GetxController {
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark address = placemarks[0]; // get only first and closest address
-    String fullAddress =
+    fullAddress.value =
         "${address.street}, ${address.subLocality}, ${address.administrativeArea} ${address.postalCode}";
-    draggedAddress.value = fullAddress;
+    draggedAddress.value = fullAddress.value;
+    district.value = address.subLocality!;
+    street.value = address.street!;
     // when dragged pin, print info
     print("============================================");
     print("latitude: ${position.latitude}");
     print("longtitude: ${position.longitude}");
     print("address: ${draggedAddress.value}");
+    print("full address: $fullAddress");
+    print("district: ${address.subLocality}");
+    print("street: ${address.street}");
     print("============================================");
   }
 

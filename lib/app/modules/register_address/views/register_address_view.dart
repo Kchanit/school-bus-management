@@ -20,41 +20,45 @@ class RegisterAddressView extends GetView<RegisterAddressController> {
       ),
       body: SingleChildScrollView(
         child: Center(
-            child: Column(
-          children: [
-            const Text(
-              'Address Information',
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
-            ),
-            Form(
-              key: controller.formKey,
-              child: Column(
-                children: [
-                  const SizedBox(height: 50),
-                  ElevatedButton(
-                      onPressed: () {
-                        Get.toNamed(Routes.PICK_ADDRESS);
-                      },
-                      child: Text(Get.find<PickAddressController>()
-                                  .draggedAddress
-                                  .value ==
-                              ""
-                          ? "Select Address"
-                          : Get.find<PickAddressController>()
-                              .draggedAddress
-                              .value)),
-                  // const SizedBox(height: 25),
-                  // _emailTextField(controller.emailController),
-                  const SizedBox(height: 50),
-                  CustomButton(
-                    buttonText: 'Confirm',
-                    onPressed: () => controller.registerData(),
+          child: Obx(
+            () => controller.isLoading.value
+                ? CircularProgressIndicator() // Show loading indicator
+                : Column(
+                    children: [
+                      const Text(
+                        'Address Information',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 24),
+                      ),
+                      Form(
+                        // key: controller.formKey,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 50),
+                            ElevatedButton(
+                                onPressed: () {
+                                  Get.toNamed(Routes.PICK_ADDRESS);
+                                },
+                                child: Text(Get.find<PickAddressController>()
+                                            .draggedAddress
+                                            .value ==
+                                        ""
+                                    ? "Select Address"
+                                    : Get.find<PickAddressController>()
+                                        .draggedAddress
+                                        .value)),
+                            const SizedBox(height: 50),
+                            CustomButton(
+                              buttonText: 'Confirm',
+                              onPressed: () => controller.registerData(),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                ],
-              ),
-            )
-          ],
-        )),
+          ),
+        ),
       ),
     );
   }

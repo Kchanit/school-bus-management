@@ -1,87 +1,122 @@
-import 'package:get/get.dart';
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:google_map_polyline_new/google_map_polyline_new.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TestController extends GetxController {
+  // var initialCameraPosition = const CameraPosition(
+  //   target: LatLng(13.8, 100.5),
+  //   zoom: 17.5,
+  // );
+  // late GoogleMapController googleMapController;
+
+  Completer<GoogleMapController> googleMapController = Completer();
+  CameraPosition? cameraPosition;
+  late LatLng defaultLatLng;
+  Position? currentPosition;
+
+  GoogleMapPolyline googleMapPolyline =
+      new GoogleMapPolyline(apiKey: "AIzaSyD_Fw72DnY6QPUrT6vowTa55pssGiDFEoc");
+  Marker? origin;
+  Marker? destination;
+  final Set<Polyline> polylines = {};
+  // List<LatLng>? routeCoords;
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    // _currentPosition = determinePosition();
-    fetchPosition();
+    await _gotoUserCurrentPosition();
+    cameraPosition = CameraPosition(target: defaultLatLng, zoom: 17.5);
   }
 
+  void initialize() async {
+    print("initialize");
+    await _gotoUserCurrentPosition();
 
-  Future fetchPosition() async {
-    try {
-      // Check if location permission is granted
-      bool hasLocationPermission = await _handleLocationPermission();
-      if (!hasLocationPermission) {
-        // Handle the case where location permission is not granted
-        return;
-      }
+    origin = Marker(
+      markerId: MarkerId("origin"),
+      position: defaultLatLng,
+      infoWindow: InfoWindow(title: "Origin"),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+    );
 
-      // Fetch the current position
-      Position position = await determinePosition();
-      print("Latitude: ${position.latitude}");
-      print("Longitude: ${position.longitude}");
-      update(); // Notify listeners of the updated position
-    } catch (e) {
-      print('Error fetching position: $e');
-    }
+    destination = Marker(
+      markerId: MarkerId("destination"),
+      position: LatLng(13.842564599,
+          100.5699795484543), // Replace with your destination coordinates
+      infoWindow: InfoWindow(title: "Destination"),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+    );
+
+    await drawRoute();
   }
 
-  Future<bool> _handleLocationPermission() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      Get.snackbar(
-          'Location services are disabled. Please enable the services', '');
-      return false;
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        Get.snackbar('Location permissions are denied', '');
-        return false;
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      Get.snackbar(
-          'Location permissions are permanently denied, we cannot request permissions.',
-          '');
-      return false;
-    }
-    return true;
+  Future _gotoUserCurrentPosition() async {
+    currentPosition = await _determineUserCurrentPosition();
+    defaultLatLng =
+        LatLng(currentPosition!.latitude, currentPosition!.longitude);
+    // cameraPosition = CameraPosition(target: defaultLatLng, zoom: 17.5);
+    // _gotoSpecificPosition(
+    //     LatLng(currentPosition!.latitude, currentPosition!.longitude));
   }
 
-  Future<Position> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+  Future<void> drawRoute() async {
+    if (origin == null || destination == null) {
+      return;
     }
 
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
+    final route = await googleMapPolyline.getCoordinatesWithLocation(
+      origin: LatLng(origin!.position.latitude, origin!.position.longitude),
+      destination: LatLng(
+          destination!.position.latitude, destination!.position.longitude),
+      mode: RouteMode.driving,
+    );
+
+    final polyline = Polyline(
+      polylineId: PolylineId("route"),
+      points: route!,
+      width: 4,
+      color: Colors.blue,
+    );
+
+    polylines.clear();
+    polylines.add(polyline);
+    update();
+  }
+
+  Future _gotoSpecificPosition(LatLng position) async {
+    GoogleMapController mapController = await googleMapController.future;
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: position, zoom: 17.5)));
+  }
+
+  Future _determineUserCurrentPosition() async {
+    LocationPermission locationPermission;
+    bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
+    //check if user enable service for location permission
+    if (!isLocationServiceEnabled) {
+      print("user don't enable location permission");
+    }
+
+    locationPermission = await Geolocator.checkPermission();
+
+    //check if user denied location and retry requesting for permission
+    if (locationPermission == LocationPermission.denied) {
+      locationPermission = await Geolocator.requestPermission();
+      if (locationPermission == LocationPermission.denied) {
+        print("user denied location permission");
       }
     }
 
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+    //check if user denied permission forever
+    if (locationPermission == LocationPermission.deniedForever) {
+      print("user denied permission forever");
     }
 
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -8,8 +9,7 @@ import '../../../widgets/utils/custom_textfield.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
-  const RegisterView({Key? key}) : super(key: key);
-
+  RegisterView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,14 +32,20 @@ class RegisterView extends GetView<RegisterController> {
               child: Column(
                 children: [
                   const SizedBox(height: 50),
-                  _nameTextField(controller.nameController),
+                  const SizedBox(height: 25),
+                  _firstNameTextField(controller.firstNameController),
+                  const SizedBox(height: 25),
+                  _lastNameTextField(controller.lastNameController),
                   const SizedBox(height: 25),
                   _emailTextField(controller.emailController),
+                  const SizedBox(height: 25),
+                  _citizenIdTextField(controller.citizenIdController),
                   const SizedBox(height: 25),
                   _passwordTextField(controller.passwordController),
                   const SizedBox(height: 25),
                   _confirmPasswordTextField(
-                      controller.confirmPasswordController,controller.passwordController),
+                      controller.confirmPasswordController,
+                      controller.passwordController),
                   const SizedBox(height: 50),
                   CustomButton(
                     buttonText: 'Next',
@@ -71,15 +77,44 @@ class RegisterView extends GetView<RegisterController> {
   }
 }
 
-Widget _nameTextField(TextEditingController controller) {
+Widget _firstNameTextField(TextEditingController controller) {
   return CustomTextFormField(
       textEditingController: controller,
-      labelText: 'Name',
-      hintText: 'Enter Name',
+      labelText: 'First Name',
+      hintText: 'Enter your first name',
       obscureText: false,
       validateFunc: (value) {
         if (value!.isEmpty) {
-          return 'Name is required';
+          return 'First name is required';
+        }
+        return null;
+      });
+}
+
+Widget _lastNameTextField(TextEditingController controller) {
+  return CustomTextFormField(
+      textEditingController: controller,
+      labelText: 'Last Name',
+      hintText: 'Enter your last name',
+      obscureText: false,
+      validateFunc: (value) {
+        if (value!.isEmpty) {
+          return 'Last name is required';
+        }
+        return null;
+      });
+}
+
+Widget _citizenIdTextField(TextEditingController controller) {
+  return CustomTextFormField(
+      textEditingController: controller,
+      labelText: 'Citizen ID',
+      hintText: 'Enter your citizen ID',
+      keyboardType: TextInputType.number,
+      obscureText: false,
+      validateFunc: (value) {
+        if (value!.isEmpty) {
+          return 'Citizen ID is required';
         }
         return null;
       });
@@ -117,7 +152,8 @@ Widget _passwordTextField(TextEditingController controller) {
       });
 }
 
-Widget _confirmPasswordTextField(TextEditingController controller, passwordController) {
+Widget _confirmPasswordTextField(
+    TextEditingController controller, passwordController) {
   return CustomTextFormField(
       textEditingController: controller,
       labelText: 'Confirm Password',

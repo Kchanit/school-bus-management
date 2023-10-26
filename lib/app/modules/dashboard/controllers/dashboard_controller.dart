@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/models/user_model.dart';
-import 'package:school_bus/user_controller.dart';
+import 'package:school_bus/controllers/user_controller.dart';
+
 
 class DashboardController extends GetxController {
   RxList<User> users = <User>[].obs;
@@ -14,7 +16,17 @@ class DashboardController extends GetxController {
     fetchUserData();
     // for firebase notification token
     checkPreference();
+    // notification();
   }
+
+  // Future<Null> notification() async {
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //   if (message.notification != null) {
+  //     print("Title: ${message.notification!.title}");
+  //     print("Body: ${message.notification!.body}");
+  //   }
+  // });
+  // }  
 
   Future<Null> checkPreference() async{
       // get the device firebasetoken
@@ -50,27 +62,25 @@ class DashboardController extends GetxController {
       List<dynamic> userJsonList = response['users'];
       List<User> userList =
           userJsonList.map((userJson) => User.fromJson(userJson)).toList();
+
       // Update the users list with the parsed data
       users.assignAll(userList);
     }
   }
 
-  Future<void> fetchUserData() async {
+Future<void> fetchUserData() async {
     // try {
     //   final response = await ApiService().getUserData();
-    //   final userData = response['user'];
-    //   users.add(User.fromJson(userData));
-    //   // Now you can use userData as the logged-in user's data
-    //   print('User Data: $userData');
+    //   // final userData = response['user'];
+    //   print(response['name']);
+    //   // print(userData['name']);
+    //   // print(userData['email']);
+    //   users.add(User.fromJson(response));
+    //   // print('User Data: $userData');
     // } catch (e) {
     //   print('Error fetching user data: $e');
     // }
-
-    // users.add(Get.find<UserController>().currentUser.value!);
-    User? currentUser = Get.find<UserController>().currentUser.value;
-    print("++++++++++++++++++++++");
-    print('Current User ID: ${currentUser!.id}');
-    print('Current User EMAIL: ${currentUser!.email}');
+    users.add(Get.find<UserController>().currentUser.value!);
   }
 
   @override
