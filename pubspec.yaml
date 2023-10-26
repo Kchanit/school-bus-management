@@ -18,7 +18,18 @@ dependencies:
   latlong2: ^0.8.1
   google_maps_flutter: ^2.5.0
 
+
   lottie: ^1.4.2
+  dio: ^4.0.0
+  flutter_polyline_points: ^1.0.0
+  google_map_polyline_new: ^0.3.0+2
+  gcloud: ^0.8.11
+  googleapis_auth: ^1.4.1
+  image_picker: ^1.0.4
+  mime: ^1.0.4
+  flutter_config_plus: ^1.1.1
+  carousel_slider: ^4.2.1
+  sliding_up_panel: ^2.0.0+1
   firebase_messaging: ^14.6.7
   firebase_core: ^2.15.1
   dio: ^4.0.0

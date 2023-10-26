@@ -4,7 +4,7 @@
 
 import FlutterMacOS
 import Foundation
-
+import file_selector_macos
 import file_selector_macos
 import firebase_core
 import firebase_messaging

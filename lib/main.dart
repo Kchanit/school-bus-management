@@ -6,9 +6,8 @@ import 'package:school_bus/app/modules/register/controllers/register_controller.
 import 'package:school_bus/app/modules/register_address/controllers/register_address_controller.dart';
 import 'package:school_bus/app/modules/register_student/controllers/register_student_controller.dart';
 import 'package:school_bus/app/modules/test/controllers/test_controller.dart';
-import 'package:school_bus/controllers/user_controller.dart';
 import 'package:flutter_config_plus/flutter_config_plus.dart';
-import 'package:school_bus/firebase_options.dart';
+import 'package:school_bus/controllers/user_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'app/routes/app_pages.dart';
 

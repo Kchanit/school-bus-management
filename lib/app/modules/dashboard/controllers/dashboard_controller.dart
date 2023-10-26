@@ -5,16 +5,16 @@ import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/models/user_model.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 
-
 class DashboardController extends GetxController {
   RxList<User> users = <User>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    fetchAllUsers();
+    // fetchAllUsers();
     fetchUserData();
-    // for firebase notification token
+
+    //for FCM
     checkPreference();
     // notification();
   }

@@ -53,7 +53,7 @@ class DashboardView extends GetView<DashboardController> {
                               NetworkImage(controller.users[index].imageUrl!),
                         ),
                   const SizedBox(height: 25),
-                  // Text(controller.users[index].firstName),
+                  Text(controller.users[index].firstName),
                   const SizedBox(height: 25),
                   Text('${controller.users[index].email} '),
                   // const SizedBox(height: 25),
