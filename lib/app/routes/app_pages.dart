@@ -20,6 +20,10 @@ import '../modules/select_student/bindings/select_student_binding.dart';
 import '../modules/select_student/views/select_student_view.dart';
 import '../modules/test/bindings/test_binding.dart';
 import '../modules/test/views/test_view.dart';
+import '../modules/notification/bindings/notification_binding.dart';
+import '../modules/notification/views/notification_view.dart';
+import '../modules/setting/bindings/setting_binding.dart';
+import '../modules/setting/views/setting_view.dart';
 
 part 'app_routes.dart';
 
@@ -78,6 +82,16 @@ class AppPages {
       name: _Paths.SELECT_STUDENT,
       page: () => const SelectStudentView(),
       binding: SelectStudentBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTIFICATION,
+      page: () => const NotificationView(),
+      binding: NotificationBinding(),
+    ),
+    GetPage(
+      name: _Paths.SETTING,
+      page: () => const SettingView(),
+      binding: SettingBinding(),
     ),
   ];
 }

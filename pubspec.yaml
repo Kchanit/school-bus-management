@@ -28,6 +28,8 @@ dependencies:
   mime: ^1.0.4
   flutter_config_plus: ^1.1.1
   carousel_slider: ^4.2.1
+  sliding_up_panel: ^2.0.0+1
+
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
@@ -39,3 +41,4 @@ flutter:
     - assets/pin.json
     - assets/credentials.json
     - .env
+    - assets/images/
