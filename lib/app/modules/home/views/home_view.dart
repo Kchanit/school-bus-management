@@ -44,7 +44,7 @@ class HomeView extends GetView<HomeController> {
                 // width: MediaQuery.of(context).size.width,
               ),
             ),
-            const CustomDraggable()
+            const CustomDraggable(),
           ],
         ));
   }

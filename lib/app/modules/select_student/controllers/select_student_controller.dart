@@ -9,22 +9,22 @@ class SelectStudentController extends GetxController {
   RxList<Student> selectedStudents = <Student>[].obs;
   var isLoading = false.obs;
 
-  List<Student> tmpSelectedStudents = <Student>[
-    Student(
-      id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      // imageUrl:
-      // 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'),
-    ),
-    Student(
-      id: 2,
-      firstName: 'Jane',
-      lastName: 'Doe',
-      // imageUrl:
-      // 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'),
-    ),
-  ];
+  // List<Student> tmpSelectedStudents = <Student>[
+  //   Student(
+  //     id: 1,
+  //     firstName: 'John',
+  //     lastName: 'Doe',
+  //     // imageUrl:
+  //     // 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'),
+  //   ),
+  //   Student(
+  //     id: 2,
+  //     firstName: 'Jane',
+  //     lastName: 'Doe',
+  //     // imageUrl:
+  //     // 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'),
+  //   ),
+  // ];
 
   @override
   void onInit() async {

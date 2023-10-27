@@ -7,6 +7,8 @@ class Student {
   double? homeLatitude;
   double? homeLongitude;
   String? imageUrl;
+  String? status;
+  bool isTakingBus = false;
 
   Student({
     required this.id,
@@ -17,6 +19,8 @@ class Student {
     this.homeLatitude,
     this.homeLongitude,
     this.imageUrl,
+    this.status,
+    required bool isTakingBus,
   });
 
   factory Student.fromJson(Map<String, dynamic> json) {
@@ -33,6 +37,8 @@ class Student {
           ? double.parse(json['home_longitude'].toString())
           : null,
       imageUrl: json['image_url'],
+      status: json['status'],
+      isTakingBus: json['is_taking_bus'] == 1 ? true : false,
     );
   }
 
@@ -46,6 +52,10 @@ class Student {
       'home_latitude': homeLatitude,
       'home_longitude': homeLongitude,
       'image_url': imageUrl,
+      'status': status,
+      'is_taking_bus': isTakingBus,
     };
   }
+
+  String get fullName => "$firstName $lastName";
 }

@@ -5,8 +5,6 @@ class User {
   final String email;
   final String role;
   final String citizenId;
-  // double? home_latitude;
-  // double? home_longitude;
   String? imageUrl;
 
   User({
@@ -16,8 +14,6 @@ class User {
     required this.email,
     required this.role,
     required this.citizenId,
-    // this.home_latitude,
-    // this.home_longitude,
     this.imageUrl,
   });
 
@@ -29,14 +25,6 @@ class User {
       email: json['email'],
       role: json['role'],
       citizenId: json['citizen_id'],
-      // address: json['address'],
-      // home_latitude: json['home_latitude'] != null
-      //     ? double.parse(json['home_latitude'].toString())
-      //     : null,
-      // home_longitude: json['home_longitude'] != null
-      //     ? double.parse(json['home_longitude'].toString())
-      //     : null,
-      // imageUrl: json['image_url'],
     );
   }
 
@@ -51,4 +39,6 @@ class User {
       'image_url': imageUrl,
     };
   }
+
+  get fullName => '$firstName $lastName';
 }

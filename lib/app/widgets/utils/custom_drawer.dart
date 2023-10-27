@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/routes/app_pages.dart';
+import 'package:school_bus/controllers/student_controller.dart';
+import 'package:school_bus/controllers/user_controller.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -25,7 +27,7 @@ class CustomDrawer extends StatelessWidget {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(30))),
                     Text(
-                      'FirstName LastName',
+                      Get.find<UserController>().currentUser.value!.fullName,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],
@@ -38,20 +40,28 @@ class CustomDrawer extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall,
             ),
             children: [
-              ListTile(
-                leading: const Icon(Icons.person),
-                title: Text(
-                  'Child 1',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.person),
-                title: Text(
-                  'Child 2',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              )
+              Obx(() {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: Get.find<StudentController>().myStudents.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: const Icon(Icons.person),
+                      onTap: () {
+                        Get.find<StudentController>().student.value =
+                            Get.find<StudentController>().myStudents[index];
+                        Get.back();
+                      },
+                      title: Text(
+                        Get.find<StudentController>()
+                            .myStudents[index]
+                            .fullName,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    );
+                  },
+                );
+              }),
             ],
           ),
           ListTile(
