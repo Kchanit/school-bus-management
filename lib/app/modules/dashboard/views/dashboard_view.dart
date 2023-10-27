@@ -22,7 +22,7 @@ class DashboardView extends GetView<DashboardController> {
               content: Text(body),
               actions: <Widget>[
                 TextButton(
-                  child: Text('Close'),
+                  child: const Text('Close'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

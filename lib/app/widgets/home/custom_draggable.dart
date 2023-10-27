@@ -9,11 +9,7 @@ class CustomDraggable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<bool> options = [
-      true,
-      false,
-    ];
-    bool currentOption = options[0];
+
     return SizedBox.expand(
       child: DraggableScrollableSheet(
         minChildSize: 0.7,

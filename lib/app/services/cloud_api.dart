@@ -13,9 +13,7 @@ class CloudApi {
 
   Future<ObjectInfo> save(String name, Uint8List imgBytes) async {
     // Create a client
-    if (_client == null)
-      _client =
-          await auth.clientViaServiceAccount(_credentials, Storage.SCOPES);
+    _client ??= await auth.clientViaServiceAccount(_credentials, Storage.SCOPES);
 
     // Instantiate objects to cloud storage
     var storage = Storage(_client!, 'Image Upload Google Storage');
