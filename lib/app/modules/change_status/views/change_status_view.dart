@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:school_bus/app/services/api_service.dart';
 
 import '../controllers/change_status_controller.dart';
 
-enum SingingCharacter { bus, yourself }
-
 class ChangeStatusView extends GetView<ChangeStatusController> {
   const ChangeStatusView({Key? key}) : super(key: key);
-
-  static Rx<SingingCharacter> _character = SingingCharacter.bus.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -61,20 +58,27 @@ class ChangeStatusView extends GetView<ChangeStatusController> {
                   const SizedBox(
                     height: 25,
                   ),
-                  RadioListTile<SingingCharacter>(
+                  RadioListTile<BusStatus>(
                     title: const Text('By School Bus'),
-                    value: SingingCharacter.bus,
-                    groupValue: _character.value,
-                    onChanged: (SingingCharacter? value) {
-                      _character.value = value!;
+                    value: BusStatus.bus,
+                    selected: false,
+                    groupValue: controller.status.value == true
+                        ? BusStatus.bus
+                        : BusStatus.yourself,
+                    onChanged: (BusStatus? value) {
+                      controller.busStatus.value = value!;
+                      controller.status.value = true;
                     },
                   ),
-                  RadioListTile<SingingCharacter>(
+                  RadioListTile<BusStatus>(
                     title: const Text('กลับด้วยตัวเอง'),
-                    value: SingingCharacter.yourself,
-                    groupValue: _character.value,
-                    onChanged: (SingingCharacter? value) {
-                      _character.value = value!;
+                    value: BusStatus.yourself,
+                    groupValue: controller.status.value == true
+                        ? BusStatus.bus
+                        : BusStatus.yourself,
+                    onChanged: (BusStatus? value) {
+                      controller.busStatus.value = value!;
+                      controller.status.value = false;
                     },
                   ),
                   const SizedBox(
@@ -85,7 +89,7 @@ class ChangeStatusView extends GetView<ChangeStatusController> {
                           backgroundColor:
                               MaterialStatePropertyAll(Colors.amber)),
                       onPressed: () {
-                        // Get.find<HomeController>().changeStudentStatus();
+                        controller.saveData();
                       },
                       child: const Text('Confirm'))
                 ],
