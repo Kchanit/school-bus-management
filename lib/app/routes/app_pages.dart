@@ -97,7 +97,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.REORDER_STUDENT,
-      page: () => const ReorderStudentView(),
+      page: () => ReorderStudentView(),
       binding: ReorderStudentBinding(),
     ),
   ];

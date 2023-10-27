@@ -5,39 +5,40 @@ import 'package:get/get.dart';
 import '../controllers/reorder_student_controller.dart';
 
 class ReorderStudentView extends GetView<ReorderStudentController> {
-  const ReorderStudentView({Key? key}) : super(key: key);
+  ReorderStudentView({Key? key}) : super(key: key);
+
+  final List<int> _items = List<int>.generate(50, (int index) => index);
+
   @override
   Widget build(BuildContext context) {
+    // final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    // final Color oddItemColor = colorScheme.primary.withOpacity(0.05);
+    // final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ReorderStudentView'),
-        centerTitle: true,
-      ),
-      body: Obx(
-        () => ReorderableListView(
-          onReorder: (oldIndex, newIndex) {
-            controller.reorder(oldIndex, newIndex);
-          },
-          children: controller.studentController!.myStudents
-              .map(
-                (e) => Container(
-                  margin: EdgeInsets.only(left: 16, right: 16, top: 8),
-                  padding: EdgeInsets.all(16),
-                  key: ValueKey(e),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      color: Colors.lightBlue),
-                  child: Text(
-                    e.fullName,
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
-              )
-              .toList(),
+        appBar: AppBar(
+          title: const Text('ReorderStudentView'),
+          centerTitle: true,
         ),
-      ),
-    );
+        body: Obx(
+          () => ReorderableListView(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            children: <Widget>[
+              for (int index = 0; index < _items.length; index += 1)
+                ListTile(
+                  key: Key('$index'),
+                  // tileColor: _items[index].isOdd ? oddItemColor : evenItemColor,
+                  title: Text('Item ${_items[index]}'),
+                ),
+            ],
+            onReorder: (int oldIndex, int newIndex) {
+              if (oldIndex < newIndex) {
+                newIndex -= 1;
+              }
+              final int item = _items.removeAt(oldIndex);
+              _items.insert(newIndex, item);
+            },
+          ),
+        ));
   }
 }
