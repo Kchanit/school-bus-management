@@ -47,14 +47,4 @@ class ReorderStudentController extends GetxController {
     userController = Get.find<UserController>();
     studentController = Get.find<StudentController>();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }
