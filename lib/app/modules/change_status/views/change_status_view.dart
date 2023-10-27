@@ -53,6 +53,12 @@ class ChangeStatusView extends GetView<ChangeStatusController> {
                     'Can be changed until 14:00',
                   ),
                   const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    '* ถ้าไม่เลือกการกลับจะเป็นรูปแบบ By School Bus *',
+                  ),
+                  const SizedBox(
                     height: 25,
                   ),
                   RadioListTile<SingingCharacter>(
