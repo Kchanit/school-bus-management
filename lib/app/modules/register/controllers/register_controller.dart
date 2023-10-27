@@ -63,7 +63,6 @@ class RegisterController extends GetxController {
         }
       }
     }
-    Get.toNamed('/select-student');
   }
 
   @override

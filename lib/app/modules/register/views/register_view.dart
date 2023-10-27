@@ -29,56 +29,58 @@ class RegisterView extends GetView<RegisterController> {
         child: Center(
             child: Column(
           children: [
-            Form(
-              key: controller.formKey,
-              child: Column(
-                children: [
-                  const SizedBox(height: 25),
-                  _firstNameTextField(controller.firstNameController),
-                  const SizedBox(height: 25),
-                  _lastNameTextField(controller.lastNameController),
-                  const SizedBox(height: 25),
-                  _emailTextField(controller.emailController),
-                  if (controller.emailError.value != '')
-                    Text(
-                      controller.emailError.value,
-                      style: const TextStyle(color: Colors.red),
+            Obx(
+              () => Form(
+                key: controller.formKey,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 25),
+                    _firstNameTextField(controller.firstNameController),
+                    const SizedBox(height: 25),
+                    _lastNameTextField(controller.lastNameController),
+                    const SizedBox(height: 25),
+                    _emailTextField(controller.emailController),
+                    if (controller.emailError.value != '')
+                      Text(
+                        controller.emailError.value,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    const SizedBox(height: 25),
+                    _citizenIdTextField(controller.citizenIdController),
+                    if (controller.citizenIdError.value != '')
+                      Text(
+                        controller.citizenIdError.value,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    const SizedBox(height: 25),
+                    _passwordTextField(controller.passwordController),
+                    const SizedBox(height: 25),
+                    _confirmPasswordTextField(
+                        controller.confirmPasswordController,
+                        controller.passwordController),
+                    const SizedBox(height: 50),
+                    CustomButton(
+                      buttonText: 'Next',
+                      routes: Routes.HOME,
+                      onPressed: () => controller.goNext(),
                     ),
-                  const SizedBox(height: 25),
-                  _citizenIdTextField(controller.citizenIdController),
-                  if (controller.citizenIdError.value != '')
-                    Text(
-                      controller.citizenIdError.value,
-                      style: const TextStyle(color: Colors.red),
+                    ElevatedButton(
+                      onPressed: () {
+                        Get.toNamed('/login');
+                      },
+                      style: ButtonStyle(
+                          elevation: MaterialStateProperty.all(0),
+                          backgroundColor:
+                              const MaterialStatePropertyAll(Colors.black),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ))),
+                      child: const Text('Login'),
                     ),
-                  const SizedBox(height: 25),
-                  _passwordTextField(controller.passwordController),
-                  const SizedBox(height: 25),
-                  _confirmPasswordTextField(
-                      controller.confirmPasswordController,
-                      controller.passwordController),
-                  const SizedBox(height: 50),
-                  CustomButton(
-                    buttonText: 'Next',
-                    routes: Routes.HOME,
-                    onPressed: () => controller.goNext(),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Get.toNamed('/login');
-                    },
-                    style: ButtonStyle(
-                        elevation: MaterialStateProperty.all(0),
-                        backgroundColor:
-                            const MaterialStatePropertyAll(Colors.black),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ))),
-                    child: const Text('Login'),
-                  ),
-                ],
+                  ],
+                ),
               ),
             )
           ],

@@ -12,11 +12,18 @@ class RegisterAddressController extends GetxController {
   // final formKey = GlobalKey<FormState>();
   User? currentUser;
   Student? student;
+  RxString districtMessage = ''.obs;
+  RxString streetMessage = ''.obs;
+
   var address;
   var isLoading = false.obs;
 
   Future<void> registerData() async {
     isLoading.value = true;
+    if (!validateAddress()) {
+      isLoading.value = false;
+      return;
+    }
     final parentResponse = await _registerParent();
     print(parentResponse);
     final addressResponse = await _registerAddress();
@@ -137,6 +144,17 @@ class RegisterAddressController extends GetxController {
     handleSuccessfulEnrollments(successfulEnrollments);
     handleUnsuccessfulEnrollments(unsuccessfulEnrollments);
     print("All students enrolled successfully");
+  }
+
+  bool validateAddress() {
+    if (Get.find<PickAddressController>().district.value == "") {
+      districtMessage.value = "Please select district";
+      return false;
+    } else if (Get.find<PickAddressController>().street.value == "") {
+      streetMessage.value = "Please select street";
+      return false;
+    }
+    return true;
   }
 
   void handleSuccessfulEnrollments(List<dynamic> successfulEnrollments) {

@@ -14,9 +14,10 @@ class PickAddressController extends GetxController {
   RxString draggedAddress = "".obs;
   Position? currentPosition;
   User? currentUser;
-  RxString district = "".obs;
+RxString district = "".obs;
   RxString street = "".obs;
   RxString fullAddress = "".obs;
+
 
   @override
   void onInit() async {

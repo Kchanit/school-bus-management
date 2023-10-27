@@ -47,6 +47,24 @@ class RegisterAddressView extends GetView<RegisterAddressController> {
                                     : Get.find<PickAddressController>()
                                         .draggedAddress
                                         .value)),
+                            const SizedBox(height: 25),
+                            Obx(
+                              () => Column(
+                                children: [
+                                  if (controller.districtMessage.value != '')
+                                    Text(
+                                      controller.districtMessage.value,
+                                      style: const TextStyle(color: Colors.red),
+                                    ),
+                                  const SizedBox(height: 25),
+                                  if (controller.streetMessage.value != '')
+                                    Text(
+                                      controller.streetMessage.value,
+                                      style: const TextStyle(color: Colors.red),
+                                    ),
+                                ],
+                              ),
+                            ),
                             const SizedBox(height: 50),
                             CustomButton(
                               buttonText: 'Confirm',
