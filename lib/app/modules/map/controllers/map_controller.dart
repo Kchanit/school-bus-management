@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-class CheckInController extends GetxController {
-  //TODO: Implement CheckInController
+class MapController extends GetxController {
+  //TODO: Implement MapController
 
   final count = 0.obs;
   @override

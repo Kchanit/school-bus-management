@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/change_status/bindings/change_status_binding.dart';
 import '../modules/change_status/views/change_status_view.dart';
-import '../modules/check_in/bindings/check_in_binding.dart';
-import '../modules/check_in/views/check_in_view.dart';
+import '../modules/check/bindings/check_binding.dart';
+import '../modules/check/views/check_view.dart';
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -12,6 +12,8 @@ import '../modules/initial/bindings/initial_binding.dart';
 import '../modules/initial/views/initial_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/map/bindings/map_binding.dart';
+import '../modules/map/views/map_view.dart';
 import '../modules/notification/bindings/notification_binding.dart';
 import '../modules/notification/views/notification_view.dart';
 import '../modules/pick_address/bindings/pick_address_binding.dart';
@@ -110,9 +112,14 @@ class AppPages {
       binding: ReorderStudentBinding(),
     ),
     GetPage(
-      name: _Paths.CHECK_IN,
-      page: () => const CheckInView(),
-      binding: CheckInBinding(),
+      name: _Paths.CHECK,
+      page: () => CheckView(),
+      binding: CheckBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAP,
+      page: () => const MapView(),
+      binding: MapBinding(),
     ),
   ];
 }

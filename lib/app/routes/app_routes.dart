@@ -17,7 +17,8 @@ abstract class Routes {
   static const SETTING = _Paths.SETTING;
   static const CHANGE_STATUS = _Paths.CHANGE_STATUS;
   static const REORDER_STUDENT = _Paths.REORDER_STUDENT;
-  static const CHECK_IN = _Paths.CHECK_IN;
+  static const CHECK = _Paths.CHECK;
+  static const MAP = _Paths.MAP;
 }
 
 abstract class _Paths {
@@ -36,5 +37,6 @@ abstract class _Paths {
   static const SETTING = '/setting';
   static const CHANGE_STATUS = '/change-status';
   static const REORDER_STUDENT = '/reorder-student';
-  static const CHECK_IN = '/check-in';
+  static const CHECK = '/check';
+  static const MAP = '/map';
 }
