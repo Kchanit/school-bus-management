@@ -65,7 +65,7 @@ class LoginController extends GetxController {
     final data = {"driver_id": currentUser!.id};
     final response = await ApiService().postData(data, '/routes/get-my-route');
     if (response['success'] == true) {
-      final List<dynamic> studentsData = response['students'].values.toList();
+      final List<dynamic> studentsData = response['students'];
 
       final List<Student> students = studentsData
           .map((student) => Student.fromJson(student as Map<String, dynamic>))
