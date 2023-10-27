@@ -25,7 +25,7 @@ class RegisterAddressController extends GetxController {
 
     if (parentResponse['success'] && addressResponse['success']) {
       Get.snackbar('Success', 'User Registered Successfully');
-      Get.offAllNamed('/dashboard');
+      Get.offAllNamed('/home');
     } else {
       final errorMessage = parentResponse['message'] ??
           addressResponse['message'] ??

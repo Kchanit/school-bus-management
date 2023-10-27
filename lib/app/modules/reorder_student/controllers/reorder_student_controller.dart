@@ -7,7 +7,7 @@ class ReorderStudentController extends GetxController {
   StudentController? studentController;
 
   void reorder(oldIndex, newIndex) {
-    if (oldIndex < newIndex) {
+    if (newIndex > oldIndex) {
       newIndex -= 1;
     }
     final item = studentController!.myStudents.removeAt(oldIndex);
@@ -19,15 +19,5 @@ class ReorderStudentController extends GetxController {
     super.onInit();
     userController = Get.find<UserController>();
     studentController = Get.find<StudentController>();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 }
