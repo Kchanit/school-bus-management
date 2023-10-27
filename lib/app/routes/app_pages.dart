@@ -8,6 +8,8 @@ import '../modules/initial/bindings/initial_binding.dart';
 import '../modules/initial/views/initial_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/notification/bindings/notification_binding.dart';
+import '../modules/notification/views/notification_view.dart';
 import '../modules/pick_address/bindings/pick_address_binding.dart';
 import '../modules/pick_address/views/pick_address_view.dart';
 import '../modules/register/bindings/register_binding.dart';
@@ -16,14 +18,14 @@ import '../modules/register_address/bindings/register_address_binding.dart';
 import '../modules/register_address/views/register_address_view.dart';
 import '../modules/register_student/bindings/register_student_binding.dart';
 import '../modules/register_student/views/register_student_view.dart';
+import '../modules/reorder_student/bindings/reorder_student_binding.dart';
+import '../modules/reorder_student/views/reorder_student_view.dart';
 import '../modules/select_student/bindings/select_student_binding.dart';
 import '../modules/select_student/views/select_student_view.dart';
-import '../modules/test/bindings/test_binding.dart';
-import '../modules/test/views/test_view.dart';
-import '../modules/notification/bindings/notification_binding.dart';
-import '../modules/notification/views/notification_view.dart';
 import '../modules/setting/bindings/setting_binding.dart';
 import '../modules/setting/views/setting_view.dart';
+import '../modules/test/bindings/test_binding.dart';
+import '../modules/test/views/test_view.dart';
 
 part 'app_routes.dart';
 
@@ -92,6 +94,11 @@ class AppPages {
       name: _Paths.SETTING,
       page: () => const SettingView(),
       binding: SettingBinding(),
+    ),
+    GetPage(
+      name: _Paths.REORDER_STUDENT,
+      page: () => const ReorderStudentView(),
+      binding: ReorderStudentBinding(),
     ),
   ];
 }

@@ -15,6 +15,7 @@ class LoginController extends GetxController {
   User? currentUser;
 
   void login() async {
+    final UserController userController = Get.find<UserController>();
     // Validate the Form
     if (formKey.currentState!.validate()) {
       // If the form is valid, proceed with login
@@ -32,18 +33,42 @@ class LoginController extends GetxController {
         // Handle successful login
         final String accessToken = response['token'];
         currentUser = User.fromJson(response['user']);
-        Get.find<UserController>().setCurrentUser(currentUser!);
-        var student = await getStudent();
-        print("Student: ${student.value!.fullName} ");
-        print('Login Successful');
-        // Store the token in the secure storage
+        userController.currentUser.value = currentUser;
+        print("Login as ${userController.currentUser.value!.fullName}");
         final storage = FlutterSecureStorage();
         await storage.write(key: 'access_token', value: accessToken);
-        Get.snackbar('Success', response['message']);
-        Get.offAllNamed('/home');
+        if (userController.currentUser.value!.role == 'PARENT') {
+          var student = await getStudent();
+          print("Student: ${student.value!.fullName} ");
+          print('Login Successful');
+          // Store the token in the secure storage
+
+          Get.snackbar('Success', response['message']);
+          Get.offAllNamed('/home');
+        } else {
+          var students = await getRoute();
+          Get.offAllNamed('/reorder-student');
+        }
       } else {
         Get.snackbar('Error', response['message']);
         print(response['message']);
+      }
+    }
+  }
+
+  getRoute() async {
+    final data = {"driver_id": currentUser!.id};
+    final response = await ApiService().postData(data, '/routes/get-my-route');
+    if (response['success'] == true) {
+      final List<Student> studentsData = (response['students'] as List)
+          .map((student) => Student.fromJson(student))
+          .toList();
+      Get.find<StudentController>().myStudents.assignAll(studentsData);
+
+      if (Get.find<StudentController>().myStudents.isNotEmpty) {
+        return Get.find<StudentController>().myStudents;
+      } else {
+        print("No students");
       }
     }
   }
@@ -60,7 +85,7 @@ class LoginController extends GetxController {
       // Get.find<StudentController>().setMyStudents(studentsData);
 
       if (Get.find<StudentController>().myStudents.isNotEmpty) {
-        Get.find<StudentController>().student!.value =
+        Get.find<StudentController>().student.value =
             Get.find<StudentController>().myStudents[0];
         print(Get.find<StudentController>().student.value!.fullName);
         return Get.find<StudentController>().student;

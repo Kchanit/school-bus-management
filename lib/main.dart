@@ -5,6 +5,7 @@ import 'package:school_bus/app/modules/pick_address/controllers/pick_address_con
 import 'package:school_bus/app/modules/register/controllers/register_controller.dart';
 import 'package:school_bus/app/modules/register_address/controllers/register_address_controller.dart';
 import 'package:school_bus/app/modules/register_student/controllers/register_student_controller.dart';
+import 'package:school_bus/app/modules/reorder_student/controllers/reorder_student_controller.dart';
 import 'package:school_bus/app/modules/test/controllers/test_controller.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
@@ -20,6 +21,7 @@ void main() async {
   Get.put(RegisterStudentController());
   Get.put(RegisterAddressController());
   Get.put(PickAddressController());
+  Get.put(ReorderStudentController());
   Get.put(TestController());
   runApp(
     GetMaterialApp(
