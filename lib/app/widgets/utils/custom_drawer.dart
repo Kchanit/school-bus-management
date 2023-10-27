@@ -96,17 +96,6 @@ class CustomDrawer extends StatelessWidget {
               Get.toNamed(Routes.LOGIN);
             },
           ),
-          ListTile(
-            title: Text(
-              'Contact us',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            // selected: _selectedIndex == 2,
-            onTap: () {
-              // _onItemTapped(2);
-              Get.toNamed(Routes.LOGIN);
-            },
-          ),
         ],
       ),
     );
