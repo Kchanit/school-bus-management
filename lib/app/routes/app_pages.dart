@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/change_status/bindings/change_status_binding.dart';
 import '../modules/change_status/views/change_status_view.dart';
+import '../modules/check_in/bindings/check_in_binding.dart';
+import '../modules/check_in/views/check_in_view.dart';
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -106,6 +108,11 @@ class AppPages {
       name: _Paths.REORDER_STUDENT,
       page: () => const ReorderStudentView(),
       binding: ReorderStudentBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHECK_IN,
+      page: () => const CheckInView(),
+      binding: CheckInBinding(),
     ),
   ];
 }

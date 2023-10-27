@@ -31,21 +31,24 @@ class LoginController extends GetxController {
       final response = await ApiService().postData(data, '/login');
       if (response['success'] == true) {
         // Handle successful login
+        // Store the token in the secure storage
         final String accessToken = response['token'];
         currentUser = User.fromJson(response['user']);
         userController.currentUser.value = currentUser;
         print("Login as ${userController.currentUser.value!.fullName}");
         final storage = FlutterSecureStorage();
         await storage.write(key: 'access_token', value: accessToken);
+
         if (userController.currentUser.value!.role == 'PARENT') {
+          // Parent
           var student = await getStudent();
           print("Student: ${student.value!.fullName} ");
           print('Login Successful');
-          // Store the token in the secure storage
 
           Get.snackbar('Success', response['message']);
           Get.offAllNamed('/home');
         } else {
+          // Driver
           var students = await getRoute();
           Get.offAllNamed('/reorder-student');
         }
@@ -60,17 +63,20 @@ class LoginController extends GetxController {
     final data = {"driver_id": currentUser!.id};
     final response = await ApiService().postData(data, '/routes/get-my-route');
     if (response['success'] == true) {
-      final List<Student> studentsData = (response['students'] as List)
-          .map((student) => Student.fromJson(student))
-          .toList();
-      Get.find<StudentController>().myStudents.assignAll(studentsData);
+      final List<dynamic> studentsData = response['students'].values.toList();
 
-      if (Get.find<StudentController>().myStudents.isNotEmpty) {
-        return Get.find<StudentController>().myStudents;
+      final List<Student> students = studentsData
+          .map((student) => Student.fromJson(student as Map<String, dynamic>))
+          .toList();
+
+      if (students.isNotEmpty) {
+        Get.find<StudentController>().myStudents.assignAll(students);
+        return students;
       } else {
         print("No students");
       }
     }
+    return null;
   }
 
   getStudent() async {

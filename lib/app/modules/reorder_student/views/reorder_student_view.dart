@@ -13,30 +13,47 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
         title: const Text('ReorderStudentView'),
         centerTitle: true,
       ),
-      body: Obx(
-        () => ReorderableListView(
-          onReorder: (oldIndex, newIndex) {
-            controller.reorder(oldIndex, newIndex);
-          },
-          children: controller.studentController!.myStudents
-              .map(
-                (e) => Container(
-                  margin: EdgeInsets.only(left: 16, right: 16, top: 8),
-                  padding: EdgeInsets.all(16),
-                  key: ValueKey(e),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
+      body: Column(
+        children: [
+          Expanded(
+            child: Obx(
+              () => ReorderableListView(
+                onReorder: (oldIndex, newIndex) {
+                  controller.reorder(oldIndex, newIndex);
+                },
+                children: controller.studentController!.myStudents
+                    .map(
+                      (e) => Container(
+                        margin:
+                            const EdgeInsets.only(left: 16, right: 16, top: 8),
+                        padding: const EdgeInsets.all(16),
+                        key: ValueKey(e),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                            color: Colors.lightBlue),
+                        child: Text(
+                          e.fullName,
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.white),
+                        ),
                       ),
-                      color: Colors.lightBlue),
-                  child: Text(
-                    e.fullName,
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
-              )
-              .toList(),
-        ),
+                    )
+                    .toList(),
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.all(16),
+            child: ElevatedButton(
+              onPressed: () {
+                controller.updateOrder();
+              },
+              child: const Text('Confirm'),
+            ),
+          )
+        ],
       ),
     );
   }
