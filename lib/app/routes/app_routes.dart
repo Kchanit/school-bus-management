@@ -15,6 +15,7 @@ abstract class Routes {
   static const SELECT_STUDENT = _Paths.SELECT_STUDENT;
   static const NOTIFICATION = _Paths.NOTIFICATION;
   static const SETTING = _Paths.SETTING;
+  static const CHANGE_STATUS = _Paths.CHANGE_STATUS;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const SELECT_STUDENT = '/select-student';
   static const NOTIFICATION = '/notification';
   static const SETTING = '/setting';
+  static const CHANGE_STATUS = '/change-status';
 }

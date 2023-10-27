@@ -18,20 +18,21 @@ class RegisterView extends GetView<RegisterController> {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
         toolbarHeight: 80,
+        centerTitle: true,
+        title: const Text(
+          'Register',
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 24),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
             child: Column(
           children: [
-            const Text(
-              'Register',
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
-            ),
             Form(
               key: controller.formKey,
               child: Column(
                 children: [
-                  const SizedBox(height: 50),
                   const SizedBox(height: 25),
                   _firstNameTextField(controller.firstNameController),
                   const SizedBox(height: 25),
