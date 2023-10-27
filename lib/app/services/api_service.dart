@@ -13,13 +13,7 @@ class ApiService extends GetConnect {
     final response = await http.post(Uri.parse(fullUrl),
         body: jsonEncode(data), headers: _setHeaders());
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      final responseBody = json.decode(response.body);
-      throw Exception(
-          'Status code: ${response.statusCode} Failed to post data to the API. Response: $responseBody');
-    }
+    return json.decode(response.body);
   }
 
   Future<Map<String, dynamic>> getData(String apiUrl) async {

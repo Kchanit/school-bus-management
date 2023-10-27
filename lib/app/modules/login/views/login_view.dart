@@ -34,42 +34,52 @@ class LoginView extends GetView<LoginController> {
                 children: [
                   const SizedBox(height: 50),
                   Obx(
-                    () => CupertinoSlidingSegmentedControl<String>(
-                      groupValue: controller.userRole.value,
-                      children: const {
-                        'parent': Text('Parent'),
-                        'driver': Text('Driver'),
-                      },
-                      onValueChanged: (value) {
-                        print(value);
-                        controller.userRole.value = value!;
-                        controller.update();
-                      },
+                    () =>
+                        // () => CupertinoSlidingSegmentedControl<String>(
+                        //   groupValue: controller.userRole.value,
+                        //   children: const {
+                        //     'parent': Text('Parent'),
+                        //     'driver': Text('Driver'),
+                        //   },
+                        //   onValueChanged: (value) {
+                        //     print(value);
+                        //     controller.userRole.value = value!;
+                        //     controller.update();
+                        //   },
+                        // ),
+                        Column(
+                      children: [
+                        const SizedBox(height: 25),
+                        _emailTextField(controller.emailController),
+                        const SizedBox(height: 25),
+                        _passwordTextField(controller.passwordController),
+                        if (controller.errorMessage.value != '')
+                          Text(
+                            controller.errorMessage.value,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        const SizedBox(height: 50),
+                        CustomButton(
+                          buttonText: 'Login',
+                          onPressed: controller.login,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Get.toNamed('/register');
+                          },
+                          style: ButtonStyle(
+                              elevation: MaterialStateProperty.all(0),
+                              backgroundColor:
+                                  const MaterialStatePropertyAll(Colors.black),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ))),
+                          child: const Text('Register'),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 25),
-                  _emailTextField(controller.emailController),
-                  const SizedBox(height: 25),
-                  _passwordTextField(controller.passwordController),
-                  const SizedBox(height: 50),
-                  CustomButton(
-                    buttonText: 'Login',
-                    onPressed: controller.login,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Get.toNamed('/register');
-                    },
-                    style: ButtonStyle(
-                        elevation: MaterialStateProperty.all(0),
-                        backgroundColor:
-                            const MaterialStatePropertyAll(Colors.black),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ))),
-                    child: const Text('Register'),
                   ),
                 ],
               )),

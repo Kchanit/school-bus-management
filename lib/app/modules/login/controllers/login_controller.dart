@@ -14,6 +14,7 @@ class LoginController extends GetxController {
   TextEditingController passwordController = TextEditingController();
   RxString userRole = 'parent'.obs;
   User? currentUser;
+  RxString errorMessage = ''.obs;
 
   void login() async {
     final UserController userController = Get.find<UserController>();
@@ -54,7 +55,8 @@ class LoginController extends GetxController {
           Get.offAllNamed('/reorder-student');
         }
       } else {
-        Get.snackbar('Error', response['message']);
+        //display error message
+        errorMessage.value = response['message'];
         print(response['message']);
       }
     }
