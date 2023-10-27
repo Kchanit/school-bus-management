@@ -43,7 +43,8 @@ class LoginController extends GetxController {
 
         if (userController.currentUser.value!.role == 'PARENT') {
           // Parent
-          var student = await getStudent();
+          var student =
+              await getStudent(userController.currentUser.value!.citizenId!);
           print("Student: ${student.value!.fullName} ");
           print('Login Successful');
 
@@ -82,8 +83,8 @@ class LoginController extends GetxController {
     return null;
   }
 
-  getStudent() async {
-    final data = {"citizen_id": currentUser!.citizenId};
+  getStudent(String citizenId) async {
+    final data = {"citizen_id": citizenId};
     final response =
         await ApiService().postData(data, '/students/get-my-students');
     if (response['success'] == true) {
@@ -96,6 +97,7 @@ class LoginController extends GetxController {
       if (Get.find<StudentController>().myStudents.isNotEmpty) {
         Get.find<StudentController>().student.value =
             Get.find<StudentController>().myStudents[0];
+        print("=====================================");
         print(Get.find<StudentController>().student.value!.fullName);
         return Get.find<StudentController>().student;
       } else {

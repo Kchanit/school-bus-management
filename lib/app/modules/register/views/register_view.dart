@@ -39,8 +39,18 @@ class RegisterView extends GetView<RegisterController> {
                   _lastNameTextField(controller.lastNameController),
                   const SizedBox(height: 25),
                   _emailTextField(controller.emailController),
+                  if (controller.emailError.value != '')
+                    Text(
+                      controller.emailError.value,
+                      style: const TextStyle(color: Colors.red),
+                    ),
                   const SizedBox(height: 25),
                   _citizenIdTextField(controller.citizenIdController),
+                  if (controller.citizenIdError.value != '')
+                    Text(
+                      controller.citizenIdError.value,
+                      style: const TextStyle(color: Colors.red),
+                    ),
                   const SizedBox(height: 25),
                   _passwordTextField(controller.passwordController),
                   const SizedBox(height: 25),

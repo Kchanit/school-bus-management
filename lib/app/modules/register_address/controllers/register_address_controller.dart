@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:school_bus/app/modules/login/controllers/login_controller.dart';
 import 'package:school_bus/app/modules/pick_address/controllers/pick_address_controller.dart';
 import 'package:school_bus/app/modules/register/controllers/register_controller.dart';
 import 'package:school_bus/app/modules/select_student/controllers/select_student_controller.dart';
@@ -25,6 +26,9 @@ class RegisterAddressController extends GetxController {
 
     if (parentResponse['success'] && addressResponse['success']) {
       Get.snackbar('Success', 'User Registered Successfully');
+      var student = await Get.find<LoginController>()
+          .getStudent(Get.find<UserController>().currentUser.value!.citizenId!);
+      print("Student: ${student.value!.fullName} ");
       Get.offAllNamed('/home');
     } else {
       final errorMessage = parentResponse['message'] ??
