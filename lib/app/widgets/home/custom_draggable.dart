@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
 import 'package:school_bus/app/widgets/home/custom_stepper.dart';
+import 'package:school_bus/controllers/student_controller.dart';
 
 class CustomDraggable extends StatelessWidget {
   const CustomDraggable({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<bool> options = [
+      true,
+      false,
+    ];
+    bool currentOption = options[0];
     return SizedBox.expand(
       child: DraggableScrollableSheet(
         minChildSize: 0.7,
@@ -42,7 +50,12 @@ class CustomDraggable extends StatelessWidget {
                                           color: Colors.green,
                                           borderRadius:
                                               BorderRadius.circular(30))),
-                                  const Text('FirstName LastName')
+                                  Obx(
+                                    () => Text(Get.find<StudentController>()
+                                        .student
+                                        .value!
+                                        .fullName),
+                                  )
                                 ],
                               ),
                               Row(
@@ -63,6 +76,12 @@ class CustomDraggable extends StatelessWidget {
                                   )
                                 ],
                               ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Get.find<HomeController>()
+                                        .changeStudentStatus();
+                                  },
+                                  child: const Text('Change Status'))
                             ],
                           ),
                         )
