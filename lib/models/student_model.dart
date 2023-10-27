@@ -8,6 +8,7 @@ class Student {
   double? homeLongitude;
   String? imageUrl;
   String? status;
+  int? order;
   bool isTakingBus = false;
 
   Student({
@@ -20,6 +21,7 @@ class Student {
     this.homeLongitude,
     this.imageUrl,
     this.status,
+    this.order,
     required bool isTakingBus,
   });
 
@@ -38,6 +40,7 @@ class Student {
           : null,
       imageUrl: json['image_url'],
       status: json['status'],
+      order: json['order'],
       isTakingBus: json['is_taking_bus'] == 1 ? true : false,
     );
   }
@@ -53,6 +56,7 @@ class Student {
       'home_longitude': homeLongitude,
       'image_url': imageUrl,
       'status': status,
+      'order': order,
       'is_taking_bus': isTakingBus,
     };
   }

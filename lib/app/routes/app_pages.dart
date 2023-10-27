@@ -20,6 +20,8 @@ import '../modules/register_address/bindings/register_address_binding.dart';
 import '../modules/register_address/views/register_address_view.dart';
 import '../modules/register_student/bindings/register_student_binding.dart';
 import '../modules/register_student/views/register_student_view.dart';
+import '../modules/reorder_student/bindings/reorder_student_binding.dart';
+import '../modules/reorder_student/views/reorder_student_view.dart';
 import '../modules/select_student/bindings/select_student_binding.dart';
 import '../modules/select_student/views/select_student_view.dart';
 import '../modules/setting/bindings/setting_binding.dart';
@@ -99,6 +101,11 @@ class AppPages {
       name: _Paths.CHANGE_STATUS,
       page: () => const ChangeStatusView(),
       binding: ChangeStatusBinding(),
+    ),
+    GetPage(
+      name: _Paths.REORDER_STUDENT,
+      page: () => const ReorderStudentView(),
+      binding: ReorderStudentBinding(),
     ),
   ];
 }

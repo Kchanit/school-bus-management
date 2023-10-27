@@ -4,9 +4,9 @@ class User {
   final String lastName;
   final String email;
   final String role;
-  final String citizenId;
-  String? imageUrl;
+  final String? imageUrl;
   String? fbtoken;
+  final String? citizenId;
 
   User({
     required this.id,
@@ -14,7 +14,7 @@ class User {
     required this.lastName,
     required this.email,
     required this.role,
-    required this.citizenId,
+    this.citizenId,
     this.imageUrl,
     this.fbtoken,
   });
@@ -39,7 +39,7 @@ class User {
       'role': role,
       'citizen_id': citizenId,
       'image_url': imageUrl,
-      'fbtoken' : fbtoken,
+      'fbtoken': fbtoken,
     };
   }
 

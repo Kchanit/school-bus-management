@@ -5,6 +5,7 @@ import 'package:school_bus/app/modules/pick_address/controllers/pick_address_con
 import 'package:school_bus/app/modules/register/controllers/register_controller.dart';
 import 'package:school_bus/app/modules/register_address/controllers/register_address_controller.dart';
 import 'package:school_bus/app/modules/register_student/controllers/register_student_controller.dart';
+import 'package:school_bus/app/modules/reorder_student/controllers/reorder_student_controller.dart';
 import 'package:school_bus/app/modules/test/controllers/test_controller.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
@@ -12,7 +13,7 @@ import 'package:flutter_config_plus/flutter_config_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'app/routes/app_pages.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfigPlus.loadEnvVariables();
   Get.put(UserController());
@@ -23,22 +24,22 @@ void main() async{
   Get.put(PickAddressController());
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Firebase.initializeApp();
-  await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
 
   await FirebaseMessaging.instance.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  Get.put(ReorderStudentController());
   Get.put(TestController());
   runApp(
     GetMaterialApp(
