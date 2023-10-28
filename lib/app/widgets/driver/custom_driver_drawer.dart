@@ -19,19 +19,41 @@ class CustomDriverDrawer extends StatelessWidget {
                 decoration: const BoxDecoration(color: Colors.amber),
                 child: Row(
                   children: [
-                    Container(
-                        height: 46,
-                        width: 46,
-                        margin: const EdgeInsets.only(right: 16),
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(30))),
+                    Icon(
+                      Icons.account_circle_rounded,
+                      size: 46,
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
                     Text(
                       Get.find<UserController>().currentUser.value!.fullName,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],
                 )),
+          ),
+          ListTile(
+            title: Text(
+              'Check',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            // selected: _selectedIndex == 0,
+            onTap: () {
+              // _onItemTapped(0);
+              Get.toNamed(Routes.CHECK);
+            },
+          ),
+          ListTile(
+            title: Text(
+              'Route',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            // selected: _selectedIndex == 0,
+            onTap: () {
+              // _onItemTapped(0);
+              Get.toNamed(Routes.REORDER_STUDENT);
+            },
           ),
           ExpansionTile(
             initiallyExpanded: true,
@@ -88,17 +110,6 @@ class CustomDriverDrawer extends StatelessWidget {
           ListTile(
             title: Text(
               'Logout',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            // selected: _selectedIndex == 2,
-            onTap: () {
-              // _onItemTapped(2);
-              Get.toNamed(Routes.LOGIN);
-            },
-          ),
-          ListTile(
-            title: Text(
-              'Contact us',
               style: Theme.of(context).textTheme.titleSmall,
             ),
             // selected: _selectedIndex == 2,

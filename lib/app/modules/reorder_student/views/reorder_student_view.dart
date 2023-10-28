@@ -34,7 +34,6 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
         () => Padding(
           padding: const EdgeInsets.only(
             bottom: 120.0,
-            top: 30,
           ),
           child: Column(
             children: [
@@ -83,6 +82,7 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
                             style: const TextStyle(
                                 fontSize: 18, color: Colors.black),
                           ),
+                          subtitle: Text('${e.address}'),
                           trailing: const Icon(Icons.drag_handle_rounded),
                         ),
                       )
