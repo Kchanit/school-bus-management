@@ -62,6 +62,7 @@ class LoginController extends GetxController {
 
   handleDriverLogin() async {
     await fetchRoute();
+    await fetchRouteAddress();
     Get.offAllNamed('/reorder-student');
   }
 
@@ -102,6 +103,34 @@ class LoginController extends GetxController {
     }
   }
 
+  fetchRouteAddress() async {
+    final data = {"driver_id": currentUser!.id};
+    final response =
+        await ApiService().postData(data, '/routes/get-route-address');
+    if (response['success'] == true) {
+      final List<dynamic> routeAddressData = response['addresses'];
+
+      // Create a map of order-to-address, assuming order is unique
+      final Map<int, Map<String, dynamic>> routeAddresses = {};
+      for (var i = 0; i < routeAddressData.length; i++) {
+        routeAddresses[i] = {
+          'address': routeAddressData[i]['home_address'].toString(),
+          'latitude': routeAddressData[i]['home_latitude'],
+          'longitude': routeAddressData[i]['home_longitude'],
+        };
+      }
+
+      for (var i = 0; i < studentController!.myStudents.length; i++) {
+        studentController!.myStudents[i].address =
+            routeAddresses[i]!['address'];
+        studentController!.myStudents[i].homeLatitude =
+            double.tryParse(routeAddresses[i]!['latitude']);
+        studentController!.myStudents[i].homeLongitude =
+            double.tryParse(routeAddresses[i]!['longitude']);
+      }
+    }
+  }
+
   Future<void> fetchStudent(String citizenId) async {
     final data = {"citizen_id": citizenId};
     final response =
@@ -110,6 +139,7 @@ class LoginController extends GetxController {
       final List<Student> studentsData = (response['students'] as List)
           .map((student) => Student.fromJson(student))
           .toList();
+      print("Students Amount: ${studentsData.length}");
       studentController!.myStudents.assignAll(studentsData);
       if (studentController!.myStudents.isNotEmpty) {
         studentController!.student.value = studentController!.myStudents[0];

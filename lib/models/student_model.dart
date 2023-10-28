@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class Student {
   final int id;
   final String firstName;
@@ -10,6 +12,7 @@ class Student {
   String? status;
   int? order;
   bool isTakingBus = false;
+  RxBool checked;
 
   Student({
     required this.id,
@@ -23,7 +26,8 @@ class Student {
     this.status,
     this.order,
     required bool isTakingBus,
-  });
+    bool isChecked = false,
+  }) : checked = isChecked.obs;
 
   factory Student.fromJson(Map<String, dynamic> json) {
     return Student(
