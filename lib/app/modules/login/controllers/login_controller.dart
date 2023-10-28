@@ -15,9 +15,11 @@ class LoginController extends GetxController {
   RxString userRole = 'parent'.obs;
   User? currentUser;
   RxString errorMessage = ''.obs;
+  final StudentController? studentController = Get.find<StudentController>();
+  final UserController userController = Get.find<UserController>();
+  var student;
 
   void login() async {
-    final UserController userController = Get.find<UserController>();
     // Validate the Form
     if (formKey.currentState!.validate()) {
       // If the form is valid, proceed with login
@@ -43,9 +45,12 @@ class LoginController extends GetxController {
 
         if (userController.currentUser.value!.role == 'PARENT') {
           // Parent
-          var student =
+          student =
               await getStudent(userController.currentUser.value!.citizenId!);
           print("Student: ${student.value!.fullName} ");
+          await fetchMyDriver(student.value!.id);
+          print("my driver ==================");
+          print(userController.myDriver.value!.fullName);
           print('Login Successful');
 
           Get.snackbar('Success', response['message']);
@@ -81,6 +86,17 @@ class LoginController extends GetxController {
       }
     }
     return null;
+  }
+
+  fetchMyDriver(studentId) async {
+    var data = {"student_id": studentId};
+
+    var response = await ApiService().postData(data, '/drivers/get-driver');
+    if (response['success'] == true) {
+      userController!.myDriver.value = User.fromJson(response['driver']);
+    } else {
+      Get.snackbar('Error', response['message']);
+    }
   }
 
   getStudent(String citizenId) async {

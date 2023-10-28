@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
 import 'package:school_bus/app/widgets/home/custom_stepper.dart';
 import 'package:school_bus/controllers/student_controller.dart';
+import 'package:school_bus/controllers/user_controller.dart';
 
 class CustomDraggable extends StatelessWidget {
   const CustomDraggable({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return SizedBox.expand(
       child: DraggableScrollableSheet(
         minChildSize: 0.7,
@@ -47,10 +47,15 @@ class CustomDraggable extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(30))),
                                   Obx(
-                                    () => Text(Get.find<StudentController>()
-                                        .student
-                                        .value!
-                                        .fullName),
+                                    () => Get.find<UserController>()
+                                                .myDriver
+                                                .value !=
+                                            null
+                                        ? Text(Get.find<UserController>()
+                                            .myDriver
+                                            .value!
+                                            .fullName)
+                                        : const Text('No route assigned yet'),
                                   )
                                 ],
                               ),

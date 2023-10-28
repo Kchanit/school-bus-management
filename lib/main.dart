@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
 import 'package:school_bus/app/modules/login/controllers/login_controller.dart';
 import 'package:school_bus/app/modules/pick_address/controllers/pick_address_controller.dart';
 import 'package:school_bus/app/modules/register/controllers/register_controller.dart';
@@ -17,13 +18,14 @@ import 'app/routes/app_pages.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterConfigPlus.loadEnvVariables();
-  Get.put(LoginController());
-  Get.put(UserController());
   Get.put(StudentController());
+  Get.put(UserController());
+  Get.put(LoginController());
   Get.put(RegisterController());
   Get.put(RegisterStudentController());
   Get.put(RegisterAddressController());
   Get.put(PickAddressController());
+  Get.put(HomeController());
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
