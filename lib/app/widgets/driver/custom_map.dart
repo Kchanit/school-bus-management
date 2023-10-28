@@ -19,10 +19,10 @@ class _CustomMapState extends State<CustomMap> {
           ? const Center(
               child: Text('Loading...'),
             )
-          : GoogleMap(
+          : Obx(() => GoogleMap(
               initialCameraPosition: CameraPosition(
-                  target: LatLng(controller.currentLocation!.latitude!,
-                      controller.currentLocation!.longitude!),
+                  target: LatLng(controller.currentLocation.value!.latitude!,
+                      controller.currentLocation.value!.longitude!),
                   zoom: 14.5),
               polylines: {
                 Polyline(
@@ -34,9 +34,9 @@ class _CustomMapState extends State<CustomMap> {
               markers: {
                 Marker(
                     markerId: const MarkerId("currentLocation"),
-                    // icon: controller.currentLocationIcon,
-                    position: LatLng(controller.currentLocation!.latitude!,
-                        controller.currentLocation!.longitude!)),
+                    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+                    position: LatLng(controller.currentLocation.value!.latitude!,
+                        controller.currentLocation.value!.longitude!)),
                 Marker(
                     markerId: const MarkerId("source"),
                     position: controller.sourceLocation),
@@ -44,10 +44,10 @@ class _CustomMapState extends State<CustomMap> {
                     markerId: const MarkerId("destination"),
                     position: controller.destination),
               },
-              // onMapCreated: (mapController) {
-              //   controller.controller.complete(mapController);
-              // },
+              onMapCreated: (mapController) {
+                controller.controller.complete(mapController);
+              },
             ),
-    );
+    ));
   }
 }
