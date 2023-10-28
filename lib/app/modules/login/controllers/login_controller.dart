@@ -106,6 +106,7 @@ class LoginController extends GetxController {
       final List<Student> studentsData = (response['students'] as List)
           .map((student) => Student.fromJson(student))
           .toList();
+      print("Students Amount: ${studentsData.length}");
       studentController!.myStudents.assignAll(studentsData);
       if (studentController!.myStudents.isNotEmpty) {
         studentController!.student.value = studentController!.myStudents[0];
