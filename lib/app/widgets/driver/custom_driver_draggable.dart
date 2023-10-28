@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
-import 'package:school_bus/app/widgets/home/custom_stepper.dart';
-import 'package:school_bus/controllers/student_controller.dart';
+import 'package:school_bus/app/widgets/driver/custom_driver_stepper.dart';
 
-class CustomDraggable extends StatelessWidget {
-  const CustomDraggable({super.key});
+class CustomDriverDraggable extends StatelessWidget {
+  const CustomDriverDraggable({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: DraggableScrollableSheet(
-        minChildSize: 0.7,
+        minChildSize: 0.2,
         maxChildSize: 0.9,
-        initialChildSize: 0.7,
+        initialChildSize: 0.2,
         builder: (BuildContext context, ScrollController scrollController) {
           return Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12)),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
                 color: Colors.white,
               ),
               child: Stack(
@@ -28,31 +25,30 @@ class CustomDraggable extends StatelessWidget {
                     controller: scrollController,
                     child: Column(
                       children: [
-                        const SizedBox(height: 30),
-                        CustomStepper(),
+                        CustomDriverStepper(),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 26, vertical: 16),
                           child: Column(
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                      height: 40,
-                                      width: 40,
-                                      margin: const EdgeInsets.only(right: 16),
-                                      decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          borderRadius:
-                                              BorderRadius.circular(30))),
-                                  Obx(
-                                    () => Text(Get.find<StudentController>()
-                                        .student
-                                        .value!
-                                        .fullName),
-                                  )
-                                ],
-                              ),
+                              // Row(
+                              //   children: [
+                              //     Container(
+                              //         height: 40,
+                              //         width: 40,
+                              //         margin: const EdgeInsets.only(right: 16),
+                              //         decoration: BoxDecoration(
+                              //             color: Colors.green,
+                              //             borderRadius:
+                              //                 BorderRadius.circular(30))),
+                              //     Obx(
+                              //       () => Text(Get.find<StudentController>()
+                              //           .student
+                              //           .value!
+                              //           .fullName),
+                              //     )
+                              //   ],
+                              // ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -71,12 +67,6 @@ class CustomDraggable extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Get.find<HomeController>()
-                                        .changeStudentStatus();
-                                  },
-                                  child: const Text('Change Status'))
                             ],
                           ),
                         )
@@ -85,7 +75,12 @@ class CustomDraggable extends StatelessWidget {
                   ),
                   IgnorePointer(
                     child: Container(
-                      color: Colors.white,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20)),
+                        color: Colors.white,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

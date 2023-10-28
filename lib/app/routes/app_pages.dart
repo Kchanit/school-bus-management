@@ -118,7 +118,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MAP,
-      page: () => const MapView(),
+      page: () => MapView(),
       binding: MapBinding(),
     ),
   ];
