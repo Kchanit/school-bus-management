@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -52,6 +54,8 @@ class LoginController extends GetxController {
   handleParentLogin() async {
     await fetchStudent(userController.currentUser.value!.citizenId!);
     await fetchMyDriver(studentController!.student.value!.id);
+    // add firebase token
+    checkPreference();
     print('Login Successful');
     Get.offAllNamed('/home');
   }
@@ -116,5 +120,32 @@ class LoginController extends GetxController {
     } else {
       Get.snackbar('Error', response['message']);
     }
+  }
+
+  Future<Null> checkPreference() async{
+      // get the device firebasetoken
+      await Firebase.initializeApp();
+      FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+      String? token = await firebaseMessaging.getToken();
+      print("++++++++++++++++++++++");
+      print('token ======> $token');
+      // get current user data
+      User? currentUser = Get.find<UserController>().currentUser.value;
+      print('Current user ====> ${currentUser}');
+      currentUser!.fbtoken = token;
+      
+      var data = {
+        "fbtoken" : currentUser.fbtoken,
+      };
+      var response = await ApiService().putData(data, '/users/${currentUser.id}');
+
+      if (response['success'] == true) {
+        print('User Updated Successfully');
+        print(response);
+      } else {
+        print('User Updated Failed');
+        print(response['message']);
+        Get.snackbar('Error', response['message']);
+      }
   }
 }

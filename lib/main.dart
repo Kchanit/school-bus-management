@@ -28,7 +28,6 @@ void main() async {
   Get.put(RegisterAddressController());
   Get.put(PickAddressController());
   Get.put(HomeController());
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
