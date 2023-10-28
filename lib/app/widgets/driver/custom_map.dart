@@ -26,7 +26,7 @@ class _CustomMapState extends State<CustomMap> {
                   zoom: 14.5),
               polylines: {
                 Polyline(
-                    polylineId: PolylineId('route'),
+                    polylineId: const PolylineId('route'),
                     points: controller.polylineCoordinates,
                     color: Colors.blue,
                     width: 6)

@@ -11,22 +11,16 @@ class ApiService extends GetConnect {
       Map<String, dynamic> data, String apiUrl) async {
     final fullUrl = apiBaseUrl + apiUrl;
     final response = await http.post(Uri.parse(fullUrl),
-        body: jsonEncode(data), headers: _setHeaders());
+        body: jsonEncode(data), headers: setHeaders());
 
     return json.decode(response.body);
   }
 
   Future<Map<String, dynamic>> getData(String apiUrl) async {
     final fullUrl = apiBaseUrl + apiUrl;
-    final response = await http.get(Uri.parse(fullUrl), headers: _setHeaders());
+    final response = await http.get(Uri.parse(fullUrl), headers: setHeaders());
 
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      print('API Request Failed with Status Code: ${response.statusCode}');
-      print('API Response Body: ${response.body}');
-      throw Exception('Failed to get data from the API');
-    }
+    return json.decode(response.body);
   }
 
   Future<Map<String, dynamic>> putData(
@@ -79,7 +73,7 @@ class ApiService extends GetConnect {
     }
   }
 
-  Map<String, String> _setHeaders() => {
+  Map<String, String> setHeaders() => {
         'Content-type': 'application/json',
         'Accept': 'application/json',
       };

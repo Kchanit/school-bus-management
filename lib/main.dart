@@ -9,6 +9,7 @@ import 'package:school_bus/app/modules/register_address/controllers/register_add
 import 'package:school_bus/app/modules/register_student/controllers/register_student_controller.dart';
 import 'package:school_bus/app/modules/reorder_student/controllers/reorder_student_controller.dart';
 import 'package:school_bus/app/modules/test/controllers/test_controller.dart';
+import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 import 'package:flutter_config_plus/flutter_config_plus.dart';
@@ -21,6 +22,7 @@ void main() async {
   Get.put(StudentController());
   Get.put(UserController());
   Get.put(LoginController());
+  Get.put(ApiService());
   Get.put(RegisterController());
   Get.put(RegisterStudentController());
   Get.put(RegisterAddressController());

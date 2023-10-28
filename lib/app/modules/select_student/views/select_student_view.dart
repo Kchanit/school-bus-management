@@ -16,7 +16,7 @@ class SelectStudentView extends GetView<SelectStudentController> {
         centerTitle: true,
       ),
       body: Obx(() => controller.isLoading.value
-          ? CircularProgressIndicator() // Show loading indicator
+          ? const CircularProgressIndicator() // Show loading indicator
           : Column(
               children: [
                 CarouselSlider(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
 import 'package:school_bus/app/widgets/home/custom_stepper.dart';
-import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 
 class CustomDraggable extends StatelessWidget {
@@ -36,28 +35,38 @@ class CustomDraggable extends StatelessWidget {
                               horizontal: 26, vertical: 16),
                           child: Column(
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                      height: 40,
-                                      width: 40,
-                                      margin: const EdgeInsets.only(right: 16),
-                                      decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          borderRadius:
-                                              BorderRadius.circular(30))),
-                                  Obx(
-                                    () => Get.find<UserController>()
-                                                .myDriver
-                                                .value !=
+                              Obx(
+                                () =>
+                                    Get.find<UserController>().myDriver.value ==
                                             null
-                                        ? Text(Get.find<UserController>()
-                                            .myDriver
-                                            .value!
-                                            .fullName)
-                                        : const Text('No route assigned yet'),
-                                  )
-                                ],
+                                        ? const Text('No driver assigned')
+                                        : Row(
+                                            children: [
+                                              Container(
+                                                height: 40,
+                                                width: 40,
+                                                margin: const EdgeInsets.only(
+                                                    right: 16),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.green,
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                ),
+                                                child: CircleAvatar(
+                                                  backgroundImage: NetworkImage(
+                                                      Get.find<UserController>()
+                                                          .myDriver
+                                                          .value!
+                                                          .imageUrl!),
+                                                  radius: 50,
+                                                ),
+                                              ),
+                                              Text(Get.find<UserController>()
+                                                  .myDriver
+                                                  .value!
+                                                  .fullName)
+                                            ],
+                                          ),
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -67,7 +76,10 @@ class CustomDraggable extends StatelessWidget {
                                   CircleAvatar(
                                     backgroundColor: Colors.amber,
                                     child: IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Get.find<HomeController>()
+                                            .contactSchool();
+                                      },
                                       icon: const Icon(
                                         Icons.phone_rounded,
                                         color: Colors.white,
