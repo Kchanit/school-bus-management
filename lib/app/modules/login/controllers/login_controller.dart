@@ -72,10 +72,17 @@ class LoginController extends GetxController {
     final data = {"driver_id": currentUser!.id};
     final response = await ApiService().postData(data, '/routes/get-my-route');
     if (response['success'] == true) {
-      final List<dynamic> studentsData = response['students'];
+      // final List<dynamic> studentsData = response['students'];
 
-      final List<Student> students = studentsData
-          .map((student) => Student.fromJson(student as Map<String, dynamic>))
+      // final List<Student> students = studentsData
+      //     .map((student) => Student.fromJson(student as Map<String, dynamic>))
+      //     .toList();
+
+      final Map<String, dynamic> studentsData = response['students'];
+
+      final List<Student> students = studentsData.entries
+          .map((student) =>
+              Student.fromJson(student.value as Map<String, dynamic>))
           .toList();
 
       if (students.isNotEmpty) {
