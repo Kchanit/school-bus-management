@@ -8,14 +8,18 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:school_bus/app/services/api_service.dart';
+import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
+import 'package:school_bus/models/student_model.dart';
 import 'package:school_bus/models/user_model.dart';
 
 class MapController extends GetxController {
   final Completer<GoogleMapController> controller = Completer();
 
+  StudentController? studentController;
+
   LatLng sourceLocation = LatLng(13.8476, 100.57);
-  LatLng destination = LatLng(13.8288, 100.568);
+  LatLng destination = LatLng(13.8202, 100.564);
 
   List<LatLng> polylineCoordinates = [];
   late Rx<LocationData?> currentLocation = Rx<LocationData?>(LocationData.fromMap({
@@ -29,10 +33,9 @@ class MapController extends GetxController {
 
   void getCurrentLocation() async {
     Location location = Location();
-
     location.getLocation().then((location) {
       currentLocation.value = location;
-      print("current location data = ${currentLocation}");
+      // print("current location data = ${currentLocation}");
       update();
     });
 
@@ -95,11 +98,34 @@ class MapController extends GetxController {
       }
   }
 
+  void addPassengerMarkers() {
+  List<Marker> markers = [];
+  // print("mystudent ===> ${studentController?.myStudents.length}");
+  //   for (var i = 0; i < studentController!.myStudents.length; i++) {
+  //     print(studentController!.myStudents[i].fullName);
+  //     print(studentController!.myStudents[i].order);
+  //   }
+  // Iterate over the number of passengers and create a marker for each one
+  for (int i = 0; i < studentController!.myStudents.length; i++) {
+    print("add markers ==========================> ${studentController?.myStudents[i].fullName}");
+    print("add homeLatitude  ==========================> ${studentController?.myStudents[i].homeLatitude}");
+    print("add homeLongtitude ==========================> ${studentController?.myStudents[i].homeLongitude}");
+    Marker marker = Marker(
+      markerId: MarkerId("${studentController!.myStudents[i].fullName}"),
+      position: LatLng(studentController!.myStudents[i].homeLatitude! + 0.01 * i, studentController!.myStudents[i].homeLongitude! + 0.01 * i),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+    );
+    markers.add(marker);
+  }
+}
+
   @override
   void onInit() {
     getCurrentLocation();
     // setCustomMarkerIcon();
     getPolyPoints();
+    studentController = Get.find<StudentController>();
+    addPassengerMarkers();
     super.onInit();
   }
 
