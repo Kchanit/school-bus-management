@@ -9,13 +9,11 @@ import 'package:school_bus/models/student_model.dart';
 import 'package:school_bus/models/user_model.dart';
 
 class RegisterAddressController extends GetxController {
-  // final formKey = GlobalKey<FormState>();
   User? currentUser;
   Student? student;
   RxString districtMessage = ''.obs;
   RxString streetMessage = ''.obs;
-
-  var address;
+  Map<String, dynamic> address = {};
   var isLoading = false.obs;
 
   Future<void> registerData() async {
@@ -33,18 +31,15 @@ class RegisterAddressController extends GetxController {
 
     if (parentResponse['success'] && addressResponse['success']) {
       Get.snackbar('Success', 'User Registered Successfully');
-      var student = await Get.find<LoginController>()
-          .getStudent(Get.find<UserController>().currentUser.value!.citizenId!);
-      print("Student: ${student.value!.fullName} ");
+      await Get.find<LoginController>().fetchStudent(
+          Get.find<UserController>().currentUser.value!.citizenId!);
       Get.offAllNamed('/home');
     } else {
       final errorMessage = parentResponse['message'] ??
           addressResponse['message'] ??
           'Unknown error occurred';
-
       Get.snackbar('Error', 'Registration failed: $errorMessage');
     }
-
     isLoading.value = false;
   }
 
@@ -57,40 +52,17 @@ class RegisterAddressController extends GetxController {
       "password": Get.find<RegisterController>().passwordController.text,
       "role": "PARENT",
     };
+
     print("Sending parent data");
     print(parentData);
-    // var response = await _registerEntity(parentData, '/register');
+
     var response = await ApiService().postData(parentData, '/register');
-    print(response);
-    if (response['success'] == false) {
-      return Get.snackbar('Success', response['message']);
-    }
+    print(response['message']);
+
     currentUser = User.fromJson(response['user']);
     Get.find<UserController>().setCurrentUser(currentUser!);
     return response;
   }
-
-  // _registerStudent() async {
-  //   String imageUrl = '';
-  //   if (Get.find<RegisterController>().imageBytes.value != null) {
-  //     imageUrl = await Get.find<RegisterStudentController>().saveImage();
-  //   }
-
-  //   List<int> students_id = Get.find<SelectStudentController>()
-  //       .selectedStudents
-  //       .map((student) => student.id)
-  //       .toList();
-  //   final studentData = {
-  //     "students_id": students_id,
-  //   };
-  //   print("Sending student data");
-  //   print(studentData);
-  //   // var response = await _registerEntity(studentData, '/students');
-  //   var response = await ApiService().postData(studentData, '/students');
-  //   student = Student.fromJson(response['student']);
-  //   Get.find<StudentController>().setMyStudent(student!);
-  //   return response;
-  // }
 
   _registerAddress() async {
     final addressData = {
@@ -105,18 +77,19 @@ class RegisterAddressController extends GetxController {
     };
     print("Sending address data");
     print(addressData);
-    // var response = await _registerEntity(addressData, '/addresses');
+
     var response = await ApiService().postData(addressData, '/addresses');
+    print(response['message']);
+
     address = response['address'];
-    print(response);
     return response;
   }
 
   _enrollStudent() async {
     final parent_id = currentUser!.id;
     final address_id = address['id'];
-    final successfulEnrollments = [];
-    final unsuccessfulEnrollments = [];
+    final successfulEnrollments = <Student>[];
+    final unsuccessfulEnrollments = <Map<String, dynamic>>[];
     for (final student
         in Get.find<SelectStudentController>().selectedStudents) {
       final studentData = {
@@ -130,7 +103,7 @@ class RegisterAddressController extends GetxController {
 
       var response =
           await ApiService().postData(studentData, '/students/enroll');
-      print(response);
+      print(response['message']);
 
       if (response['success']) {
         successfulEnrollments.add(student);
@@ -141,9 +114,29 @@ class RegisterAddressController extends GetxController {
         });
       }
     }
-    handleSuccessfulEnrollments(successfulEnrollments);
-    handleUnsuccessfulEnrollments(unsuccessfulEnrollments);
-    print("All students enrolled successfully");
+
+    _printEnrollmentResults(successfulEnrollments, unsuccessfulEnrollments);
+  }
+
+  void _printEnrollmentResults(List<Student> successfulEnrollments,
+      List<Map<String, dynamic>> unsuccessfulEnrollments) {
+    if (successfulEnrollments.isNotEmpty) {
+      print('Successfully enrolled ${successfulEnrollments.length} students');
+    }
+
+    if (unsuccessfulEnrollments.isNotEmpty) {
+      print('Failed to enroll ${unsuccessfulEnrollments.length} students.');
+
+      for (final enrollment in unsuccessfulEnrollments) {
+        final student = enrollment['student'];
+        final errorMessage = enrollment['message'];
+        print("Enrollment failed for student ${student.id}: $errorMessage");
+      }
+    }
+
+    if (unsuccessfulEnrollments.isEmpty) {
+      print("All students enrolled successfully");
+    }
   }
 
   bool validateAddress() {
@@ -155,33 +148,6 @@ class RegisterAddressController extends GetxController {
       return false;
     }
     return true;
-  }
-
-  void handleSuccessfulEnrollments(List<dynamic> successfulEnrollments) {
-    if (successfulEnrollments.isNotEmpty) {
-      // Display a success message for the students who were enrolled successfully.
-      Get.snackbar(
-        'Success',
-        'Successfully enrolled ${successfulEnrollments.length} students',
-      );
-    }
-  }
-
-  void handleUnsuccessfulEnrollments(List<dynamic> unsuccessfulEnrollments) {
-    if (unsuccessfulEnrollments.isNotEmpty) {
-      for (final enrollment in unsuccessfulEnrollments) {
-        final student = enrollment['student'];
-        final errorMessage = enrollment['error_message'];
-
-        // Handle the unsuccessful enrollment.
-        print("Enrollment failed for student ${student.id}: $errorMessage");
-        // Display an error message to the user.
-        Get.snackbar(
-          'Error',
-          'Enrollment failed for student ${student.id}: $errorMessage',
-        );
-      }
-    }
   }
 
   @override

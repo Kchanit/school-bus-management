@@ -19,11 +19,11 @@ class CustomDriverDrawer extends StatelessWidget {
                 decoration: const BoxDecoration(color: Colors.amber),
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.account_circle_rounded,
                       size: 46,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 12,
                     ),
                     Text(

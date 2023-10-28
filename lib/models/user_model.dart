@@ -4,7 +4,7 @@ class User {
   final String lastName;
   final String email;
   final String role;
-  final String? imageUrl;
+  String? imageUrl;
   String? fbtoken;
   final String? citizenId;
 
@@ -27,6 +27,7 @@ class User {
       email: json['email'],
       role: json['role'],
       citizenId: json['citizen_id'],
+      imageUrl: json['image_url'],
     );
   }
 
