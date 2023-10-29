@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:school_bus/app/services/api_service.dart';
+import 'package:school_bus/models/student_model.dart';
 
 import '../../../../controllers/student_controller.dart';
 import '../../../../controllers/user_controller.dart';
@@ -6,18 +8,34 @@ import '../../../../controllers/user_controller.dart';
 class CheckController extends GetxController {
   UserController? userController;
   StudentController? studentController;
-  List<RxBool>? checkboxValues;
+  RxInt checkedCount = 0.obs;
+  Future<bool> updateStatus(Student student, StudentStatus status) async {
+    final data = {
+      "student_id": student.id,
+      "status": status.toString().split('.').last,
+    };
+    print(data);
+    final response =
+        await ApiService().postData(data, '/students/update-status');
+    if (response['success'] == true) {
+      final student = Student.fromJson(response['student']);
+      print(
+          "Update status of ${student.fullName} to ${student.status.toString().split('.').last} successfully");
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @override
   void onInit() {
     super.onInit();
     userController = Get.find<UserController>();
     studentController = Get.find<StudentController>();
-
-    // checkboxValues = List.generate(
-    //   studentController!.myStudents.length,
-    //   (index) => false.obs,
-    // );
+    checkedCount = studentController!.myStudents
+        .where((student) => student.status.value == StudentStatus.CHECKED)
+        .length
+        .obs;
   }
 
   @override

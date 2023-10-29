@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:school_bus/models/student_model.dart';
 
 import '../../../widgets/driver/custom_driver_drawer.dart';
 import '../controllers/check_controller.dart';
@@ -61,7 +62,8 @@ class CheckView extends GetView<CheckController> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text('8/${controller.studentController!.myStudents.length}'),
+                  Text(
+                      '${controller.checkedCount}/${controller.studentController!.myStudents.length}'),
                 ],
               ),
               const SizedBox(
@@ -80,25 +82,36 @@ class CheckView extends GetView<CheckController> {
                         const SizedBox(width: 20),
                         Obx(
                           () => ElevatedButton(
-                              onPressed: () {
-                                Get.defaultDialog(
-                                  title: "Confirm",
-                                  middleText:
-                                      "Do you want to check this student?",
-                                  textConfirm: "Yes",
-                                  textCancel: "No",
-                                  onConfirm: () {
-                                    student.checked.value = true;
+                            onPressed: () {
+                              if (student.status.value ==
+                                  StudentStatus.CHECKED) {
+                                return;
+                              }
+                              Get.defaultDialog(
+                                title: "Confirm",
+                                middleText:
+                                    "Do you want to check this student?",
+                                textConfirm: "Yes",
+                                textCancel: "No",
+                                onConfirm: () async {
+                                  if (await controller.updateStatus(
+                                      student, StudentStatus.CHECKED)) {
                                     Get.back();
-                                  },
-                                );
-                              },
-                              child: Text(
-                                  student.checked.value ? 'Checked' : 'Check'),
-                              style: ElevatedButton.styleFrom(
-                                primary:
-                                    student.checked.value ? Colors.grey : null,
-                              )),
+                                  }
+                                },
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  student.status.value == StudentStatus.CHECKED
+                                      ? Colors.grey
+                                      : null,
+                            ),
+                            child: Text(
+                                student.status.value == StudentStatus.CHECKED
+                                    ? 'Checked'
+                                    : 'Check'),
+                          ),
                         ),
                       ],
                     );

@@ -1,5 +1,11 @@
 import 'package:get/get.dart';
 
+enum StudentStatus {
+  NONE,
+  CHECKED,
+  NOT_CHECKED,
+}
+
 class Student {
   final int id;
   final String firstName;
@@ -9,25 +15,22 @@ class Student {
   double? homeLatitude;
   double? homeLongitude;
   String? imageUrl;
-  String? status;
+  Rx<StudentStatus> status;
   int? order;
   bool isTakingBus = false;
-  RxBool checked;
 
   Student({
     required this.id,
     required this.firstName,
     required this.lastName,
-    // required this.studentNumber,
     this.address,
     this.homeLatitude,
     this.homeLongitude,
     this.imageUrl,
-    this.status,
+    required this.status,
     this.order,
     required bool isTakingBus,
-    bool isChecked = false,
-  }) : checked = isChecked.obs;
+  });
 
   factory Student.fromJson(Map<String, dynamic> json) {
     return Student(
@@ -43,10 +46,20 @@ class Student {
           ? double.parse(json['home_longitude'].toString())
           : null,
       imageUrl: json['image_url'],
-      status: json['status'],
+      status: _getStatusFromJson(json['status']).obs,
       order: json['order'],
       isTakingBus: json['is_taking_bus'] == 1 ? true : false,
     );
+  }
+  static StudentStatus _getStatusFromJson(String? status) {
+    switch (status) {
+      case 'CHECKED':
+        return StudentStatus.CHECKED;
+      case 'NOT_CHECKED':
+        return StudentStatus.NOT_CHECKED;
+      default:
+        return StudentStatus.NONE;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -59,10 +72,32 @@ class Student {
       'home_latitude': homeLatitude,
       'home_longitude': homeLongitude,
       'image_url': imageUrl,
-      'status': status,
+      'status': statusToJson(status.value),
       'order': order,
       'is_taking_bus': isTakingBus,
     };
+  }
+
+  String statusToJson(StudentStatus status) {
+    switch (status) {
+      case StudentStatus.CHECKED:
+        return 'CHECKED';
+      case StudentStatus.NOT_CHECKED:
+        return 'NOT_CHECKED';
+      default:
+        return 'NONE';
+    }
+  }
+
+  String get statusText {
+    switch (status.value) {
+      case StudentStatus.CHECKED:
+        return 'Checked';
+      case StudentStatus.NOT_CHECKED:
+        return 'Not Checked';
+      default:
+        return 'None';
+    }
   }
 
   String get fullName => "$firstName $lastName";
