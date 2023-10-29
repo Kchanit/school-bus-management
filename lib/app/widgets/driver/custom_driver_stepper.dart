@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school_bus/app/modules/map/controllers/map_controller.dart';
 
 class CustomDriverStepper extends StatelessWidget {
   CustomDriverStepper({super.key});
@@ -20,6 +21,7 @@ class CustomDriverStepper extends StatelessWidget {
                           if (_index.value < 6) {
                             _index.value += 1;
                           }
+                           Get.find<MapController>().deleteMarker();
                         },
                         child: Text('Finish ${_index.value}')),
                     const Text('15:00   '),
