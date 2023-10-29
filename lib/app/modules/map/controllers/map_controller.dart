@@ -22,6 +22,7 @@ class MapController extends GetxController {
   LatLng destination = LatLng(13.8202, 100.564);
 
   List<Marker> markers = [];
+  List<Step> steps = [];
 
   List<LatLng> polylineCoordinates = [];
   late Rx<LocationData?> currentLocation = Rx<LocationData?>(LocationData.fromMap({
@@ -129,15 +130,27 @@ class MapController extends GetxController {
 void deleteMarker() {
   if (markers.isNotEmpty) {
     markers.removeAt(0); // Remove the first marker from the list
+    print("Current marker ============================> ${markers}");
+    print("marker length ============================> ${markers.length}");
   }
 }
 
+// void addSteps() {
+//   for (int i = 0; i < studentController!.myStudents.length ; i++) {
+//     Step step = Step(
+//       title: Text("${studentController?.myStudents[i].fullName}"),
+//       subtitle: Text("${studentController?.myStudents[i].fullName}"),
+//       content: Text("$i"),
+//     );
+//   }
+// }
 
   @override
   void onInit() {
     studentController = Get.find<StudentController>();
-    getCurrentLocation();
+    // addSteps();
     // setCustomMarkerIcon();
+    getCurrentLocation();
     getPolyPoints();
     super.onInit();
   }
@@ -152,7 +165,6 @@ void deleteMarker() {
 
   @override
   void onClose() {
-    getCurrentLocation();
     super.onClose();
   }
 }

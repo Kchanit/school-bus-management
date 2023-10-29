@@ -24,7 +24,7 @@ void main() async {
   Get.put(LoginController());
   Get.put(ApiService());
   Get.put(RegisterController());
-  Get.put(RegisterStudentController());
+  Get.put(RegisterStudentController()); 
   Get.put(RegisterAddressController());
   Get.put(PickAddressController());
   Get.put(HomeController());
