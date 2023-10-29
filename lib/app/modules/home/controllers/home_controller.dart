@@ -16,33 +16,6 @@ class HomeController extends GetxController {
     Get.toNamed("/change-status");
   }
 
-  // Future<Null> checkPreference() async{
-  //     // get the device firebasetoken
-  //     await Firebase.initializeApp();
-  //     FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-  //     String? token = await firebaseMessaging.getToken();
-  //     print("++++++++++++++++++++++");
-  //     print('token ======> $token');
-  //     // get current user data
-  //     User? currentUser = Get.find<UserController>().currentUser.value;
-  //     print('Current user ====> ${currentUser}');
-  //     currentUser!.fbtoken = token;
-      
-  //     var data = {
-  //       "fbtoken" : currentUser.fbtoken,
-  //     };
-  //     var response = await ApiService().putData(data, '/users/${currentUser.id}');
-
-  //     if (response['success'] == true) {
-  //       print('User Updated Successfully');
-  //       print(response);
-  //     } else {
-  //       print('User Updated Failed');
-  //       print(response['message']);
-  //       Get.snackbar('Error', response['message']);
-  //     }
-  // }
-
   contactSchool() async {
     const number = '1234567890'; //set the number here
     await FlutterPhoneDirectCaller.callNumber(number);
@@ -55,15 +28,11 @@ class HomeController extends GetxController {
 
   @override
   void onReady() {
-    // get fire token after login
-    // checkPreference();
     super.onReady();
   }
 
   @override
   void onClose() {
     super.onClose();
-    // get fire token after login
-    // checkPreference();
   }
 }

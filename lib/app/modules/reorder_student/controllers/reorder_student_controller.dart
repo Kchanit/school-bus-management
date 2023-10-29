@@ -27,17 +27,15 @@ class ReorderStudentController extends GetxController {
     final data = {
       "driver_id": userController!.currentUser.value!.id,
       "students": studentController!.myStudents
-          .map((student) => {"id": student.id, "order": student.order})
+          .map((e) => {"id": e.id, "order": e.order})
           .toList()
     };
-    print(data);
 
     final response = await ApiService().postData(data, '/routes/update-order');
     if (response['success'] == true) {
       print("Route updated successfully");
-      print(response['students'].toString());
       Get.snackbar('Success', response['message']);
-      Get.offAllNamed('/check-in');
+      Get.offAllNamed('/check');
     } else {
       Get.snackbar('Error', response['message']);
     }

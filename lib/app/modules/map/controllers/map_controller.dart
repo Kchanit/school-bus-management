@@ -21,6 +21,8 @@ class MapController extends GetxController {
   LatLng sourceLocation = LatLng(13.8476, 100.57);
   LatLng destination = LatLng(13.8202, 100.564);
 
+  List<Marker> markers = [];
+
   List<LatLng> polylineCoordinates = [];
   late Rx<LocationData?> currentLocation = Rx<LocationData?>(LocationData.fromMap({
     "latitude": 13.8476, // Default latitude value
@@ -44,6 +46,15 @@ class MapController extends GetxController {
     location.onLocationChanged.listen((newLoc) {
       currentLocation.value = newLoc;
       print("yo it changing = ${currentLocation}");
+      Marker marker = Marker(
+        markerId: const MarkerId("currentLocation"),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+        position: LatLng(currentLocation.value!.latitude!, currentLocation.value!.longitude!));
+      markers.add(marker);
+      print("add markers ==========================> current location");
+      print("add homeLatitude  ==========================> ${currentLocation.value!.latitude}");
+      print("add homeLongtitude ==========================> ${currentLocation.value!.longitude}");
+      print("list of marker (from currentlocation) =======> ${markers}");
 
       googleMapController.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(
@@ -99,38 +110,42 @@ class MapController extends GetxController {
   }
 
   void addPassengerMarkers() {
-  List<Marker> markers = [];
-  // print("mystudent ===> ${studentController?.myStudents.length}");
-  //   for (var i = 0; i < studentController!.myStudents.length; i++) {
-  //     print(studentController!.myStudents[i].fullName);
-  //     print(studentController!.myStudents[i].order);
-  //   }
-  // Iterate over the number of passengers and create a marker for each one
-  for (int i = 0; i < studentController!.myStudents.length; i++) {
+  // List<Marker> markers = [];
+  for (int i = 0; i < studentController!.myStudents.length ; i++) {
     print("add markers ==========================> ${studentController?.myStudents[i].fullName}");
     print("add homeLatitude  ==========================> ${studentController?.myStudents[i].homeLatitude}");
     print("add homeLongtitude ==========================> ${studentController?.myStudents[i].homeLongitude}");
     Marker marker = Marker(
       markerId: MarkerId("${studentController!.myStudents[i].fullName}"),
-      position: LatLng(studentController!.myStudents[i].homeLatitude! + 0.01 * i, studentController!.myStudents[i].homeLongitude! + 0.01 * i),
+      position: LatLng(studentController!.myStudents[i].homeLatitude!, studentController!.myStudents[i].homeLongitude!),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
     );
     markers.add(marker);
   }
+  print("list of marker (from addPassenger) =======> ${markers}");
 }
+
+// at destination
+void deleteMarker() {
+  if (markers.isNotEmpty) {
+    markers.removeAt(0); // Remove the first marker from the list
+  }
+}
+
 
   @override
   void onInit() {
+    studentController = Get.find<StudentController>();
     getCurrentLocation();
     // setCustomMarkerIcon();
     getPolyPoints();
-    studentController = Get.find<StudentController>();
-    addPassengerMarkers();
     super.onInit();
   }
 
   @override
   void onReady() {
+    studentController = Get.find<StudentController>();
+    addPassengerMarkers();
     getCurrentLocation();
     super.onReady();
   }
