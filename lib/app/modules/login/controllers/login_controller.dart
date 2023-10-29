@@ -66,18 +66,17 @@ class LoginController extends GetxController {
     final data = {"driver_id": currentUser!.id};
     final response = await ApiService().postData(data, '/routes/get-my-route');
     if (response['success'] == true) {
-      // final List<dynamic> studentsData = response['students'];
-
-      // final List<Student> students = studentsData
-      //     .map((student) => Student.fromJson(student as Map<String, dynamic>))
-      //     .toList();
-
       final List<Student> students = (response['students'] as List)
-          .map((student) => Student.fromJson(student as Map<String, dynamic>))
+          .map((student) => Student.fromJson(student))
           .toList();
 
       if (students.isNotEmpty) {
+        students.sort((a, b) => a.order!.compareTo(b.order!));
         studentController!.myStudents.assignAll(students);
+        for (var i = 0; i < studentController!.myStudents.length; i++) {
+          print(studentController!.myStudents[i].fullName);
+          print(studentController!.myStudents[i].order);
+        }
         print("Students Amount: ${studentController!.myStudents.length}");
       } else {
         print("No students");
