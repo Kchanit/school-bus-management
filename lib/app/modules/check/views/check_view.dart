@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -73,17 +75,17 @@ class CheckView extends GetView<CheckController> {
                 child: ListView.builder(
                   itemCount: controller.studentController!.myStudents.length,
                   itemBuilder: (context, index) {
-                    final student =
-                        controller.studentController!.myStudents[index];
+                    final Rx<Student> student =
+                        controller.studentController!.myStudents[index].obs;
                     // final isCheck = student.checked;
                     return Row(
                       children: [
-                        Text(student.fullName),
+                        Text(student.value.fullName),
                         const SizedBox(width: 20),
                         Obx(
                           () => ElevatedButton(
                             onPressed: () {
-                              if (student.status.value ==
+                              if (student.value.status.value ==
                                   StudentStatus.CHECKED) {
                                 return;
                               }
@@ -98,19 +100,20 @@ class CheckView extends GetView<CheckController> {
                                       student, StudentStatus.CHECKED)) {
                                     Get.back();
                                   }
+                                  print(student.value.status.value);
                                 },
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  student.status.value == StudentStatus.CHECKED
-                                      ? Colors.grey
-                                      : null,
+                              backgroundColor: student.value.status.value ==
+                                      StudentStatus.CHECKED
+                                  ? Colors.grey
+                                  : null,
                             ),
-                            child: Text(
-                                student.status.value == StudentStatus.CHECKED
-                                    ? 'Checked'
-                                    : 'Check'),
+                            child: Text(student.value.status.value ==
+                                    StudentStatus.CHECKED
+                                ? 'Checked'
+                                : 'Check'),
                           ),
                         ),
                       ],

@@ -9,11 +9,14 @@ class CheckController extends GetxController {
   UserController? userController;
   StudentController? studentController;
   RxInt checkedCount = 0.obs;
-  Future<bool> updateStatus(Student student, StudentStatus status) async {
+  Rx<StudentStatus> status = StudentStatus.NOT_CHECKED.obs;
+
+  Future<bool> updateStatus(Rx<Student> student, StudentStatus status) async {
     final data = {
-      "student_id": student.id,
+      "student_id": student.value.id,
       "status": status.toString().split('.').last,
     };
+    student.value.status.value = status;
     print(data);
     final response =
         await ApiService().postData(data, '/students/update-status');
