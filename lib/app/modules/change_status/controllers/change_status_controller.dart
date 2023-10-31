@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/models/student_model.dart';
@@ -28,6 +29,17 @@ class ChangeStatusController extends GetxController {
       Get.offAllNamed("/home");
     } else {
       Get.snackbar('Error', response['message']);
+    }
+  }
+
+  checkTime() {
+    final timeFormat = DateFormat("HH:mm");
+    final now = DateTime.now();
+
+    if (now.isAfter(timeFormat.parse("14:00"))) {
+      return false;
+    } else {
+      return true;
     }
   }
 
