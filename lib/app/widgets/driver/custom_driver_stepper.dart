@@ -60,37 +60,6 @@ class CustomDriverStepper extends StatelessWidget {
             //     subtitle: const Text('Road, District'),
             //     content: _content(_index.value),
             //   ),
-            //   Step(
-            //     title: const Text('Student2'),
-            //     subtitle: const Text('Road, District'),
-            //     content: _content(_index.value),
-            //   ),
-            //   Step(
-            //     title: const Text('Student3'),
-            //     subtitle: const Text('Road, District'),
-            //     content: _content(_index.value),
-            //   ),
-            //   Step(
-            //     title: const Text('Student3'),
-            //     subtitle: const Text('Road, District'),
-            //     content: _content(_index.value),
-            //   ),
-            //   Step(
-            //     title: const Text('Student3'),
-            //     subtitle: const Text('Road, District'),
-            //     content: _content(_index.value),
-            //   ),
-            //   Step(
-            //     title: const Text('Student3'),
-            //     subtitle: const Text('Road, District'),
-            //     content: _content(_index.value),
-            //   ),
-            //   Step(
-            //     title: const Text('Student3'),
-            //     subtitle: const Text('Road, District'),
-            //     content: _content(_index.value),
-            //   ),
-            // ]
             );
   }
 }

@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:ffi';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config_plus/flutter_config_plus.dart';
@@ -10,7 +10,7 @@ import 'package:location/location.dart';
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
-import 'package:school_bus/models/student_model.dart';
+// import 'package:school_bus/models/student_model.dart';
 import 'package:school_bus/models/user_model.dart';
 
 class MapController extends GetxController {
@@ -25,6 +25,7 @@ class MapController extends GetxController {
   List<Step> steps = [];
 
   List<LatLng> polylineCoordinates = [];
+
   late Rx<LocationData?> currentLocation = Rx<LocationData?>(LocationData.fromMap({
     "latitude": 13.8476, // Default latitude value
     "longitude": 100.57, // Default longitude value
@@ -57,6 +58,15 @@ class MapController extends GetxController {
       print("add homeLongtitude ==========================> ${currentLocation.value!.longitude}");
       print("list of marker (from currentlocation) =======> ${markers}");
 
+      // if (polylineCoordinates.isEmpty) {
+      //     print("polylineCoordinatespolyline is empty");
+      //     getPolyPoints();
+      // } else {
+      //     print("polyline is not empty");
+      // }
+
+      getPolyPoints();
+
       googleMapController.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(
               zoom: 14.5,
@@ -66,15 +76,21 @@ class MapController extends GetxController {
 
   void getPolyPoints() async {
     PolylinePoints polylinePoints = PolylinePoints();
-
+    print("get Polypoints==============================================================");
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         FlutterConfigPlus.get('GG_API_KEY'),
-        PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
-        PointLatLng(destination.latitude, destination.longitude));
-
-    if (result.points.isNotEmpty) {
+        // PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
+        PointLatLng(currentLocation.value!.latitude!, currentLocation.value!.longitude!),
+        PointLatLng(markers[0].position.latitude, markers[0].position.longitude));
+    polylineCoordinates.clear();
+    if (result.points.isNotEmpty)  {
+      print("point is NOT EMPTY and clear polyline");
       result.points.forEach((PointLatLng point) =>
           polylineCoordinates.add(LatLng(point.latitude, point.longitude)));
+          print("${polylineCoordinates}");
+    } else {
+      print("point is EMPTY");
+      print("add ${polylineCoordinates}");
     }
   }
 
@@ -111,17 +127,19 @@ class MapController extends GetxController {
   }
 
   void addPassengerMarkers() {
-  // List<Marker> markers = [];
   for (int i = 0; i < studentController!.myStudents.length ; i++) {
     print("add markers ==========================> ${studentController?.myStudents[i].fullName}");
     print("add homeLatitude  ==========================> ${studentController?.myStudents[i].homeLatitude}");
     print("add homeLongtitude ==========================> ${studentController?.myStudents[i].homeLongitude}");
     Marker marker = Marker(
-      markerId: MarkerId("${studentController!.myStudents[i].fullName}"),
+      markerId: MarkerId("${studentController!.myStudents[i].id}"),
       position: LatLng(studentController!.myStudents[i].homeLatitude!, studentController!.myStudents[i].homeLongitude!),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
     );
     markers.add(marker);
+    sendNotification(studentController!.myStudents[i].id.toString(), 
+    "แจ้งเตือนสถานะการเดินทางของนักเรียน", 
+    "ขณะนี้นักเรียน ${studentController!.myStudents[i].fullName} กำลังออกเดินทางค่ะ");
   }
   print("list of marker (from addPassenger) =======> ${markers}");
 }
@@ -129,29 +147,41 @@ class MapController extends GetxController {
 // at destination
 void deleteMarker() {
   if (markers.isNotEmpty) {
+    Marker marker = markers[0];
+    sendNotification(marker.markerId.value, 
+    "แจ้งเตือนสถานะการเดินทางของนักเรียน", 
+    "ขณะนี้นักเรียน ${marker.markerId.value} กำลังออกเดินทางค่ะ");
+
     markers.removeAt(0); // Remove the first marker from the list
     print("Current marker ============================> ${markers}");
     print("marker length ============================> ${markers.length}");
   }
 }
 
-// void addSteps() {
-//   for (int i = 0; i < studentController!.myStudents.length ; i++) {
-//     Step step = Step(
-//       title: Text("${studentController?.myStudents[i].fullName}"),
-//       subtitle: Text("${studentController?.myStudents[i].fullName}"),
-//       content: Text("$i"),
-//     );
-//   }
-// }
+void sendNotification(String student_id, String title, String body) async {
+  print("SENDING NOTIFICATION+++++++++++++++++++++++++++++++++++++++");
+  var data = {
+    "student_id" : student_id,
+    "title" : title,
+    "body" : body,
+  };
+
+  final response = await ApiService().postData(data, '/sendNotification/{student_id}/{title}/{body}');
+  if (response['success'] == true) {
+      print(response);
+      // Get.snackbar('Successfully send notification', response['message']);
+    } else {
+      print("respones__________________________________________________");
+      print(response);
+      // Get.snackbar('Error (sending notification)', response['message']);
+    }
+}
+
 
   @override
   void onInit() {
     studentController = Get.find<StudentController>();
-    // addSteps();
     // setCustomMarkerIcon();
-    getCurrentLocation();
-    getPolyPoints();
     super.onInit();
   }
 
@@ -160,6 +190,7 @@ void deleteMarker() {
     studentController = Get.find<StudentController>();
     addPassengerMarkers();
     getCurrentLocation();
+    // getPolyPoints();
     super.onReady();
   }
 
