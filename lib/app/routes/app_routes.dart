@@ -21,6 +21,7 @@ abstract class Routes {
   static const REORDER_STUDENT = _Paths.REORDER_STUDENT;
   static const CHECK = _Paths.CHECK;
   static const MAP = _Paths.MAP;
+  static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
 }
 
 abstract class _Paths {
@@ -41,4 +42,5 @@ abstract class _Paths {
   static const REORDER_STUDENT = '/reorder-student';
   static const CHECK = '/check';
   static const MAP = '/map';
+  static const CHANGE_PASSWORD = '/change-password';
 }

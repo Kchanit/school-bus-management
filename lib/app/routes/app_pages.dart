@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/change_password/bindings/change_password_binding.dart';
+import '../modules/change_password/views/change_password_view.dart';
 import '../modules/change_status/bindings/change_status_binding.dart';
 import '../modules/change_status/views/change_status_view.dart';
 import '../modules/check/bindings/check_binding.dart';
@@ -98,7 +100,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SETTING,
-      page: () => const SettingView(),
+      page: () => SettingView(),
       binding: SettingBinding(),
     ),
     GetPage(
@@ -118,8 +120,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MAP,
-      page: () => MapView(),
+      page: () => const MapView(),
       binding: MapBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHANGE_PASSWORD,
+      page: () => ChangePasswordView(),
+      binding: ChangePasswordBinding(),
     ),
   ];
 }
