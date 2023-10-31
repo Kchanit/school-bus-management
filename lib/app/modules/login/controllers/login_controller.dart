@@ -13,6 +13,7 @@ class LoginController extends GetxController {
   TextEditingController passwordController = TextEditingController();
   final StudentController? studentController = Get.find<StudentController>();
   final UserController userController = Get.find<UserController>();
+  final apiService = ApiService();
   final formKey = GlobalKey<FormState>();
   User? currentUser;
   RxString errorMessage = ''.obs;
@@ -50,7 +51,7 @@ class LoginController extends GetxController {
   }
 
   handleParentLogin() async {
-    await fetchStudent(userController.currentUser.value!.citizenId!);
+    await fetchStudent(userController.currentUser.value!.id);
     await fetchMyDriver(studentController!.student.value!.id);
     print('Login Successful');
     Get.offAllNamed('/home');
@@ -63,8 +64,10 @@ class LoginController extends GetxController {
   }
 
   Future<void> fetchRoute() async {
-    final data = {"driver_id": currentUser!.id};
-    final response = await ApiService().postData(data, '/routes/get-my-route');
+    // final data = {"driver_id": currentUser!.id};
+    // final response = await ApiService().postData(data, '/routes/get-my-route');
+    final response =
+        await apiService.getData('/routes/${currentUser!.id}/get-my-route');
     if (response['success'] == true) {
       final List<Student> students = (response['students'] as List)
           .map((student) => Student.fromJson(student))
@@ -85,23 +88,24 @@ class LoginController extends GetxController {
   }
 
   Future<void> fetchMyDriver(studentId) async {
-    var data = {"student_id": studentId};
+    // var data = {"student_id": studentId};
 
-    var response = await ApiService().postData(data, '/drivers/get-driver');
+    var response = await apiService.getData('/drivers/$studentId/get-driver');
     if (response['success'] == true) {
       userController.myDriver.value = User.fromJson(response['driver']);
       // Get the driver image
       userController.myDriver.value!.imageUrl =
           await userController.getDriverImageUrl();
     } else {
-      Get.snackbar('Error', response['message']);
+      // Get.snackbar('Error', response['message']);
+      print(response['message']);
     }
   }
 
   fetchRouteAddress() async {
-    final data = {"driver_id": currentUser!.id};
-    final response =
-        await ApiService().postData(data, '/routes/get-route-address');
+    // final data = {"driver_id": currentUser!.id};
+    final response = await apiService
+        .getData('/routes/${currentUser!.id}/get-route-address');
     if (response['success'] == true) {
       final List<dynamic> routeAddressData = response['addresses'];
 
@@ -126,10 +130,10 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> fetchStudent(String citizenId) async {
-    final data = {"citizen_id": citizenId};
-    final response =
-        await ApiService().postData(data, '/students/get-my-students');
+  // Parent get students
+  Future<void> fetchStudent(int id) async {
+    // final data = {"citizen_id": citizenId};
+    final response = await apiService.getData('/students/$id/get-my-students');
     if (response['success'] == true) {
       final List<Student> studentsData = (response['students'] as List)
           .map((student) => Student.fromJson(student))

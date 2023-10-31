@@ -30,11 +30,14 @@ class SelectStudentController extends GetxController {
   void onInit() async {
     super.onInit();
     isLoading.value = true;
-    var data = {
-      "citizen_id": Get.find<RegisterController>().citizenIdController.text,
-    };
+    // var data = {
+    //   "citizen_id": Get.find<RegisterController>().citizenIdController.text,
+    // };
+    var citizenId = Get.find<RegisterController>().citizenIdController.text;
 
-    var response = await ApiService().postData(data, '/students/my-students');
+    // var response = await ApiService().postData(data, '/students/my-students');
+    var response =
+        await ApiService().getData('/students/$citizenId/my-students');
     if (response['success'] == true) {
       List<dynamic> studentJsonList = response['students'];
       List<Student> studentList = studentJsonList

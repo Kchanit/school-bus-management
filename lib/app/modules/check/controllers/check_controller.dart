@@ -13,13 +13,12 @@ class CheckController extends GetxController {
 
   Future<bool> updateStatus(Rx<Student> student, StudentStatus status) async {
     final data = {
-      "student_id": student.value.id,
       "status": status.toString().split('.').last,
     };
     student.value.status.value = status;
     print(data);
-    final response =
-        await ApiService().postData(data, '/students/update-status');
+    final response = await ApiService()
+        .putData(data, '/students/${student.value.id}/update-status');
     if (response['success'] == true) {
       final student = Student.fromJson(response['student']);
       print(

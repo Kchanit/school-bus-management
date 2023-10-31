@@ -31,7 +31,7 @@ class ReorderStudentController extends GetxController {
           .toList()
     };
 
-    final response = await ApiService().postData(data, '/routes/update-order');
+    final response = await ApiService().putData(data, '/routes/update-order');
     if (response['success'] == true) {
       print("Route updated successfully");
       Get.snackbar('Success', response['message']);

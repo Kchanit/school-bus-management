@@ -19,11 +19,10 @@ class ChangeStatusController extends GetxController {
       student.isTakingBus = false;
     }
     var data = {
-      'student_id': student.id,
       'is_taking_bus': student.isTakingBus,
     };
-    final response =
-        await ApiService().postData(data, '/students/change-bus-status');
+    final response = await ApiService()
+        .putData(data, '/students/${student.id}/change-bus-status');
     if (response['success'] == true) {
       Get.snackbar('Success', response['message']);
       Get.offAllNamed("/home");
