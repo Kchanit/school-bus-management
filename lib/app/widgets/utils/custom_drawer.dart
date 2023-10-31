@@ -4,6 +4,8 @@ import 'package:school_bus/app/routes/app_pages.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 
+import '../../modules/home/controllers/home_controller.dart';
+
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
@@ -19,13 +21,13 @@ class CustomDrawer extends StatelessWidget {
                 decoration: const BoxDecoration(color: Colors.amber),
                 child: Row(
                   children: [
-                    Container(
-                        height: 46,
-                        width: 46,
-                        margin: const EdgeInsets.only(right: 16),
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(30))),
+                    const Icon(
+                      Icons.account_circle_rounded,
+                      size: 50,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
                     Text(
                       Get.find<UserController>().currentUser.value!.fullName,
                       style: Theme.of(context).textTheme.titleMedium,
@@ -64,17 +66,32 @@ class CustomDrawer extends StatelessWidget {
               }),
             ],
           ),
-          ListTile(
-            title: Text(
-              'Contact School',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            // selected: _selectedIndex == 0,
-            onTap: () {
-              // _onItemTapped(0);
-              Navigator.pop(context);
-            },
+          SizedBox(
+            height: 10,
           ),
+          ListTile(
+              title: Text(
+                'Contact School',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              // selected: _selectedIndex == 0,
+              onTap: () {
+                // _onItemTapped(0);
+                Navigator.pop(context);
+              },
+              trailing: CircleAvatar(
+                backgroundColor: Colors.amber.shade100,
+                child: IconButton(
+                  onPressed: () {
+                    Get.find<HomeController>().contactSchool();
+                  },
+                  icon: const Icon(
+                    Icons.phone_rounded,
+                    color: Colors.brown,
+                    size: 18,
+                  ),
+                ),
+              )),
           ListTile(
             title: Text(
               'Setting',
