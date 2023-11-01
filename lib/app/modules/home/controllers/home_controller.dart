@@ -22,6 +22,7 @@ class HomeController extends GetxController {
   void onInit() async {
     super.onInit();
     final userId = await authService.getId();
+    await userController.fetchParent(userId);
     await userController.fetchStudent(userId);
     await userController.fetchMyDriver(studentController.student.value!.id);
   }

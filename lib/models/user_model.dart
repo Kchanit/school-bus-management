@@ -29,7 +29,7 @@ class User {
       email: json['email'],
       role: json['role'],
       citizenId: json['citizen_id'],
-      imageUrl: json['image_url'],
+      imageUrl: json['image_url'] ?? '',
     );
   }
 

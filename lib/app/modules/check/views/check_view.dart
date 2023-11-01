@@ -76,45 +76,41 @@ class CheckView extends GetView<CheckController> {
                     final Rx<Student> student =
                         controller.studentController!.myStudents[index].obs;
                     // final isCheck = student.checked;
-                    return Row(
-                      children: [
-                        Text(student.value.fullName),
-                        const SizedBox(width: 20),
-                        Obx(
-                          () => ElevatedButton(
-                            onPressed: () {
-                              if (student.value.status.value ==
-                                  StudentStatus.CHECKED) {
-                                return;
-                              }
-                              Get.defaultDialog(
-                                title: "Confirm",
-                                middleText:
-                                    "Do you want to check this student?",
-                                textConfirm: "Yes",
-                                textCancel: "No",
-                                onConfirm: () async {
-                                  if (await controller.updateStatus(
-                                      student, StudentStatus.CHECKED)) {
-                                    Get.back();
-                                  }
-                                  print(student.value.status.value);
-                                },
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: student.value.status.value ==
-                                      StudentStatus.CHECKED
-                                  ? Colors.grey
-                                  : null,
-                            ),
-                            child: Text(student.value.status.value ==
+                    return ListTile(
+                      title: Text(student.value.fullName),
+                      trailing: Obx(
+                        () => ElevatedButton(
+                          onPressed: () {
+                            if (student.value.status.value ==
+                                StudentStatus.CHECKED) {
+                              return;
+                            }
+                            Get.defaultDialog(
+                              title: "Confirm",
+                              middleText: "Do you want to check this student?",
+                              textConfirm: "Yes",
+                              textCancel: "No",
+                              onConfirm: () async {
+                                if (await controller.updateStatus(
+                                    student, StudentStatus.CHECKED)) {
+                                  Get.back();
+                                }
+                                print(student.value.status.value);
+                              },
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: student.value.status.value ==
                                     StudentStatus.CHECKED
-                                ? 'Checked'
-                                : 'Check'),
+                                ? Colors.grey
+                                : null,
                           ),
+                          child: Text(student.value.status.value ==
+                                  StudentStatus.CHECKED
+                              ? 'Checked'
+                              : 'Check'),
                         ),
-                      ],
+                      ),
                     );
                   },
                 ),
