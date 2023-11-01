@@ -54,7 +54,6 @@ class ReorderStudentController extends GetxController {
     print("Reorder student controller ready");
     authService.saveState("reorder");
     final userId = await authService.getId();
-    // await userController.fetchDriver(userId);
     await userController.fetchRoute(userId);
     print("Reorder student controller ready");
   }

@@ -13,15 +13,15 @@ class CheckController extends GetxController {
   var checkedCount = 0.obs;
   Rx<StudentStatus> status = StudentStatus.NOT_CHECKED.obs;
 
-  Future<bool> updateStatus(Rx<Student> student, StudentStatus status) async {
+  Future<bool> updateStatus(student, StudentStatus status) async {
     // noti
     final data = {
       "status": status.toString().split('.').last,
     };
-    student.value.status.value = status;
+    student.status.value = status;
     print(data);
     final response = await ApiService()
-        .putData(data, '/students/${student.value.id}/update-status');
+        .putData(data, '/students/${student.id}/update-status');
     if (response['success'] == true) {
       final student = Student.fromJson(response['student']);
       print(
@@ -30,6 +30,19 @@ class CheckController extends GetxController {
     } else {
       return false;
     }
+  }
+
+  confirm() async {
+    final students = studentController.myStudents;
+
+    for (final student in students) {
+      if (student.status.value == StudentStatus.CHECKED) {
+        updateStatus(student, StudentStatus.ON_THE_WAY);
+        student.status.value = StudentStatus.ON_THE_WAY;
+        // Send notification to parent
+      }
+    }
+    Get.toNamed('/map');
   }
 
   @override
@@ -43,7 +56,6 @@ class CheckController extends GetxController {
     authService.saveState("check");
     final userId = await authService.getId();
     await userController.fetchRoute(userId);
-    // await userController.fetchRouteAddress(userId);
     checkedCount = studentController.myStudents
         .where((student) => student.status.value == StudentStatus.CHECKED)
         .length

@@ -92,7 +92,7 @@ class CheckView extends GetView<CheckController> {
                               textCancel: "No",
                               onConfirm: () async {
                                 if (await controller.updateStatus(
-                                    student, StudentStatus.CHECKED)) {
+                                    student.value, StudentStatus.CHECKED)) {
                                   Get.back();
                                 }
                                 print(student.value.status.value);
@@ -121,7 +121,15 @@ class CheckView extends GetView<CheckController> {
               CupertinoButton.filled(
                   child: const Text('Confirm'),
                   onPressed: () {
-                    Get.toNamed('/map');
+                    Get.defaultDialog(
+                      title: "Confirm",
+                      middleText: "Are you sure to confirm",
+                      textConfirm: "Yes",
+                      textCancel: "No",
+                      onConfirm: () async {
+                        controller.confirm();
+                      },
+                    );
                   })
             ],
           ),
