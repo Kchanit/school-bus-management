@@ -1,10 +1,12 @@
+import 'package:get/get.dart';
+
 class User {
   final int id;
   final String firstName;
   final String lastName;
   final String email;
   final String role;
-  String? imageUrl;
+  String imageUrl;
   String? fbtoken;
   final String? citizenId;
 
@@ -15,7 +17,7 @@ class User {
     required this.email,
     required this.role,
     this.citizenId,
-    this.imageUrl,
+    required this.imageUrl,
     this.fbtoken,
   });
 

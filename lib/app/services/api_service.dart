@@ -1,11 +1,12 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get_connect.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_config_plus/flutter_config_plus.dart';
+import 'package:school_bus/app/services/auth_service.dart';
 
 class ApiService extends GetConnect {
   static String apiBaseUrl = FlutterConfigPlus.get('API_URL');
+  final authService = AuthService();
 
   Future<Map<String, dynamic>> postData(
       Map<String, dynamic> data, String apiUrl) async {
@@ -19,15 +20,14 @@ class ApiService extends GetConnect {
   Future<Map<String, dynamic>> getData(String apiUrl) async {
     final fullUrl = apiBaseUrl + apiUrl;
     final response = await http.get(Uri.parse(fullUrl), headers: setHeaders());
-
+    
     return json.decode(response.body);
   }
 
   Future<Map<String, dynamic>> putData(
       Map<String, dynamic> data, String apiUrl) async {
     final fullUrl = apiBaseUrl + apiUrl;
-    final String? accessToken =
-        await const FlutterSecureStorage().read(key: 'access_token');
+    final String? accessToken = await authService.getToken();
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',

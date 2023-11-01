@@ -31,7 +31,7 @@ class RegisterAddressController extends GetxController {
 
     if (parentResponse['success'] && addressResponse['success']) {
       Get.snackbar('Success', 'User Registered Successfully');
-      await Get.find<LoginController>()
+      await Get.find<UserController>()
           .fetchStudent(Get.find<UserController>().currentUser.value!.id);
       Get.offAllNamed('/home');
     } else {

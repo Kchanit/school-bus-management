@@ -10,6 +10,7 @@ import 'package:school_bus/app/modules/register_student/controllers/register_stu
 import 'package:school_bus/app/modules/reorder_student/controllers/reorder_student_controller.dart';
 import 'package:school_bus/app/modules/test/controllers/test_controller.dart';
 import 'package:school_bus/app/services/api_service.dart';
+import 'package:school_bus/app/services/auth_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 import 'package:flutter_config_plus/flutter_config_plus.dart';
@@ -47,10 +48,25 @@ void main() async {
   );
   Get.put(ReorderStudentController());
   Get.put(TestController());
+
+  final token = await AuthService().getToken();
+  final role = await AuthService().getRole();
+  final userId = await AuthService().getId();
+  var page = Routes.INITIAL;
+  if (token != null && role != null && userId != null) {
+    if (role == 'PARENT') {
+      page = Routes.HOME;
+    } else {
+      page = Routes.REORDER_STUDENT;
+    }
+  } else {
+    page = Routes.LOGIN;
+  }
+
   runApp(
     GetMaterialApp(
       title: "Application",
-      initialRoute: AppPages.INITIAL,
+      initialRoute: page,
       getPages: AppPages.routes,
     ),
   );

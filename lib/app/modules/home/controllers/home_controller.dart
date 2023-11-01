@@ -1,11 +1,13 @@
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:get/get.dart';
+import 'package:school_bus/app/services/auth_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 
 class HomeController extends GetxController {
-  StudentController? studentController;
-  UserController? userController;
+  final studentController = Get.find<StudentController>();
+  final userController = Get.find<UserController>();
+  final authService = AuthService();
 
   void changeStudentStatus() async {
     Get.toNamed("/change-status");
@@ -17,7 +19,15 @@ class HomeController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    final userId = await authService.getId();
+    await userController.fetchStudent(userId);
+    await userController.fetchMyDriver(studentController.student.value!.id);
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
   }
 }

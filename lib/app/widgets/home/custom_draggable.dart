@@ -36,37 +36,40 @@ class CustomDraggable extends StatelessWidget {
                           child: Column(
                             children: [
                               Obx(
-                                () =>
-                                    Get.find<UserController>().myDriver.value ==
-                                            null
-                                        ? const Text('No driver assigned')
-                                        : Row(
-                                            children: [
-                                              Container(
-                                                height: 40,
-                                                width: 40,
-                                                margin: const EdgeInsets.only(
-                                                    right: 16),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.green,
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                ),
-                                                child: CircleAvatar(
-                                                  backgroundImage: NetworkImage(
-                                                      Get.find<UserController>()
-                                                          .myDriver
-                                                          .value!
-                                                          .imageUrl!),
-                                                  radius: 50,
-                                                ),
+                                () => Get.find<UserController>()
+                                            .myDriver
+                                            .value ==
+                                        null
+                                    ? const Text('No driver assigned')
+                                    : Row(
+                                        children: [
+                                          Container(
+                                            height: 40,
+                                            width: 40,
+                                            margin: const EdgeInsets.only(
+                                                right: 16),
+                                            decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                            child: Obx(
+                                              () => CircleAvatar(
+                                                backgroundImage: NetworkImage(
+                                                    Get.find<UserController>()
+                                                        .myDriver
+                                                        .value!
+                                                        .imageUrl),
+                                                radius: 50,
                                               ),
-                                              Text(Get.find<UserController>()
-                                                  .myDriver
-                                                  .value!
-                                                  .fullName)
-                                            ],
+                                            ),
                                           ),
+                                          Text(Get.find<UserController>()
+                                              .myDriver
+                                              .value!
+                                              .fullName)
+                                        ],
+                                      ),
                               ),
                               Row(
                                 mainAxisAlignment:

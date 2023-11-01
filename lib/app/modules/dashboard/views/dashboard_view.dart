@@ -45,13 +45,13 @@ class DashboardView extends GetView<DashboardController> {
             return Container(
               child: Column(
                 children: [
-                  controller.users[index].imageUrl == null
-                      ? const Text('No image selected.')
-                      : CircleAvatar(
-                          radius: 50,
-                          backgroundImage:
-                              NetworkImage(controller.users[index].imageUrl!),
-                        ),
+                  // controller.users[index].imageUrl == null
+                  //     ? const Text('No image selected.')
+                  //     : CircleAvatar(
+                  //         radius: 50,
+                  //         backgroundImage:
+                  //             NetworkImage(controller.users[index].imageUrl!),
+                  //       ),
                   const SizedBox(height: 25),
                   Text(controller.users[index].firstName),
                   const SizedBox(height: 25),
