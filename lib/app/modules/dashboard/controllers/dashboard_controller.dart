@@ -18,15 +18,6 @@ class DashboardController extends GetxController {
     // notification();
   }
 
-  // Future<Null> notification() async {
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //   if (message.notification != null) {
-  //     print("Title: ${message.notification!.title}");
-  //     print("Body: ${message.notification!.body}");
-  //   }
-  // });
-  // }  
-
   Future<Null> checkPreference() async{
       // get the device firebasetoken
       FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;

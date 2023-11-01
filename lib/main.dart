@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:school_bus/app/modules/change_password/controllers/change_password_controller.dart';
 import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
 import 'package:school_bus/app/modules/login/controllers/login_controller.dart';
 import 'package:school_bus/app/modules/pick_address/controllers/pick_address_controller.dart';
@@ -11,7 +10,6 @@ import 'package:school_bus/app/modules/register_student/controllers/register_stu
 import 'package:school_bus/app/modules/reorder_student/controllers/reorder_student_controller.dart';
 import 'package:school_bus/app/modules/test/controllers/test_controller.dart';
 import 'package:school_bus/app/services/api_service.dart';
-import 'package:school_bus/app/services/auth_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 import 'package:flutter_config_plus/flutter_config_plus.dart';
@@ -29,8 +27,8 @@ void main() async {
   Get.put(RegisterStudentController());
   Get.put(RegisterAddressController());
   Get.put(PickAddressController());
-  Get.put(ChangePasswordController());
   Get.put(HomeController());
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
@@ -49,28 +47,10 @@ void main() async {
   );
   Get.put(ReorderStudentController());
   Get.put(TestController());
-
-  final token = await AuthService().getToken();
-  print(token);
-  final role = await AuthService().getRole();
-  print(role);
-  final userId = await AuthService().getId();
-  print(userId);
-  var page = Routes.INITIAL;
-  if (token != null && role != null && userId != null) {
-    if (role == 'PARENT') {
-      page = Routes.HOME;
-    } else {
-      page = Routes.REORDER_STUDENT;
-    }
-  } else {
-    page = Routes.LOGIN;
-  }
-
   runApp(
     GetMaterialApp(
       title: "Application",
-      initialRoute: page,
+      initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
     ),
   );

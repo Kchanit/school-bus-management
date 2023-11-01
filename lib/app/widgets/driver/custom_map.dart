@@ -31,19 +31,6 @@ class _CustomMapState extends State<CustomMap> {
                     color: Colors.blue,
                     width: 6)
               },
-              // markers: {
-              //   Marker(
-              //       markerId: const MarkerId("currentLocation"),
-              //       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-              //       position: LatLng(controller.currentLocation.value!.latitude!,
-              //           controller.currentLocation.value!.longitude!)),
-              //   Marker(
-              //       markerId: const MarkerId("source"),
-              //       position: controller.sourceLocation),
-              //   Marker(
-              //       markerId: const MarkerId("destination"),
-              //       position: controller.destination),
-              // },
               markers: Set<Marker>.of(controller.markers),
               onMapCreated: (mapController) {
                 controller.controller.complete(mapController);
