@@ -9,7 +9,6 @@ import 'package:school_bus/app/modules/register/controllers/register_controller.
 import 'package:school_bus/app/modules/register_address/controllers/register_address_controller.dart';
 import 'package:school_bus/app/modules/register_student/controllers/register_student_controller.dart';
 import 'package:school_bus/app/modules/reorder_student/controllers/reorder_student_controller.dart';
-import 'package:school_bus/app/modules/test/controllers/test_controller.dart';
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/app/services/auth_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
@@ -23,14 +22,16 @@ void main() async {
   await FlutterConfigPlus.loadEnvVariables();
   Get.put(StudentController());
   Get.put(UserController());
-  Get.put(LoginController());
-  Get.put(ApiService());
-  Get.put(RegisterController());
-  Get.put(RegisterStudentController());
-  Get.put(RegisterAddressController());
-  Get.put(PickAddressController());
-  Get.put(ChangePasswordController());
-  Get.put(HomeController());
+  // Get.put(LoginController());
+  // Get.put(ApiService());
+  // Get.put(RegisterController());
+  // Get.put(RegisterStudentController());
+  // Get.put(RegisterAddressController());
+  // Get.put(PickAddressController());
+  // Get.put(ChangePasswordController());
+  // Get.put(HomeController());
+  // Get.put(ReorderStudentController());
+
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
@@ -47,26 +48,34 @@ void main() async {
     provisional: false,
     sound: true,
   );
-  Get.put(ReorderStudentController());
-  Get.put(TestController());
 
   final token = await AuthService().getToken();
-  print(token);
   final role = await AuthService().getRole();
-  print(role);
   final userId = await AuthService().getId();
-  print(userId);
-  var page = Routes.INITIAL;
+  final state = await AuthService().getState();
+  var page = Routes.LOGIN;
+
   if (token != null && role != null && userId != null) {
     if (role == 'PARENT') {
+      Get.find<UserController>().fetchParent(userId);
       page = Routes.HOME;
     } else {
-      page = Routes.REORDER_STUDENT;
+      Get.find<UserController>().fetchDriver(userId);
+      switch (state) {
+        case 'reorder':
+          page = Routes.REORDER_STUDENT;
+          break;
+        case 'check':
+          page = Routes.CHECK;
+          break;
+        case 'map':
+          page = Routes.MAP;
+          break;
+        default:
+          page = Routes.LOGIN;
+      }
     }
-  } else {
-    page = Routes.LOGIN;
   }
-
   runApp(
     GetMaterialApp(
       title: "Application",

@@ -7,6 +7,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:school_bus/app/services/api_service.dart';
+import 'package:school_bus/app/services/auth_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 // import 'package:school_bus/models/student_model.dart';
@@ -14,7 +15,7 @@ import 'package:school_bus/models/user_model.dart';
 
 class MapController extends GetxController {
   final Completer<GoogleMapController> controller = Completer();
-
+  final authService = AuthService();
   StudentController? studentController;
 
   LatLng sourceLocation = LatLng(13.8476, 100.57);
@@ -25,7 +26,8 @@ class MapController extends GetxController {
 
   List<LatLng> polylineCoordinates = [];
 
-  late Rx<LocationData?> currentLocation = Rx<LocationData?>(LocationData.fromMap({
+  late Rx<LocationData?> currentLocation =
+      Rx<LocationData?>(LocationData.fromMap({
     "latitude": 13.8476, // Default latitude value
     "longitude": 100.57, // Default longitude value
   }));
@@ -48,13 +50,16 @@ class MapController extends GetxController {
       currentLocation.value = newLoc;
       print("yo it changing = ${currentLocation}");
       Marker marker = Marker(
-        markerId: const MarkerId("currentLocation"),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-        position: LatLng(currentLocation.value!.latitude!, currentLocation.value!.longitude!));
+          markerId: const MarkerId("currentLocation"),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          position: LatLng(currentLocation.value!.latitude!,
+              currentLocation.value!.longitude!));
       markers.add(marker);
       print("add markers ==========================> current location");
-      print("add homeLatitude  ==========================> ${currentLocation.value!.latitude}");
-      print("add homeLongtitude ==========================> ${currentLocation.value!.longitude}");
+      print(
+          "add homeLatitude  ==========================> ${currentLocation.value!.latitude}");
+      print(
+          "add homeLongtitude ==========================> ${currentLocation.value!.longitude}");
       print("list of marker (from currentlocation) =======> ${markers}");
 
       // if (polylineCoordinates.isEmpty) {
@@ -75,18 +80,21 @@ class MapController extends GetxController {
 
   void getPolyPoints() async {
     PolylinePoints polylinePoints = PolylinePoints();
-    print("get Polypoints==============================================================");
+    print(
+        "get Polypoints==============================================================");
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         FlutterConfigPlus.get('GG_API_KEY'),
         // PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
-        PointLatLng(currentLocation.value!.latitude!, currentLocation.value!.longitude!),
-        PointLatLng(markers[0].position.latitude, markers[0].position.longitude));
+        PointLatLng(currentLocation.value!.latitude!,
+            currentLocation.value!.longitude!),
+        PointLatLng(
+            markers[0].position.latitude, markers[0].position.longitude));
     polylineCoordinates.clear();
-    if (result.points.isNotEmpty)  {
+    if (result.points.isNotEmpty) {
       print("point is NOT EMPTY and clear polyline");
       result.points.forEach((PointLatLng point) =>
           polylineCoordinates.add(LatLng(point.latitude, point.longitude)));
-          print("${polylineCoordinates}");
+      print("${polylineCoordinates}");
     } else {
       print("point is EMPTY");
       print("add ${polylineCoordinates}");
@@ -100,73 +108,80 @@ class MapController extends GetxController {
   //   });
   // }
 
-  Future<Null> checkPreference() async{
-      // get the device firebasetoken
-      FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-      String? token = await firebaseMessaging.getToken();
-      print("++++++++++++++++++++++");
-      print('token ======> $token');
-      // get current user data
-      User? currentUser = Get.find<UserController>().currentUser.value;
-      currentUser!.fbtoken = token;
-      
-      var data = {
-        "fbtoken" : currentUser.fbtoken,
-      };
-      var response = await ApiService().putData(data, '/users/${currentUser.id}');
+  Future<Null> checkPreference() async {
+    // get the device firebasetoken
+    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    String? token = await firebaseMessaging.getToken();
+    print("++++++++++++++++++++++");
+    print('token ======> $token');
+    // get current user data
+    User? currentUser = Get.find<UserController>().currentUser.value;
+    currentUser!.fbtoken = token;
 
-      if (response['success'] == true) {
-        print('User Updated Successfully');
-        print(response);
-      } else {
-        print('User Updated Failed');
-        print(response['message']);
-        Get.snackbar('Error', response['message']);
-      }
+    var data = {
+      "fbtoken": currentUser.fbtoken,
+    };
+    var response = await ApiService().putData(data, '/users/${currentUser.id}');
+
+    if (response['success'] == true) {
+      print('User Updated Successfully');
+      print(response);
+    } else {
+      print('User Updated Failed');
+      print(response['message']);
+      Get.snackbar('Error', response['message']);
+    }
   }
 
   void addPassengerMarkers() {
-  for (int i = 0; i < studentController!.myStudents.length ; i++) {
-    print("add markers ==========================> ${studentController?.myStudents[i].fullName}");
-    print("add homeLatitude  ==========================> ${studentController?.myStudents[i].homeLatitude}");
-    print("add homeLongtitude ==========================> ${studentController?.myStudents[i].homeLongitude}");
-    Marker marker = Marker(
-      markerId: MarkerId("${studentController!.myStudents[i].id}"),
-      position: LatLng(studentController!.myStudents[i].homeLatitude!, studentController!.myStudents[i].homeLongitude!),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-    );
-    markers.add(marker);
-    sendNotification(studentController!.myStudents[i].id.toString(), 
-    "แจ้งเตือนสถานะการเดินทางของนักเรียน", 
-    "ขณะนี้นักเรียน ${studentController!.myStudents[i].fullName} กำลังออกเดินทางค่ะ");
+    for (int i = 0; i < studentController!.myStudents.length; i++) {
+      print(
+          "add markers ==========================> ${studentController?.myStudents[i].fullName}");
+      print(
+          "add homeLatitude  ==========================> ${studentController?.myStudents[i].homeLatitude}");
+      print(
+          "add homeLongtitude ==========================> ${studentController?.myStudents[i].homeLongitude}");
+      Marker marker = Marker(
+        markerId: MarkerId("${studentController!.myStudents[i].id}"),
+        position: LatLng(studentController!.myStudents[i].homeLatitude!,
+            studentController!.myStudents[i].homeLongitude!),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+      );
+      markers.add(marker);
+      sendNotification(
+          studentController!.myStudents[i].id.toString(),
+          "แจ้งเตือนสถานะการเดินทางของนักเรียน",
+          "ขณะนี้นักเรียน ${studentController!.myStudents[i].fullName} กำลังออกเดินทางค่ะ");
+    }
+    print("list of marker (from addPassenger) =======> ${markers}");
   }
-  print("list of marker (from addPassenger) =======> ${markers}");
-}
 
 // at destination
-void deleteMarker() {
-  if (markers.isNotEmpty) {
-    Marker marker = markers[0];
-    sendNotification(marker.markerId.value, 
-    "แจ้งเตือนสถานะการเดินทางของนักเรียน", 
-    "ขณะนี้นักเรียน ${marker.markerId.value} กำลังออกเดินทางค่ะ");
+  void deleteMarker() {
+    if (markers.isNotEmpty) {
+      Marker marker = markers[0];
+      sendNotification(
+          marker.markerId.value,
+          "แจ้งเตือนสถานะการเดินทางของนักเรียน",
+          "ขณะนี้นักเรียน ${marker.markerId.value} กำลังออกเดินทางค่ะ");
 
-    markers.removeAt(0); // Remove the first marker from the list
-    print("Current marker ============================> ${markers}");
-    print("marker length ============================> ${markers.length}");
+      markers.removeAt(0); // Remove the first marker from the list
+      print("Current marker ============================> ${markers}");
+      print("marker length ============================> ${markers.length}");
+    }
   }
-}
 
-void sendNotification(String student_id, String title, String body) async {
-  print("SENDING NOTIFICATION+++++++++++++++++++++++++++++++++++++++");
-  var data = {
-    "student_id" : student_id,
-    "title" : title,
-    "body" : body,
-  };
+  void sendNotification(String student_id, String title, String body) async {
+    print("SENDING NOTIFICATION+++++++++++++++++++++++++++++++++++++++");
+    var data = {
+      "student_id": student_id,
+      "title": title,
+      "body": body,
+    };
 
-  final response = await ApiService().postData(data, '/sendNotification/{student_id}/{title}/{body}');
-  if (response['success'] == true) {
+    final response = await ApiService()
+        .postData(data, '/sendNotification/{student_id}/{title}/{body}');
+    if (response['success'] == true) {
       print(response);
       // Get.snackbar('Successfully send notification', response['message']);
     } else {
@@ -174,8 +189,7 @@ void sendNotification(String student_id, String title, String body) async {
       print(response);
       // Get.snackbar('Error (sending notification)', response['message']);
     }
-}
-
+  }
 
   @override
   void onInit() {
@@ -186,6 +200,7 @@ void sendNotification(String student_id, String title, String body) async {
 
   @override
   void onReady() {
+    authService.saveState("map");
     studentController = Get.find<StudentController>();
     addPassengerMarkers();
     getCurrentLocation();

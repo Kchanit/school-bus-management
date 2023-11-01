@@ -6,8 +6,6 @@ import '../modules/change_status/bindings/change_status_binding.dart';
 import '../modules/change_status/views/change_status_view.dart';
 import '../modules/check/bindings/check_binding.dart';
 import '../modules/check/views/check_view.dart';
-import '../modules/dashboard/bindings/dashboard_binding.dart';
-import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/initial/bindings/initial_binding.dart';
@@ -32,8 +30,6 @@ import '../modules/select_student/bindings/select_student_binding.dart';
 import '../modules/select_student/views/select_student_view.dart';
 import '../modules/setting/bindings/setting_binding.dart';
 import '../modules/setting/views/setting_view.dart';
-import '../modules/test/bindings/test_binding.dart';
-import '../modules/test/views/test_view.dart';
 
 part 'app_routes.dart';
 
@@ -59,19 +55,9 @@ class AppPages {
       binding: LoginBinding(),
     ),
     GetPage(
-      name: _Paths.DASHBOARD,
-      page: () => const DashboardView(),
-      binding: DashboardBinding(),
-    ),
-    GetPage(
       name: _Paths.INITIAL,
       page: () => const InitialView(),
       binding: InitialBinding(),
-    ),
-    GetPage(
-      name: _Paths.TEST,
-      page: () => const TestView(),
-      binding: TestBinding(),
     ),
     GetPage(
       name: _Paths.REGISTER_ADDRESS,

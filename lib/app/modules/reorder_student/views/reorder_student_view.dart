@@ -50,7 +50,7 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
               const SizedBox(
                 height: 30,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
@@ -61,7 +61,8 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
                   SizedBox(
                     width: 10,
                   ),
-                  Text('8/8')
+                  Text(
+                      controller.studentController.myStudents.length.toString())
                 ],
               ),
               const SizedBox(
@@ -74,15 +75,15 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
                   },
                   children: controller.studentController.myStudents
                       .map(
-                        (e) => ListTile(
-                          key: ValueKey(e),
+                        (student) => ListTile(
+                          key: ValueKey(student.id),
                           // leading: Text(e.id.toString()),
                           title: Text(
-                            e.fullName,
+                            student.fullName,
                             style: const TextStyle(
                                 fontSize: 18, color: Colors.black),
                           ),
-                          subtitle: Text('${e.address}'),
+                          subtitle: Text('${student.address}'),
                           trailing: const Icon(Icons.drag_handle_rounded),
                         ),
                       )

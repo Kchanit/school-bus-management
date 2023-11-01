@@ -34,7 +34,7 @@ class UserController extends GetxController {
       final List<Student> studentsData = (response['students'] as List)
           .map((student) => Student.fromJson(student))
           .toList();
-      print("Students Amount: ${studentsData.length}");
+      print("Students Amount P: ${studentsData.length}");
       studentController.myStudents.assignAll(studentsData);
       if (studentController.myStudents.isNotEmpty) {
         studentController.student.value = studentController.myStudents[0];
@@ -60,6 +60,17 @@ class UserController extends GetxController {
     }
   }
 
+  // Get Driver
+  Future<void> fetchDriver(id) async {
+    final response = await apiService.getData('/drivers/$id');
+    if (response['success'] == true) {
+      User? driver = User.fromJson(response['driver']);
+      currentUser.value = driver;
+    } else {
+      Get.snackbar('Error', response['message']);
+    }
+  }
+
   // Driver get students
   Future<void> fetchRoute(id) async {
     final response = await apiService.getData('/routes/$id/get-my-route');
@@ -67,46 +78,49 @@ class UserController extends GetxController {
       final List<Student> students = (response['students'] as List)
           .map((student) => Student.fromJson(student))
           .toList();
-
       if (students.isNotEmpty) {
-        students.sort((a, b) => a.order!.compareTo(b.order!));
-        studentController.myStudents.assignAll(students);
+        var busTakingStudents =
+            students.where((student) => student.isTakingBus == true).toList();
+
+        busTakingStudents.sort((a, b) => a.order!.compareTo(b.order!));
+        studentController.myStudents.assignAll(busTakingStudents);
         for (var i = 0; i < studentController.myStudents.length; i++) {
           print(studentController.myStudents[i].fullName);
           print(studentController.myStudents[i].order);
+          print(studentController.myStudents[i].address);
         }
-        print("Students Amount: ${studentController.myStudents.length}");
+        print("Students Amount D: ${studentController.myStudents.length}");
       } else {
         print("No students");
       }
     }
   }
 
-  // Driver get route address
-  fetchRouteAddress(id) async {
-    final response = await apiService.getData('/routes/$id/get-route-address');
-    if (response['success'] == true) {
-      final List<dynamic> routeAddressData = response['addresses'];
+  // // Driver get route address
+  // fetchRouteAddress(id) async {
+  //   final response = await apiService.getData('/routes/$id/get-route-address');
+  //   if (response['success'] == true) {
+  //     final List<dynamic> routeAddressData = response['addresses'];
 
-      // Create a map of order-to-address, assuming order is unique
-      final Map<int, Map<String, dynamic>> routeAddresses = {};
-      for (var i = 0; i < routeAddressData.length; i++) {
-        routeAddresses[i] = {
-          'address': routeAddressData[i]['home_address'].toString(),
-          'latitude': routeAddressData[i]['home_latitude'],
-          'longitude': routeAddressData[i]['home_longitude'],
-        };
-      }
+  //     // Create a map of order-to-address, assuming order is unique
+  //     final Map<int, Map<String, dynamic>> routeAddresses = {};
+  //     for (var i = 0; i < routeAddressData.length; i++) {
+  //       routeAddresses[i] = {
+  //         'address': routeAddressData[i]['home_address'].toString(),
+  //         'latitude': routeAddressData[i]['home_latitude'],
+  //         'longitude': routeAddressData[i]['home_longitude'],
+  //       };
+  //     }
 
-      for (var i = 0; i < studentController.myStudents.length; i++) {
-        studentController.myStudents[i].address = routeAddresses[i]!['address'];
-        studentController.myStudents[i].homeLatitude =
-            double.tryParse(routeAddresses[i]!['latitude']);
-        studentController.myStudents[i].homeLongitude =
-            double.tryParse(routeAddresses[i]!['longitude']);
-      }
-    }
-  }
+  //     for (var i = 0; i < studentController.myStudents.length; i++) {
+  //       studentController.myStudents[i].address = routeAddresses[i]!['address'];
+  //       studentController.myStudents[i].homeLatitude =
+  //           double.tryParse(routeAddresses[i]!['latitude']);
+  //       studentController.myStudents[i].homeLongitude =
+  //           double.tryParse(routeAddresses[i]!['longitude']);
+  //     }
+  //   }
+  // }
 
   Future getDriverImageUrl(id) async {
     print("Get driver image url");

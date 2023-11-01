@@ -16,6 +16,10 @@ class AuthService {
     return await storage.read(key: 'id');
   }
 
+  Future<String?> getState() async {
+    return await storage.read(key: 'state');
+  }
+
   Future<void> setToken(String token) async {
     await storage.write(key: 'access_token', value: token);
   }
@@ -28,9 +32,15 @@ class AuthService {
     await storage.write(key: 'id', value: id);
   }
 
+  Future<void> saveState(String id) async {
+    await storage.write(key: 'state', value: id);
+  }
+
   Future<void> removeToken() async {
     await storage.delete(key: 'access_token');
     await storage.delete(key: 'role');
+    await storage.delete(key: 'id');
+    await storage.delete(key: 'state');
   }
 
   Future<bool> isAuthenticated() async {

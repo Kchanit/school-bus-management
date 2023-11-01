@@ -2,8 +2,10 @@ import 'package:get/get.dart';
 
 enum StudentStatus {
   NONE,
-  CHECKED,
   NOT_CHECKED,
+  CHECKED, // arrived at bus
+  ON_THE_WAY, // on the way
+  ARRIVED_AT_HOME, // arrived at home
 }
 
 class Student {
@@ -17,7 +19,7 @@ class Student {
   String? imageUrl;
   Rx<StudentStatus> status;
   int? order;
-  bool isTakingBus = false;
+  bool isTakingBus;
 
   Student({
     required this.id,
@@ -29,7 +31,7 @@ class Student {
     this.imageUrl,
     required this.status,
     this.order,
-    required bool isTakingBus,
+    required this.isTakingBus,
   });
 
   factory Student.fromJson(Map<String, dynamic> json) {
@@ -38,7 +40,7 @@ class Student {
       firstName: json['first_name'],
       lastName: json['last_name'],
       // studentNumber: json['student_number'],
-      address: json['address'],
+      address: json['home_address'],
       homeLatitude: json['home_latitude'] != null
           ? double.parse(json['home_latitude'].toString())
           : null,
@@ -48,7 +50,7 @@ class Student {
       imageUrl: json['image_url'],
       status: _getStatusFromJson(json['status']).obs,
       order: json['order'],
-      isTakingBus: json['is_taking_bus'] == 1 ? true : false,
+      isTakingBus: json['is_taking_bus'] == 1,
     );
   }
   static StudentStatus _getStatusFromJson(String? status) {

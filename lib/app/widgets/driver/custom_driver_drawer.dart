@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/routes/app_pages.dart';
-import 'package:school_bus/controllers/student_controller.dart';
+import 'package:school_bus/app/services/auth_service.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 
 class CustomDriverDrawer extends StatelessWidget {
@@ -55,37 +55,37 @@ class CustomDriverDrawer extends StatelessWidget {
               Get.toNamed(Routes.REORDER_STUDENT);
             },
           ),
-          ExpansionTile(
-            initiallyExpanded: true,
-            title: Text(
-              'Children',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            children: [
-              Obx(() {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: Get.find<StudentController>().myStudents.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: const Icon(Icons.person),
-                      onTap: () {
-                        Get.find<StudentController>().student.value =
-                            Get.find<StudentController>().myStudents[index];
-                        Get.back();
-                      },
-                      title: Text(
-                        Get.find<StudentController>()
-                            .myStudents[index]
-                            .fullName,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                    );
-                  },
-                );
-              }),
-            ],
-          ),
+          // ExpansionTile(
+          //   initiallyExpanded: true,
+          //   title: Text(
+          //     'Children',
+          //     style: Theme.of(context).textTheme.titleSmall,
+          //   ),
+          //   children: [
+          // Obx(() {
+          //   return ListView.builder(
+          //     shrinkWrap: true,
+          //     itemCount: Get.find<StudentController>().myStudents.length,
+          //     itemBuilder: (context, index) {
+          //       return ListTile(
+          //         leading: const Icon(Icons.person),
+          //         onTap: () {
+          //           Get.find<StudentController>().student.value =
+          //               Get.find<StudentController>().myStudents[index];
+          //           Get.back();
+          //         },
+          //         title: Text(
+          //           Get.find<StudentController>()
+          //               .myStudents[index]
+          //               .fullName,
+          //           style: Theme.of(context).textTheme.titleSmall,
+          //         ),
+          //       );
+          //     },
+          //   );
+          // }),
+          // ],
+          // ),
           ListTile(
             title: Text(
               'Contact School',
@@ -115,7 +115,7 @@ class CustomDriverDrawer extends StatelessWidget {
             // selected: _selectedIndex == 2,
             onTap: () {
               // _onItemTapped(2);
-              Get.toNamed(Routes.LOGIN);
+              AuthService().logout();
             },
           ),
         ],

@@ -51,9 +51,11 @@ class ReorderStudentController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
+    print("Reorder student controller ready");
+    authService.saveState("reorder");
     final userId = await authService.getId();
-
+    // await userController.fetchDriver(userId);
     await userController.fetchRoute(userId);
-    await userController.fetchRouteAddress(userId);
+    print("Reorder student controller ready");
   }
 }

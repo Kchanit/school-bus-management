@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:geocoding/geocoding.dart';
@@ -6,8 +5,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:school_bus/models/user_model.dart';
 import 'package:school_bus/controllers/user_controller.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:school_bus/app/services/api_service.dart';
 
 class PickAddressController extends GetxController {
   Completer<GoogleMapController> googleMapController = Completer();
@@ -17,10 +14,9 @@ class PickAddressController extends GetxController {
   RxString draggedAddress = "".obs;
   Position? currentPosition;
   User? currentUser;
-RxString district = "".obs;
+  RxString district = "".obs;
   RxString street = "".obs;
   RxString fullAddress = "".obs;
-
 
   @override
   void onInit() async {

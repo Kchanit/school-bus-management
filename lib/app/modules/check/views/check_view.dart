@@ -63,7 +63,7 @@ class CheckView extends GetView<CheckController> {
                     width: 10,
                   ),
                   Text(
-                      '${controller.checkedCount}/${controller.studentController!.myStudents.length}'),
+                      '${controller.checkedCount.value}/${controller.studentController.myStudents.length}'),
                 ],
               ),
               const SizedBox(
@@ -71,10 +71,10 @@ class CheckView extends GetView<CheckController> {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: controller.studentController!.myStudents.length,
+                  itemCount: controller.studentController.myStudents.length,
                   itemBuilder: (context, index) {
                     final Rx<Student> student =
-                        controller.studentController!.myStudents[index].obs;
+                        controller.studentController.myStudents[index].obs;
                     // final isCheck = student.checked;
                     return ListTile(
                       title: Text(student.value.fullName),

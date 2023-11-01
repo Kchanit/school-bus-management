@@ -1,17 +1,20 @@
 import 'package:get/get.dart';
 import 'package:school_bus/app/services/api_service.dart';
+import 'package:school_bus/app/services/auth_service.dart';
 import 'package:school_bus/models/student_model.dart';
 
 import '../../../../controllers/student_controller.dart';
 import '../../../../controllers/user_controller.dart';
 
 class CheckController extends GetxController {
-  UserController? userController;
-  StudentController? studentController;
-  RxInt checkedCount = 0.obs;
+  final userController = Get.find<UserController>();
+  final studentController = Get.find<StudentController>();
+  final authService = AuthService();
+  var checkedCount = 0.obs;
   Rx<StudentStatus> status = StudentStatus.NOT_CHECKED.obs;
 
   Future<bool> updateStatus(Rx<Student> student, StudentStatus status) async {
+    // noti
     final data = {
       "status": status.toString().split('.').last,
     };
@@ -32,17 +35,19 @@ class CheckController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    userController = Get.find<UserController>();
-    studentController = Get.find<StudentController>();
-    checkedCount = studentController!.myStudents
-        .where((student) => student.status.value == StudentStatus.CHECKED)
-        .length
-        .obs;
   }
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
+    authService.saveState("check");
+    final userId = await authService.getId();
+    await userController.fetchRoute(userId);
+    // await userController.fetchRouteAddress(userId);
+    checkedCount = studentController.myStudents
+        .where((student) => student.status.value == StudentStatus.CHECKED)
+        .length
+        .obs;
   }
 
   @override

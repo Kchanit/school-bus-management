@@ -69,8 +69,6 @@ class LoginController extends GetxController {
   }
 
   handleDriverLogin() async {
-    // await userController.fetchRoute(userController.currentUser.value!.id);
-    // await userController.fetchRouteAddress(userController.currentUser.value!.id);
     Get.offAllNamed('/reorder-student');
   }
 
