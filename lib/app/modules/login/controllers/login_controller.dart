@@ -59,8 +59,7 @@ class LoginController extends GetxController {
   }
 
   handleParentLogin() async {
-    await userController
-        .fetchStudent(userController.currentUser.value!.citizenId!);
+    await userController.fetchStudent(userController.currentUser.value!.id);
     await userController.fetchMyDriver(studentController!.student.value!.id);
     // add firebase token
     checkPreference();

@@ -29,13 +29,16 @@ class UserController extends GetxController {
 
   // Parent get students
   Future<void> fetchStudent(id) async {
+    print(id);
     final response = await apiService.getData('/students/$id/get-my-students');
     if (response['success'] == true) {
-      final List<Student> studentsData = (response['students'] as List)
+      final List<Student> students = (response['students'] as List)
           .map((student) => Student.fromJson(student))
           .toList();
-      print("Students Amount P: ${studentsData.length}");
-      studentController.myStudents.assignAll(studentsData);
+      var busTakingStudents =
+          students.where((student) => student.isTakingBus == true).toList();
+      print("Students Amount P: ${students.length}");
+      studentController.myStudents.assignAll(busTakingStudents);
       if (studentController.myStudents.isNotEmpty) {
         studentController.student.value = studentController.myStudents[0];
         print("Student: ${studentController.student.value!.fullName} ");

@@ -21,7 +21,7 @@ class HomeController extends GetxController {
     const number = '1234567890'; //set the number here
     await FlutterPhoneDirectCaller.callNumber(number);
   }
-  
+
   void showNotificationPopup(String title, String body) {
     Get.dialog(
       AlertDialog(
@@ -58,9 +58,9 @@ class HomeController extends GetxController {
     final userId = await authService.getId();
     if (userId != null) {
       await userController.fetchParent(userId);
-      await userController.fetchStudent(userId);
-      await userController.fetchMyDriver(studentController.student.value!.id);
     }
+    await userController.fetchStudent(userId);
+    await userController.fetchMyDriver(studentController.student.value!.id);
   }
 
   @override
