@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school_bus/app/modules/map/controllers/map_controller.dart';
 
 class CustomDriverStepper extends StatelessWidget {
   CustomDriverStepper({super.key});
@@ -7,6 +8,12 @@ class CustomDriverStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // final mapController = Get.find<MapController>();
+    // List<Step> steps = mapController.steps.toList();
+    // int currentStepValue = steps.length;
+    // _index.value = currentStepValue;
+    
     return Obx(() => Stepper(
             physics: const NeverScrollableScrollPhysics(),
             controlsBuilder: (BuildContext context, ControlsDetails controls) {
@@ -17,9 +24,10 @@ class CustomDriverStepper extends StatelessWidget {
                   children: <Widget>[
                     ElevatedButton(
                         onPressed: () {
-                          if (_index.value < 6) {
+                          if (_index.value < Get.find<MapController>().studentController!.myStudents.length - 1){
                             _index.value += 1;
                           }
+                           Get.find<MapController>().deleteMarker();
                         },
                         child: Text('Finish ${_index.value}')),
                     const Text('15:00   '),
@@ -31,43 +39,26 @@ class CustomDriverStepper extends StatelessWidget {
             onStepTapped: (int index) {
               _index.value = index;
             },
-            steps: <Step>[
-              Step(
-                title: const Text('Student1'),
-                subtitle: const Text('Road, District'),
-                content: _content(_index.value),
-              ),
-              Step(
-                title: const Text('Student2'),
-                subtitle: const Text('Road, District'),
-                content: _content(_index.value),
-              ),
-              Step(
-                title: const Text('Student3'),
-                subtitle: const Text('Road, District'),
-                content: _content(_index.value),
-              ),
-              Step(
-                title: const Text('Student3'),
-                subtitle: const Text('Road, District'),
-                content: _content(_index.value),
-              ),
-              Step(
-                title: const Text('Student3'),
-                subtitle: const Text('Road, District'),
-                content: _content(_index.value),
-              ),
-              Step(
-                title: const Text('Student3'),
-                subtitle: const Text('Road, District'),
-                content: _content(_index.value),
-              ),
-              Step(
-                title: const Text('Student3'),
-                subtitle: const Text('Road, District'),
-                content: _content(_index.value),
-              ),
-            ]));
+            // steps: Get.find<MapController>().steps.toList(),
+
+            steps: Get.find<MapController>().studentController!.myStudents
+                      .map(
+                        (e) => Step(
+                          title: Text('${e.fullName}'),
+                          subtitle: Text('${e.homeLatitude}'),
+                          content: Text('${e.homeLongitude}'),
+                        ),
+                      )
+                      .toList(),
+                ),
+
+            // steps: <Step>[
+            //   Step(
+            //     title: const Text('Student1'),
+            //     subtitle: const Text('Road, District'),
+            //     content: _content(_index.value),
+            //   ),
+            );
   }
 }
 

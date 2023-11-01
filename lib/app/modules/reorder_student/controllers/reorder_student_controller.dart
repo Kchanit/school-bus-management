@@ -1,33 +1,35 @@
 import 'package:get/get.dart';
 import 'package:school_bus/app/services/api_service.dart';
+import 'package:school_bus/app/services/auth_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 
 class ReorderStudentController extends GetxController {
-  UserController? userController;
-  StudentController? studentController;
+  final userController = Get.find<UserController>();
+  final studentController = Get.find<StudentController>();
+  final authService = AuthService();
 
   void reorder(oldIndex, newIndex) {
     if (newIndex > oldIndex) {
       newIndex -= 1;
     }
-    final item = studentController!.myStudents.removeAt(oldIndex);
-    studentController!.myStudents.insert(newIndex, item);
+    final item = studentController.myStudents.removeAt(oldIndex);
+    studentController.myStudents.insert(newIndex, item);
 
-    for (var i = 0; i < studentController!.myStudents.length; i++) {
-      studentController!.myStudents[i].order = i + 1;
+    for (var i = 0; i < studentController.myStudents.length; i++) {
+      studentController.myStudents[i].order = i + 1;
     }
-    for (var i = 0; i < studentController!.myStudents.length; i++) {
-      print(studentController!.myStudents[i].fullName);
-      print(studentController!.myStudents[i].order);
+    for (var i = 0; i < studentController.myStudents.length; i++) {
+      print(studentController.myStudents[i].fullName);
+      print(studentController.myStudents[i].order);
     }
   }
 
   void updateOrder() async {
     final data = {
-      "driver_id": userController!.currentUser.value!.id,
-      "students": studentController!.myStudents
-          .map((student) => {"id": student.id, "order": student.order})
+      "driver_id": userController.currentUser.value!.id,
+      "students": studentController.myStudents
+          .map((e) => {"id": e.id, "order": e.order})
           .toList()
     };
 
@@ -44,7 +46,14 @@ class ReorderStudentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    userController = Get.find<UserController>();
-    studentController = Get.find<StudentController>();
+  }
+
+  @override
+  void onReady() async {
+    super.onReady();
+    final userId = await authService.getId();
+
+    await userController.fetchRoute(userId);
+    await userController.fetchRouteAddress(userId);
   }
 }

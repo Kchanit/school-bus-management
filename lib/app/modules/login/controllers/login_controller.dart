@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -57,9 +59,12 @@ class LoginController extends GetxController {
   }
 
   handleParentLogin() async {
-    // await userController.fetchStudent(userController.currentUser.value!.id);
-    // await userController.fetchMyDriver(studentController!.student.value!.id);
-    // print('Login Successful');
+    await userController
+        .fetchStudent(userController.currentUser.value!.citizenId!);
+    await userController.fetchMyDriver(studentController!.student.value!.id);
+    // add firebase token
+    checkPreference();
+    print('Login Successful');
     Get.offAllNamed('/home');
   }
 
@@ -69,88 +74,30 @@ class LoginController extends GetxController {
     Get.offAllNamed('/reorder-student');
   }
 
-  // // Driver get students
-  // Future<void> fetchRoute() async {
-  //   final response =
-  //       await apiService.getData('/routes/${currentUser!.id}/get-my-route');
-  //   if (response['success'] == true) {
-  //     final List<Student> students = (response['students'] as List)
-  //         .map((student) => Student.fromJson(student))
-  //         .toList();
+  Future<Null> checkPreference() async {
+    // get the device firebasetoken
+    await Firebase.initializeApp();
+    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    String? token = await firebaseMessaging.getToken();
+    print("++++++++++++++++++++++");
+    print('token ======> $token');
+    // get current user data
+    User? currentUser = Get.find<UserController>().currentUser.value;
+    print('Current user ====> ${currentUser}');
+    currentUser!.fbtoken = token;
 
-  //     if (students.isNotEmpty) {
-  //       students.sort((a, b) => a.order!.compareTo(b.order!));
-  //       studentController!.myStudents.assignAll(students);
-  //       for (var i = 0; i < studentController!.myStudents.length; i++) {
-  //         print(studentController!.myStudents[i].fullName);
-  //         print(studentController!.myStudents[i].order);
-  //       }
-  //       print("Students Amount: ${studentController!.myStudents.length}");
-  //     } else {
-  //       print("No students");
-  //     }
-  //   }
-  // }
+    var data = {
+      "fbtoken": currentUser.fbtoken,
+    };
+    var response = await ApiService().putData(data, '/users/${currentUser.id}');
 
-  // // Parent get driver
-  // Future<void> fetchMyDriver(studentId) async {
-  //   var response = await apiService.getData('/drivers/$studentId/get-driver');
-  //   if (response['success'] == true) {
-  //     userController.myDriver.value = User.fromJson(response['driver']);
-  //     // Get the driver image
-  //     userController.myDriver.value!.imageUrl =
-  //         await userController.getDriverImageUrl();
-  //   } else {
-  //     // Get.snackbar('Error', response['message']);
-  //     print(response['message']);
-  //   }
-  // }
-
-  // // Driver get route address
-  // fetchRouteAddress() async {
-  //   final response = await apiService
-  //       .getData('/routes/${currentUser!.id}/get-route-address');
-  //   if (response['success'] == true) {
-  //     final List<dynamic> routeAddressData = response['addresses'];
-
-  //     // Create a map of order-to-address, assuming order is unique
-  //     final Map<int, Map<String, dynamic>> routeAddresses = {};
-  //     for (var i = 0; i < routeAddressData.length; i++) {
-  //       routeAddresses[i] = {
-  //         'address': routeAddressData[i]['home_address'].toString(),
-  //         'latitude': routeAddressData[i]['home_latitude'],
-  //         'longitude': routeAddressData[i]['home_longitude'],
-  //       };
-  //     }
-
-  //     for (var i = 0; i < studentController!.myStudents.length; i++) {
-  //       studentController!.myStudents[i].address =
-  //           routeAddresses[i]!['address'];
-  //       studentController!.myStudents[i].homeLatitude =
-  //           double.tryParse(routeAddresses[i]!['latitude']);
-  //       studentController!.myStudents[i].homeLongitude =
-  //           double.tryParse(routeAddresses[i]!['longitude']);
-  //     }
-  //   }
-  // }
-
-  // // Parent get students
-  // Future<void> fetchStudent(int id) async {
-  //   final response = await apiService.getData('/students/$id/get-my-students');
-  //   if (response['success'] == true) {
-  //     final List<Student> studentsData = (response['students'] as List)
-  //         .map((student) => Student.fromJson(student))
-  //         .toList();
-  //     print("Students Amount: ${studentsData.length}");
-  //     studentController!.myStudents.assignAll(studentsData);
-  //     if (studentController!.myStudents.isNotEmpty) {
-  //       studentController!.student.value = studentController!.myStudents[0];
-  //       print("Student: ${studentController!.student.value!.fullName} ");
-  //     } else {
-  //       print("No students");
-  //     }
-  //   } else {
-  //     Get.snackbar('Error', response['message']);
-  //   }
-  // }
+    if (response['success'] == true) {
+      print('User Updated Successfully');
+      print(response);
+    } else {
+      print('User Updated Failed');
+      print(response['message']);
+      Get.snackbar('Error', response['message']);
+    }
+  }
 }

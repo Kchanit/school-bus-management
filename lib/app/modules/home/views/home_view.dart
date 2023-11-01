@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -12,6 +13,29 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        String title = message.notification!.title ?? 'No title';
+        String body = message.notification!.body ?? 'No body';
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(title),
+              content: Text(body),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Close'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

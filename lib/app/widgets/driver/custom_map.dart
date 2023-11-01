@@ -19,10 +19,10 @@ class _CustomMapState extends State<CustomMap> {
           ? const Center(
               child: Text('Loading...'),
             )
-          : GoogleMap(
+          : Obx(() => GoogleMap(
               initialCameraPosition: CameraPosition(
-                  target: LatLng(controller.currentLocation!.latitude!,
-                      controller.currentLocation!.longitude!),
+                  target: LatLng(controller.currentLocation.value!.latitude!,
+                      controller.currentLocation.value!.longitude!),
                   zoom: 14.5),
               polylines: {
                 Polyline(
@@ -31,23 +31,24 @@ class _CustomMapState extends State<CustomMap> {
                     color: Colors.blue,
                     width: 6)
               },
-              markers: {
-                Marker(
-                    markerId: const MarkerId("currentLocation"),
-                    // icon: controller.currentLocationIcon,
-                    position: LatLng(controller.currentLocation!.latitude!,
-                        controller.currentLocation!.longitude!)),
-                Marker(
-                    markerId: const MarkerId("source"),
-                    position: controller.sourceLocation),
-                Marker(
-                    markerId: const MarkerId("destination"),
-                    position: controller.destination),
-              },
-              // onMapCreated: (mapController) {
-              //   controller.controller.complete(mapController);
+              // markers: {
+              //   Marker(
+              //       markerId: const MarkerId("currentLocation"),
+              //       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+              //       position: LatLng(controller.currentLocation.value!.latitude!,
+              //           controller.currentLocation.value!.longitude!)),
+              //   Marker(
+              //       markerId: const MarkerId("source"),
+              //       position: controller.sourceLocation),
+              //   Marker(
+              //       markerId: const MarkerId("destination"),
+              //       position: controller.destination),
               // },
+              markers: Set<Marker>.of(controller.markers),
+              onMapCreated: (mapController) {
+                controller.controller.complete(mapController);
+              },
             ),
-    );
+    ));
   }
 }

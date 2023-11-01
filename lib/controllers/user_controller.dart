@@ -20,7 +20,7 @@ class UserController extends GetxController {
   Future<void> fetchParent(id) async {
     final response = await apiService.getData('/users/$id');
     if (response['success'] == true) {
-      final User parent = User.fromJson(response['user']);
+      User? parent = User.fromJson(response['user']);
       currentUser.value = parent;
     } else {
       Get.snackbar('Error', response['message']);

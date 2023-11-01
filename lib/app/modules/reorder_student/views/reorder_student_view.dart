@@ -72,7 +72,7 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
                   onReorder: (oldIndex, newIndex) {
                     controller.reorder(oldIndex, newIndex);
                   },
-                  children: controller.studentController!.myStudents
+                  children: controller.studentController.myStudents
                       .map(
                         (e) => ListTile(
                           key: ValueKey(e),

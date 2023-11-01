@@ -31,7 +31,6 @@ void main() async {
   Get.put(PickAddressController());
   Get.put(ChangePasswordController());
   Get.put(HomeController());
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
@@ -52,8 +51,11 @@ void main() async {
   Get.put(TestController());
 
   final token = await AuthService().getToken();
+  print(token);
   final role = await AuthService().getRole();
+  print(role);
   final userId = await AuthService().getId();
+  print(userId);
   var page = Routes.INITIAL;
   if (token != null && role != null && userId != null) {
     if (role == 'PARENT') {
