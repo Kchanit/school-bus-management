@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:school_bus/app/modules/login/controllers/login_controller.dart';
 import 'package:school_bus/app/modules/pick_address/controllers/pick_address_controller.dart';
 import 'package:school_bus/app/modules/register/controllers/register_controller.dart';
 import 'package:school_bus/app/modules/select_student/controllers/select_student_controller.dart';

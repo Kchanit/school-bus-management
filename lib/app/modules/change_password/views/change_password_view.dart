@@ -29,7 +29,7 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 onPressed: () {
-                  Get.toNamed(Routes.SETTING);
+                  controller.saveData();
                 })
           ],
           centerTitle: true,
@@ -51,7 +51,7 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                 height: 25,
               ),
               CustomTextFormField(
-                  textEditingController: oldPasswordController,
+                  textEditingController: controller.passwordController,
                   labelText: 'Old password',
                   autofocus: true,
                   obscureText: false),
@@ -59,7 +59,7 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                 height: 25,
               ),
               CustomTextFormField(
-                  textEditingController: newPasswordController,
+                  textEditingController: controller.newPasswordController,
                   labelText: 'New password',
                   autofocus: true,
                   obscureText: false),
@@ -67,10 +67,17 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                 height: 25,
               ),
               CustomTextFormField(
-                  textEditingController: confirmNewPasswordController,
+                  textEditingController: controller.confirmPasswordController,
                   labelText: 'Confirm new password',
                   autofocus: true,
                   obscureText: false),
+              const SizedBox(
+                height: 25,
+              ),
+              Obx(() => Text(
+                    controller.errorMessage.value,
+                    style: const TextStyle(color: Colors.red),
+                  )),
             ],
           ),
         ));

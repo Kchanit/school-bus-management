@@ -1,5 +1,3 @@
-import 'package:get/get.dart';
-
 class User {
   final int id;
   final String firstName;

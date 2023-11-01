@@ -15,15 +15,6 @@ class SettingView extends GetView<SettingController> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
 
-  final image = Rxn<XFile>();
-  final ImagePicker imagePicker = ImagePicker();
-
-  Future getImage(ImageSource media) async {
-    var img = await imagePicker.pickImage(source: media);
-
-    image.value = img;
-  }
-
   myAlert(context) {
     return Get.defaultDialog(
       title: 'Please choose media to select.',
@@ -37,7 +28,7 @@ class SettingView extends GetView<SettingController> {
               //if user click this button, user can upload image from gallery
               onPressed: () {
                 Navigator.pop(context);
-                getImage(ImageSource.gallery);
+                controller.getImage(ImageSource.gallery);
               },
               child: const Row(
                 children: [
@@ -53,7 +44,7 @@ class SettingView extends GetView<SettingController> {
               //if user click this button. user can upload image from camera
               onPressed: () {
                 Navigator.pop(context);
-                getImage(ImageSource.camera);
+                controller.getImage(ImageSource.camera);
               },
               child: const Row(
                 children: [
@@ -151,7 +142,7 @@ class SettingView extends GetView<SettingController> {
                 ),
                 Column(
                   children: [
-                    image.value != null
+                    controller.image.value != null
                         ? Container(
                             height: 85,
                             width: 85,
@@ -162,7 +153,7 @@ class SettingView extends GetView<SettingController> {
                               borderRadius: BorderRadius.circular(60),
                               child: Image.file(
                                 //to show image, you type like this.
-                                File(image.value!.path),
+                                File(controller.image.value!.path),
                                 fit: BoxFit.cover,
                                 width: MediaQuery.of(context).size.width,
                                 height: 300,
