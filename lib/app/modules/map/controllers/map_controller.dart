@@ -15,6 +15,8 @@ import 'package:school_bus/models/user_model.dart';
 
 class MapController extends GetxController {
   final Completer<GoogleMapController> controller = Completer();
+  final userController = Get.find<UserController>();
+  // final studentController = Get.find<StudentController>();
   final authService = AuthService();
   StudentController? studentController;
 
@@ -147,8 +149,8 @@ class MapController extends GetxController {
       markers.add(marker);
       sendNotification(
           studentController!.myStudents[i].id.toString(),
-          "แจ้งเตือนสถานะการเดินทางของนักเรียน",
-          "ขณะนี้นักเรียน ${studentController!.myStudents[i].fullName} กำลังออกเดินทางค่ะ");
+          "Schoolbus Notification",
+          "Student: ${studentController!.myStudents[i].fullName} is on the way.");
     }
     print("list of marker (from addPassenger) =======> ${markers}");
   }
@@ -163,11 +165,10 @@ void deleteMarker() {
         if (student.id.toString() == marker.markerId.value) {
           studentname = student.fullName;
         }
-
     }
     sendNotification(marker.markerId.value, 
-    "แจ้งเตือนสถานะการเดินทางของนักเรียน", 
-    "ขณะนี้นักเรียน $studentname ถึงบ้านแล้วค่ะ");
+    "Schoolbus Notification", 
+    "Student: $studentname arrived at home");
 
       markers.removeAt(0); // Remove the first marker from the list
       print("Current marker ============================> ${markers}");
@@ -196,14 +197,16 @@ void deleteMarker() {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     studentController = Get.find<StudentController>();
+    final userId = await authService.getId();
+    await userController.fetchRoute(userId);
     // setCustomMarkerIcon();
     super.onInit();
   }
 
   @override
-  void onReady() {
+  void onReady() async {
     authService.saveState("map");
     studentController = Get.find<StudentController>();
     addPassengerMarkers();

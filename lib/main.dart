@@ -2,7 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/services/auth_service.dart';
-// import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
+import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
 // import 'package:school_bus/app/modules/login/controllers/login_controller.dart';
 // import 'package:school_bus/app/modules/pick_address/controllers/pick_address_controller.dart';
 // import 'package:school_bus/app/modules/register/controllers/register_controller.dart';
@@ -21,6 +21,7 @@ void main() async {
   await FlutterConfigPlus.loadEnvVariables();
   Get.put(StudentController());
   Get.put(UserController());
+  Get.put(HomeController());
   // Get.put(LoginController());
   // Get.put(ApiService());
   // Get.put(RegisterController());
@@ -28,7 +29,6 @@ void main() async {
   // Get.put(RegisterAddressController());
   // Get.put(PickAddressController());
   // Get.put(ChangePasswordController());
-  // Get.put(HomeController());
   // Get.put(ReorderStudentController());
 
   await Firebase.initializeApp();
@@ -78,7 +78,7 @@ void main() async {
   runApp(
     GetMaterialApp(
       title: "Application",
-      initialRoute: page,
+      initialRoute: Routes.INITIAL,
       getPages: AppPages.routes,
     ),
   );

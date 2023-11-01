@@ -13,6 +13,18 @@ class HomeController extends GetxController {
   final authService = AuthService();
   RxList<User> users = <User>[].obs;
 
+  void initializeFirebaseMessaging() {
+    print("FCM initialize");
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("Received notification");
+      print(message.notification!.title);
+      print(message.notification!.body);
+      String title = message.notification!.title ?? 'No title';
+      String body = message.notification!.body ?? 'No body';
+      showNotificationPopup(title, body);
+    });
+  }
+
   void changeStudentStatus() async {
     Get.toNamed("/change-status");
   }
@@ -42,14 +54,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("Received notification");
-      print(message.notification!.title);
-      print(message.notification!.body);
-      String title = message.notification!.title ?? 'No title';
-      String body = message.notification!.body ?? 'No body';
-      showNotificationPopup(title, body);
-    });
+    initializeFirebaseMessaging();
   }
 
   @override
