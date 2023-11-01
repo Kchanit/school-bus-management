@@ -84,11 +84,8 @@ class MapController extends GetxController {
         "get Polypoints==============================================================");
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         FlutterConfigPlus.get('GG_API_KEY'),
-        // PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
-        PointLatLng(currentLocation.value!.latitude!,
-            currentLocation.value!.longitude!),
-        PointLatLng(
-            markers[0].position.latitude, markers[0].position.longitude));
+        PointLatLng(currentLocation.value!.latitude!, currentLocation.value!.longitude!),
+        PointLatLng(markers[0].position.latitude, markers[0].position.longitude));
     polylineCoordinates.clear();
     if (result.points.isNotEmpty) {
       print("point is NOT EMPTY and clear polyline");
@@ -157,13 +154,20 @@ class MapController extends GetxController {
   }
 
 // at destination
-  void deleteMarker() {
-    if (markers.isNotEmpty) {
-      Marker marker = markers[0];
-      sendNotification(
-          marker.markerId.value,
-          "แจ้งเตือนสถานะการเดินทางของนักเรียน",
-          "ขณะนี้นักเรียน ${marker.markerId.value} กำลังออกเดินทางค่ะ");
+void deleteMarker() {
+  if (markers.isNotEmpty) {
+    Marker marker = markers[0];
+    //find student name
+    String studentname = "";
+    for (var student in studentController!.myStudents) {
+        if (student.id.toString() == marker.markerId.value) {
+          studentname = student.fullName;
+        }
+
+    }
+    sendNotification(marker.markerId.value, 
+    "แจ้งเตือนสถานะการเดินทางของนักเรียน", 
+    "ขณะนี้นักเรียน $studentname ถึงบ้านแล้วค่ะ");
 
       markers.removeAt(0); // Remove the first marker from the list
       print("Current marker ============================> ${markers}");

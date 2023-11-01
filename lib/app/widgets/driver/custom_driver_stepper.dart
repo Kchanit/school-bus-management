@@ -45,8 +45,8 @@ class CustomDriverStepper extends StatelessWidget {
                       .map(
                         (e) => Step(
                           title: Text('${e.fullName}'),
-                          subtitle: Text('${e.homeLatitude}'),
-                          content: Text('${e.homeLongitude}'),
+                          subtitle: Text('${e.address}'),
+                          content: Text(''),
                         ),
                       )
                       .toList(),
