@@ -15,13 +15,14 @@ abstract class Routes {
   static const REGISTER_STUDENT = _Paths.REGISTER_STUDENT;
   static const PICK_ADDRESS = _Paths.PICK_ADDRESS;
   static const SELECT_STUDENT = _Paths.SELECT_STUDENT;
-  static const NOTIFICATION = _Paths.NOTIFICATION;
   static const SETTING = _Paths.SETTING;
   static const CHANGE_STATUS = _Paths.CHANGE_STATUS;
   static const REORDER_STUDENT = _Paths.REORDER_STUDENT;
   static const CHECK = _Paths.CHECK;
   static const MAP = _Paths.MAP;
   static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
+  static const DRIVER_HOME = _Paths.DRIVER_HOME;
+  static const DRIVER_END = _Paths.DRIVER_END;
 }
 
 abstract class _Paths {
@@ -36,11 +37,12 @@ abstract class _Paths {
   static const REGISTER_STUDENT = '/register-student';
   static const PICK_ADDRESS = '/pick-address';
   static const SELECT_STUDENT = '/select-student';
-  static const NOTIFICATION = '/notification';
   static const SETTING = '/setting';
   static const CHANGE_STATUS = '/change-status';
   static const REORDER_STUDENT = '/reorder-student';
   static const CHECK = '/check';
   static const MAP = '/map';
   static const CHANGE_PASSWORD = '/change-password';
+  static const DRIVER_HOME = '/driver-home';
+  static const DRIVER_END = '/driver-end';
 }

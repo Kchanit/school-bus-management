@@ -26,9 +26,34 @@ class CheckController extends GetxController {
       final student = Student.fromJson(response['student']);
       print(
           "Update status of ${student.fullName} to ${student.status.toString().split('.').last} successfully");
+      sendNotification(student.id.toString(),
+                      "Schoolbus Notification",
+                      "Student: ${student.fullName} has boarded the bus.");
       return true;
     } else {
+      sendNotification(student.value.id.toString(),
+                      "Schoolbus Notification",
+                      "Student: ${student.value.fullName} has NOT boarded the bus.");
       return false;
+    }
+  }
+
+  void sendNotification(String student_id, String title, String body) async {
+    print("SENDING NOTIFICATION+++++++++++++++++++++++++++++++++++++++");
+    var data = {
+      "student_id": student_id,
+      "title": title,
+      "body": body,
+    };
+    final response = await ApiService()
+        .postData(data, '/sendNotification/{student_id}/{title}/{body}');
+    if (response['success'] == true) {
+      print(response);
+      // Get.snackbar('Successfully send notification', response['message']);
+    } else {
+      print("respones__________________________________________________");
+      print(response);
+      // Get.snackbar('Error (sending notification)', response['message']);
     }
   }
 
@@ -46,7 +71,7 @@ class CheckController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
   }
 
@@ -54,6 +79,7 @@ class CheckController extends GetxController {
   void onReady() async {
     super.onReady();
     authService.saveState("check");
+    // await userController.fetchRouteAddress(userId);
     final userId = await authService.getId();
     await userController.fetchRoute(userId);
     checkedCount = studentController.myStudents

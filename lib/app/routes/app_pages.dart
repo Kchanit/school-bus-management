@@ -6,6 +6,10 @@ import '../modules/change_status/bindings/change_status_binding.dart';
 import '../modules/change_status/views/change_status_view.dart';
 import '../modules/check/bindings/check_binding.dart';
 import '../modules/check/views/check_view.dart';
+import '../modules/driver_end/bindings/driver_end_binding.dart';
+import '../modules/driver_end/views/driver_end_view.dart';
+import '../modules/driver_home/bindings/driver_home_binding.dart';
+import '../modules/driver_home/views/driver_home_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/initial/bindings/initial_binding.dart';
@@ -14,8 +18,6 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/map/bindings/map_binding.dart';
 import '../modules/map/views/map_view.dart';
-import '../modules/notification/bindings/notification_binding.dart';
-import '../modules/notification/views/notification_view.dart';
 import '../modules/pick_address/bindings/pick_address_binding.dart';
 import '../modules/pick_address/views/pick_address_view.dart';
 import '../modules/register/bindings/register_binding.dart';
@@ -80,11 +82,6 @@ class AppPages {
       binding: SelectStudentBinding(),
     ),
     GetPage(
-      name: _Paths.NOTIFICATION,
-      page: () => const NotificationView(),
-      binding: NotificationBinding(),
-    ),
-    GetPage(
       name: _Paths.SETTING,
       page: () => SettingView(),
       binding: SettingBinding(),
@@ -113,6 +110,16 @@ class AppPages {
       name: _Paths.CHANGE_PASSWORD,
       page: () => ChangePasswordView(),
       binding: ChangePasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.DRIVER_HOME,
+      page: () => const DriverHomeView(),
+      binding: DriverHomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.DRIVER_END,
+      page: () => const DriverEndView(),
+      binding: DriverEndBinding(),
     ),
   ];
 }

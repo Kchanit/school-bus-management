@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
 import 'package:school_bus/app/services/auth_service.dart';
-// import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
+import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
 // import 'package:school_bus/app/modules/login/controllers/login_controller.dart';
 // import 'package:school_bus/app/modules/pick_address/controllers/pick_address_controller.dart';
 // import 'package:school_bus/app/modules/register/controllers/register_controller.dart';
@@ -22,6 +22,7 @@ void main() async {
   await FlutterConfigPlus.loadEnvVariables();
   Get.put(StudentController());
   Get.put(UserController());
+  Get.put(HomeController());
   // Get.put(LoginController());
   // Get.put(ApiService());
   // Get.put(RegisterController());
@@ -61,7 +62,9 @@ void main() async {
       page = Routes.HOME;
     } else {
       Get.find<UserController>().fetchDriver(userId);
-      switch (state) {
+        switch (state) {
+        case 'driver-end':
+          page = Routes.DRIVER_END;
         case 'reorder':
           page = Routes.REORDER_STUDENT;
           break;
@@ -79,7 +82,7 @@ void main() async {
   runApp(
     GetMaterialApp(
       title: "Application",
-      initialRoute: page,
+      initialRoute: Routes.INITIAL,
       getPages: AppPages.routes,
     ),
   );

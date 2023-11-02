@@ -5,6 +5,7 @@ import 'package:flutter_config_plus/flutter_config_plus.dart';
 import 'package:get/get.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/app/services/auth_service.dart';
@@ -15,11 +16,16 @@ import 'package:school_bus/models/user_model.dart';
 
 class MapController extends GetxController {
   final Completer<GoogleMapController> controller = Completer();
+  final userController = Get.find<UserController>();
+  // final studentController = Get.find<StudentController>();
   final authService = AuthService();
   StudentController? studentController;
 
   LatLng sourceLocation = LatLng(13.8476, 100.57);
   LatLng destination = LatLng(13.8202, 100.564);
+
+  late Timer _timer;
+  late String _currentTime;
 
   List<Marker> markers = [];
   List<Step> steps = [];
@@ -147,8 +153,8 @@ class MapController extends GetxController {
       markers.add(marker);
       sendNotification(
           studentController!.myStudents[i].id.toString(),
-          "แจ้งเตือนสถานะการเดินทางของนักเรียน",
-          "ขณะนี้นักเรียน ${studentController!.myStudents[i].fullName} กำลังออกเดินทางค่ะ");
+          "Schoolbus Notification",
+          "Student: ${studentController!.myStudents[i].fullName} is on the way.");
     }
     print("list of marker (from addPassenger) =======> ${markers}");
   }
@@ -163,11 +169,10 @@ void deleteMarker() {
         if (student.id.toString() == marker.markerId.value) {
           studentname = student.fullName;
         }
-
     }
     sendNotification(marker.markerId.value, 
-    "แจ้งเตือนสถานะการเดินทางของนักเรียน", 
-    "ขณะนี้นักเรียน $studentname ถึงบ้านแล้วค่ะ");
+    "Schoolbus Notification", 
+    "Student: $studentname arrived at home");
 
       markers.removeAt(0); // Remove the first marker from the list
       print("Current marker ============================> ${markers}");
@@ -195,15 +200,32 @@ void deleteMarker() {
     }
   }
 
+  String getCurrentTime() {
+    final now = DateTime.now();
+    final timeFormat = DateFormat("HH:mm");
+    return timeFormat.format(now);
+  }
+
+  handleDriverHome() {
+    Get.offAllNamed('/driver-end');
+  }
+
   @override
-  void onInit() {
+  void onInit() async {
     studentController = Get.find<StudentController>();
+    final userId = await authService.getId();
+    await userController.fetchRoute(userId);
     // setCustomMarkerIcon();
+    _currentTime = getCurrentTime();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      _currentTime = getCurrentTime();
+      update();
+    });
     super.onInit();
   }
 
   @override
-  void onReady() {
+  void onReady() async {
     authService.saveState("map");
     studentController = Get.find<StudentController>();
     addPassengerMarkers();
