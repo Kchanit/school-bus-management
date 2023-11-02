@@ -20,12 +20,6 @@ class HomeView extends GetView<HomeController> {
           actions: [
             IconButton(
               onPressed: () {
-                Get.toNamed(Routes.NOTIFICATION);
-              },
-              icon: const Icon(Icons.notifications_rounded),
-            ),
-            IconButton(
-              onPressed: () {
                 Get.toNamed(Routes.CHANGE_STATUS);
               },
               icon: const Icon(Icons.directions_bus_rounded),

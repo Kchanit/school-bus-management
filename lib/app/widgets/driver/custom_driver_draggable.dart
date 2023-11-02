@@ -31,24 +31,6 @@ class CustomDriverDraggable extends StatelessWidget {
                               horizontal: 26, vertical: 16),
                           child: Column(
                             children: [
-                              // Row(
-                              //   children: [
-                              //     Container(
-                              //         height: 40,
-                              //         width: 40,
-                              //         margin: const EdgeInsets.only(right: 16),
-                              //         decoration: BoxDecoration(
-                              //             color: Colors.green,
-                              //             borderRadius:
-                              //                 BorderRadius.circular(30))),
-                              //     Obx(
-                              //       () => Text(Get.find<StudentController>()
-                              //           .student
-                              //           .value!
-                              //           .fullName),
-                              //     )
-                              //   ],
-                              // ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,

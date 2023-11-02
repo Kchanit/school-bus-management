@@ -5,6 +5,7 @@ import 'package:flutter_config_plus/flutter_config_plus.dart';
 import 'package:get/get.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/app/services/auth_service.dart';
@@ -22,6 +23,9 @@ class MapController extends GetxController {
 
   LatLng sourceLocation = LatLng(13.8476, 100.57);
   LatLng destination = LatLng(13.8202, 100.564);
+
+  late Timer _timer;
+  late String _currentTime;
 
   List<Marker> markers = [];
   List<Step> steps = [];
@@ -196,12 +200,27 @@ void deleteMarker() {
     }
   }
 
+  String getCurrentTime() {
+    final now = DateTime.now();
+    final timeFormat = DateFormat("HH:mm");
+    return timeFormat.format(now);
+  }
+
+  handleDriverHome() {
+    Get.offAllNamed('/driver-end');
+  }
+
   @override
   void onInit() async {
     studentController = Get.find<StudentController>();
     final userId = await authService.getId();
     await userController.fetchRoute(userId);
     // setCustomMarkerIcon();
+    _currentTime = getCurrentTime();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      _currentTime = getCurrentTime();
+      update();
+    });
     super.onInit();
   }
 

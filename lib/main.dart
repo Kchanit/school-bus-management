@@ -60,7 +60,9 @@ void main() async {
       page = Routes.HOME;
     } else {
       Get.find<UserController>().fetchDriver(userId);
-      switch (state) {
+        switch (state) {
+        case 'driver-end':
+          page = Routes.DRIVER_END;
         case 'reorder':
           page = Routes.REORDER_STUDENT;
           break;

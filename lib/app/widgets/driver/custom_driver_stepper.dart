@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:school_bus/app/modules/map/controllers/map_controller.dart';
 
 class CustomDriverStepper extends StatelessWidget {
@@ -8,12 +9,6 @@ class CustomDriverStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    // final mapController = Get.find<MapController>();
-    // List<Step> steps = mapController.steps.toList();
-    // int currentStepValue = steps.length;
-    // _index.value = currentStepValue;
-    
     return Obx(() => Stepper(
             physics: const NeverScrollableScrollPhysics(),
             controlsBuilder: (BuildContext context, ControlsDetails controls) {
@@ -26,11 +21,12 @@ class CustomDriverStepper extends StatelessWidget {
                         onPressed: () {
                           if (_index.value < Get.find<MapController>().studentController!.myStudents.length - 1){
                             _index.value += 1;
+                          } else {
+                            Get.find<MapController>().handleDriverHome();
                           }
                            Get.find<MapController>().deleteMarker();
                         },
                         child: Text('Finish ${_index.value}')),
-                    const Text('15:00   '),
                   ],
                 ),
               );
@@ -39,7 +35,6 @@ class CustomDriverStepper extends StatelessWidget {
             onStepTapped: (int index) {
               _index.value = index;
             },
-            // steps: Get.find<MapController>().steps.toList(),
 
             steps: Get.find<MapController>().studentController!.myStudents
                       .map(
@@ -51,13 +46,6 @@ class CustomDriverStepper extends StatelessWidget {
                       )
                       .toList(),
                 ),
-
-            // steps: <Step>[
-            //   Step(
-            //     title: const Text('Student1'),
-            //     subtitle: const Text('Road, District'),
-            //     content: _content(_index.value),
-            //   ),
             );
   }
 }
