@@ -25,7 +25,11 @@ class ChangeStatusController extends GetxController {
         .putData(data, '/students/${student.id}/change-bus-status');
     if (response['success'] == true) {
       Get.snackbar('Success', response['message']);
-      Get.offAllNamed("/home");
+      if (student.isTakingBus){
+        Get.offAllNamed("/home");
+      } else {
+        Get.offAllNamed('/parent-end');
+      }
     } else {
       Get.snackbar('Error', response['message']);
     }

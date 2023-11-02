@@ -64,6 +64,8 @@ class CheckController extends GetxController {
       if (student.status.value == StudentStatus.CHECKED) {
         updateStatus(student, StudentStatus.ON_THE_WAY);
         student.status.value = StudentStatus.ON_THE_WAY;
+        print("STUDENT VALUE");
+        print(student.status.value);
         // Send notification to parent
       }
     }

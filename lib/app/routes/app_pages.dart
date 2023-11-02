@@ -18,6 +18,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/map/bindings/map_binding.dart';
 import '../modules/map/views/map_view.dart';
+import '../modules/parent_end/bindings/parent_end_binding.dart';
+import '../modules/parent_end/views/parent_end_view.dart';
 import '../modules/pick_address/bindings/pick_address_binding.dart';
 import '../modules/pick_address/views/pick_address_view.dart';
 import '../modules/register/bindings/register_binding.dart';
@@ -120,6 +122,11 @@ class AppPages {
       name: _Paths.DRIVER_END,
       page: () => const DriverEndView(),
       binding: DriverEndBinding(),
+    ),
+    GetPage(
+      name: _Paths.PARENT_END,
+      page: () => const ParentEndView(),
+      binding: ParentEndBinding(),
     ),
   ];
 }

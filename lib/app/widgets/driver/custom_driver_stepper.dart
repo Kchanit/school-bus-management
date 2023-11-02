@@ -26,14 +26,14 @@ class CustomDriverStepper extends StatelessWidget {
                           }
                            Get.find<MapController>().deleteMarker();
                         },
-                        child: Text('Finish ${_index.value}')),
+                        child: Text('Finish')),
                   ],
                 ),
               );
             },
             currentStep: _index.value,
             onStepTapped: (int index) {
-              _index.value = index;
+              _index.value = index+1;
             },
 
             steps: Get.find<MapController>().studentController!.myStudents

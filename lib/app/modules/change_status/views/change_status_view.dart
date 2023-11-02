@@ -85,12 +85,15 @@ class ChangeStatusView extends GetView<ChangeStatusController> {
                   ),
                   ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: controller.checkTime()
-                          ? MaterialStateProperty.all(Colors.yellow)
-                          : MaterialStateProperty.all(Colors.grey),
+                      backgroundColor: 
+                          MaterialStateProperty.all(Colors.yellow),
+                      // backgroundColor: controller.checkTime()
+                      //     ? MaterialStateProperty.all(Colors.yellow)
+                      //     : MaterialStateProperty.all(Colors.grey),
                     ),
                     onPressed: () {
-                      controller.checkTime() ? controller.saveData() : null;
+                      controller.saveData();
+                      
                     },
                     child: const Text('Confirm'),
                   )

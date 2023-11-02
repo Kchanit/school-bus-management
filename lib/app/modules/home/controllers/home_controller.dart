@@ -6,12 +6,33 @@ import 'package:school_bus/app/services/auth_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 import 'package:school_bus/models/user_model.dart';
+import 'package:intl/intl.dart';
 
 class HomeController extends GetxController {
   final studentController = Get.find<StudentController>();
   final userController = Get.find<UserController>();
   final authService = AuthService();
   RxList<User> users = <User>[].obs;
+  final RxInt index = 0.obs;
+  final RxString time = ''.obs;
+
+  var imagePath = "assets/images/seat.png".obs;
+  
+  List<String> imageList = [
+    "assets/images/kids.png",
+    "assets/images/bus-bd.gif",
+    "assets/images/home.png",
+  ];
+
+void getCurrentImagePath() {
+    imagePath.value = imageList[index.value - 1];
+  }
+
+  void getCurrentTime() {
+    final now = DateTime.now();
+    final formattedTime = DateFormat.Hm().format(now);
+    time.value = formattedTime;
+  }
 
   void initializeFirebaseMessaging() {
     print("FCM initialize");
@@ -43,6 +64,13 @@ class HomeController extends GetxController {
           TextButton(
             child: const Text('Close'),
             onPressed: () {
+                index.value++;
+                print("add index");
+                print(index.value);
+                getCurrentImagePath();
+                print(imagePath.value);
+                getCurrentTime();
+                print(time);
               Get.back();
             },
           ),
@@ -51,9 +79,14 @@ class HomeController extends GetxController {
     );
   }
 
+  handleParentEnd() async {
+    Get.offAllNamed('/parent-end');
+  }
+
   @override
   void onInit() {
     super.onInit();
+    getCurrentTime();
     initializeFirebaseMessaging();
   }
 

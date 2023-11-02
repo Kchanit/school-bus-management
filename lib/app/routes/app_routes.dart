@@ -23,6 +23,7 @@ abstract class Routes {
   static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
   static const DRIVER_HOME = _Paths.DRIVER_HOME;
   static const DRIVER_END = _Paths.DRIVER_END;
+  static const PARENT_END = _Paths.PARENT_END;
 }
 
 abstract class _Paths {
@@ -45,4 +46,5 @@ abstract class _Paths {
   static const CHANGE_PASSWORD = '/change-password';
   static const DRIVER_HOME = '/driver-home';
   static const DRIVER_END = '/driver-end';
+  static const PARENT_END = '/parent-end';
 }
