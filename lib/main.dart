@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
+import 'package:school_bus/app/modules/pick_address/controllers/pick_address_controller.dart';
 import 'package:school_bus/app/services/auth_service.dart';
 import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
 // import 'package:school_bus/app/modules/login/controllers/login_controller.dart';
@@ -28,7 +29,7 @@ void main() async {
   // Get.put(RegisterController());
   // Get.put(RegisterStudentController());
   // Get.put(RegisterAddressController());
-  // Get.put(PickAddressController());
+  Get.put(PickAddressController());
   // Get.put(ChangePasswordController());
   Get.put(HomeController());
   // Get.put(ReorderStudentController());
@@ -62,7 +63,7 @@ void main() async {
       page = Routes.HOME;
     } else {
       Get.find<UserController>().fetchDriver(userId);
-        switch (state) {
+      switch (state) {
         case 'driver-end':
           page = Routes.DRIVER_END;
         case 'reorder':

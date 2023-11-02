@@ -17,14 +17,14 @@ class HomeController extends GetxController {
   final RxString time = ''.obs;
 
   var imagePath = "assets/images/seat.png".obs;
-  
+
   List<String> imageList = [
     "assets/images/kids.png",
     "assets/images/bus-bd.gif",
     "assets/images/home.png",
   ];
 
-void getCurrentImagePath() {
+  void getCurrentImagePath() {
     imagePath.value = imageList[index.value - 1];
   }
 
@@ -64,13 +64,13 @@ void getCurrentImagePath() {
           TextButton(
             child: const Text('Close'),
             onPressed: () {
-                index.value++;
-                print("add index");
-                print(index.value);
-                getCurrentImagePath();
-                print(imagePath.value);
-                getCurrentTime();
-                print(time);
+              index.value++;
+              print("add index");
+              print(index.value);
+              getCurrentImagePath();
+              print(imagePath.value);
+              getCurrentTime();
+              print(time);
               Get.back();
             },
           ),
@@ -96,9 +96,9 @@ void getCurrentImagePath() {
     final userId = await authService.getId();
     if (userId != null) {
       await userController.fetchParent(userId);
+      await userController.fetchStudent(userId);
+      await userController.fetchMyDriver(studentController.student.value!.id);
     }
-    await userController.fetchStudent(userId);
-    await userController.fetchMyDriver(studentController.student.value!.id);
   }
 
   @override
