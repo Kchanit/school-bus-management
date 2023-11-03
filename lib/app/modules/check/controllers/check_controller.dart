@@ -62,14 +62,18 @@ class CheckController extends GetxController {
 
     for (final student in students) {
       if (student.status.value == StudentStatus.CHECKED) {
-        updateStatus(student, StudentStatus.ON_THE_WAY);
-        student.status.value = StudentStatus.ON_THE_WAY;
-        print("STUDENT VALUE");
+        // updateStatus(student, StudentStatus.ON_THE_WAY);
+        // student.status.value = StudentStatus.ON_THE_WAY;
+        // print("STUDENT VALUE");
         print(student.status.value);
         // Send notification to parent
       }
     }
-    Get.toNamed('/map');
+    studentController.myStudents = studentController.myStudents
+        .where((student) => student.status.value == StudentStatus.CHECKED)
+        .toList()
+        .obs;
+    Get.toNamed('/reorder-student');
   }
 
   @override

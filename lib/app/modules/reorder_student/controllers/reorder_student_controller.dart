@@ -37,7 +37,7 @@ class ReorderStudentController extends GetxController {
     if (response['success'] == true) {
       print("Route updated successfully");
       Get.snackbar('Success', response['message']);
-      Get.offAllNamed('/check');
+      Get.offAllNamed('/map');
     } else {
       Get.snackbar('Error', response['message']);
     }

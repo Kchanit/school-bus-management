@@ -4,7 +4,6 @@ import 'package:school_bus/app/services/auth_service.dart';
 class DriverEndController extends GetxController {
  final authService = AuthService();
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -12,8 +11,8 @@ class DriverEndController extends GetxController {
 
   @override
   void onReady() {
-    authService.saveState("driver-end");
     super.onReady();
+    authService.saveState("driver-end");
   }
 
   @override
@@ -21,5 +20,4 @@ class DriverEndController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
 }

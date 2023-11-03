@@ -70,7 +70,7 @@ class LoginController extends GetxController {
   }
 
   handleDriverLogin() async {
-    Get.offAllNamed('/reorder-student');
+    Get.offAllNamed('/check');
   }
 
   Future<Null> checkPreference() async {

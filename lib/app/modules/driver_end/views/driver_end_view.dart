@@ -27,7 +27,7 @@ class DriverEndView extends GetView<DriverEndController> {
               height: 220.0,
             ),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'The Task is completed.\nThank you for your service.',
               style: TextStyle(
                 fontSize: 20,
