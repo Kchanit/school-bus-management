@@ -12,6 +12,7 @@ import 'package:school_bus/controllers/report_controller.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
 import 'package:school_bus/models/report_model.dart';
+import 'package:school_bus/models/student_model.dart';
 // import 'package:school_bus/models/student_model.dart';
 import 'package:school_bus/models/user_model.dart';
 
@@ -118,6 +119,7 @@ class MapController extends GetxController {
     var students = studentController!.myStudents;
     for (var student in students) {
       print(student.fullName);
+      student.status.value = StudentStatus.ON_THE_WAY;
     }
     for (int i = 0; i < studentController!.myStudents.length; i++) {
       print(
@@ -150,6 +152,7 @@ class MapController extends GetxController {
       for (var student in studentController!.myStudents) {
         if (student.id.toString() == marker.markerId.value) {
           studentname = student.fullName;
+          student.status.value = StudentStatus.ARRIVED_AT_HOME;
           DateTime now = DateTime.now();
           student.endTime = "${now.hour}:${now.minute}:${now.second}";
         }
