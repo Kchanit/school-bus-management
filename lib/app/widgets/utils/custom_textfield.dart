@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_bus/app/styles/stye.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final TextEditingController textEditingController;
@@ -52,10 +53,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 labelStyle: const TextStyle(color: Colors.black),
                 // hintText: widget.hintText,
                 focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.black, width: 1),
+                    borderSide: const BorderSide(color: Colors.grey, width: 1),
                     borderRadius: BorderRadius.circular(8)),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Style.greyColor)),
+                errorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.red),
+                    borderRadius: BorderRadius.circular(8)),
+                focusedErrorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.red),
+                    borderRadius: BorderRadius.circular(8))),
             validator: widget.validateFunc ?? (value) => null,
           ),
         )

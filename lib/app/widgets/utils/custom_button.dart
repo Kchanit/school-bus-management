@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_bus/app/styles/stye.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -16,19 +17,22 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.85,
-      height: 50,
+      height: 55,
       child: ElevatedButton(
         onPressed: () {
           onPressed!();
         },
         style: ButtonStyle(
             elevation: MaterialStateProperty.all(0),
-            backgroundColor: const MaterialStatePropertyAll(Colors.black),
+            backgroundColor: MaterialStatePropertyAll(Style.primaryColor),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ))),
-        child: Text(buttonText),
+        child: Text(
+          buttonText,
+          style: const TextStyle(fontSize: 16),
+        ),
       ),
     );
   }
