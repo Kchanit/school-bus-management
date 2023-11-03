@@ -29,13 +29,14 @@ class CheckController extends GetxController {
       if (status == StudentStatus.CHECKED) {
         sendNotification(student.id.toString(), "Schoolbus Notification",
             "Student: ${student.fullName} has boarded the bus.");
+        return true;
+      } else if (status == StudentStatus.NOT_CHECKED) {
+        sendNotification(student.id.toString(), "Schoolbus Notification",
+            "Student: ${student.fullName} has NOT boarded the bus.");
+        return false;
       }
-      return true;
-    } else {
-      sendNotification(student.value.id.toString(), "Schoolbus Notification",
-          "Student: ${student.value.fullName} has NOT boarded the bus.");
-      return false;
     }
+    return false;
   }
 
   void sendNotification(String student_id, String title, String body) async {
@@ -61,9 +62,16 @@ class CheckController extends GetxController {
     studentController.myStudents.refresh(); // Refresh the observable
     final students = studentController.myStudents;
 
+    var notCheckedStudents = students
+        .where((student) => student.status.value != StudentStatus.CHECKED)
+        .toList();
     studentController.myStudents.value = students
         .where((student) => student.status.value == StudentStatus.CHECKED)
         .toList();
+
+    for (var student in notCheckedStudents) {
+      await updateStatus(student, StudentStatus.NOT_CHECKED);
+    }
 
     Get.toNamed('/reorder-student');
   }
