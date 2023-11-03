@@ -11,8 +11,18 @@ class PickAddressView extends GetView<PickAddressController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: false,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        toolbarHeight: 10,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
+      ),
       body: Stack(children: [
-        Container(
+        SizedBox(
           height: MediaQuery.of(context).size.height,
           width: double.infinity,
           child: GoogleMap(
@@ -40,7 +50,7 @@ class PickAddressView extends GetView<PickAddressController> {
         ),
         // Custom pin
         Center(
-          child: Container(
+          child: SizedBox(
             width: 150,
             child: Lottie.asset("assets/pin.json"),
           ),

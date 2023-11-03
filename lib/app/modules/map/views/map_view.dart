@@ -35,7 +35,7 @@ class MapView extends GetView<MapController> {
             color: Colors.black,
           ),
         ),
-        drawer: const CustomDriverDrawer(),
+        // drawer: const CustomDriverDrawer(),
         body: const Stack(
           children: [CustomMap(), CustomDriverDraggable()],
         ));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school_bus/app/routes/app_pages.dart';
 import '../controllers/driver_end_controller.dart';
 
 class DriverEndView extends GetView<DriverEndController> {
@@ -12,11 +13,22 @@ class DriverEndView extends GetView<DriverEndController> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Task Completed',
-          style: TextStyle(color: Colors.white),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.toNamed(Routes.SETTING);
+            },
+            icon: const Icon(
+              Icons.settings,
+            ),
+          ),
+          const SizedBox(
+            width: 6,
+          )
+        ],
+        iconTheme: const IconThemeData(
+          color: Colors.black,
         ),
-        centerTitle: true,
       ),
       body: Center(
         child: Column(

@@ -27,19 +27,19 @@ class CustomErrorLightButton extends StatelessWidget {
         },
         style: ButtonStyle(
             elevation: MaterialStateProperty.all(0),
-            backgroundColor: MaterialStatePropertyAll(Colors.red[100]),
+            backgroundColor: MaterialStatePropertyAll(Colors.red[50]),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
-                    side: const BorderSide(color: Colors.transparent)))),
+                    side: BorderSide(color: Colors.red[700]!)))),
         child: icon == null
             ? Text(buttonText,
-                style: TextStyle(color: Colors.red[900], fontSize: 16))
+                style: TextStyle(color: Colors.red[800], fontSize: 16))
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(buttonText,
-                      style: TextStyle(color: Colors.red[900], fontSize: 16)),
+                      style: TextStyle(color: Colors.red[800], fontSize: 16)),
                   const SizedBox(
                     width: 8,
                   ),
