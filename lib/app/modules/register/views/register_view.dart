@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:school_bus/app/styles/space.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../widgets/utils/custom_button.dart';
@@ -16,74 +18,101 @@ class RegisterView extends GetView<RegisterController> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
-        toolbarHeight: 80,
         centerTitle: true,
-        title: const Text(
-          'Register',
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 24),
+        leading: IconButton(
+          icon: SvgPicture.asset('assets/images/arrow-left.svg'),
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: SingleChildScrollView(
-        child: Center(
-            child: Column(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Register 👋',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                    ),
+                  ),
+                  Space.sm,
+                  const Text(
+                    'Please, fill your information.',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Obx(
               () => Form(
                 key: controller.formKey,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 25),
-                    _firstNameTextField(controller.firstNameController),
-                    const SizedBox(height: 25),
-                    _lastNameTextField(controller.lastNameController),
-                    const SizedBox(height: 25),
-                    _emailTextField(controller.emailController),
-                    if (controller.emailError.value != '')
-                      Text(
-                        controller.emailError.value,
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                    const SizedBox(height: 25),
-                    _citizenIdTextField(controller.citizenIdController),
-                    if (controller.citizenIdError.value != '')
-                      Text(
-                        controller.citizenIdError.value,
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                    const SizedBox(height: 25),
-                    _passwordTextField(controller.passwordController),
-                    const SizedBox(height: 25),
-                    _confirmPasswordTextField(
-                        controller.confirmPasswordController,
-                        controller.passwordController),
-                    const SizedBox(height: 50),
-                    CustomButton(
-                      buttonText: 'Next',
-                      routes: Routes.HOME,
-                      onPressed: () => controller.goNext(),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Get.toNamed('/login');
-                      },
-                      style: ButtonStyle(
-                          elevation: MaterialStateProperty.all(0),
-                          backgroundColor:
-                              const MaterialStatePropertyAll(Colors.black),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ))),
-                      child: const Text('Login'),
-                    ),
-                  ],
+                child: Center(
+                  child: Column(
+                    children: [
+                      Space.md,
+                      _firstNameTextField(controller.firstNameController),
+                      Space.md,
+                      _lastNameTextField(controller.lastNameController),
+                      Space.md,
+                      _emailTextField(controller.emailController),
+                      if (controller.emailError.value != '')
+                        Column(
+                          children: [
+                            Space.xs,
+                            Text(
+                              controller.emailError.value,
+                              style: TextStyle(
+                                  color: Colors.red[700], fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      Space.md,
+                      _citizenIdTextField(controller.citizenIdController),
+                      if (controller.citizenIdError.value != '')
+                        Column(
+                          children: [
+                            Space.xs,
+                            Text(
+                              controller.citizenIdError.value,
+                              style: TextStyle(
+                                  color: Colors.red[700], fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      Space.md,
+                      _passwordTextField(controller.passwordController),
+                      Space.md,
+                      _confirmPasswordTextField(
+                          controller.confirmPasswordController,
+                          controller.passwordController),
+                      const SizedBox(height: 60),
+                    ],
+                  ),
                 ),
               ),
-            )
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: CustomButton(
+                buttonText: 'Next',
+                routes: Routes.HOME,
+                onPressed: () => controller.goNext(),
+              ),
+            ),
+            const SizedBox(height: 60),
           ],
-        )),
+        ),
       ),
     );
   }
