@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
+import 'package:school_bus/app/styles/space.dart';
 import 'package:school_bus/app/widgets/home/custom_stepper.dart';
 import 'package:school_bus/controllers/user_controller.dart';
+
+import '../../styles/stye.dart';
 
 class CustomDraggable extends StatelessWidget {
   const CustomDraggable({super.key});
@@ -71,13 +74,14 @@ class CustomDraggable extends StatelessWidget {
                                         ],
                                       ),
                               ),
+                              Space.lg,
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Text('Contact School'),
                                   CircleAvatar(
-                                    backgroundColor: Colors.amber,
+                                    backgroundColor: Style.primaryColor,
                                     child: IconButton(
                                       onPressed: () {
                                         Get.find<HomeController>()
@@ -92,12 +96,12 @@ class CustomDraggable extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Get.find<HomeController>()
-                                        .changeStudentStatus();
-                                  },
-                                  child: const Text('Change Status'))
+                              // ElevatedButton(
+                              //     onPressed: () {
+                              //       Get.find<HomeController>()
+                              //           .changeStudentStatus();
+                              //     },
+                              //     child: const Text('Change Status'))
                             ],
                           ),
                         )
@@ -106,7 +110,10 @@ class CustomDraggable extends StatelessWidget {
                   ),
                   IgnorePointer(
                     child: Container(
-                      color: Colors.white,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
