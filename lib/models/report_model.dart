@@ -19,9 +19,9 @@ class Report {
     return {
       "driver_id": driverId,
       "date": date,
-      "students": students.map((student) => student.toJson()).toList(),
       "start_time": startTime,
       "end_time": endTime,
+      "students": students.map((student) => student.toJson()).toList(),
     };
   }
 }

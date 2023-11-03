@@ -5,7 +5,6 @@ import 'package:flutter_config_plus/flutter_config_plus.dart';
 import 'package:get/get.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/app/services/auth_service.dart';
@@ -171,7 +170,7 @@ class MapController extends GetxController {
         if (student.id.toString() == marker.markerId.value) {
           studentname = student.fullName;
           DateTime now = DateTime.now();
-          student.endTime = "${now.hour}:${now.minute}";
+          student.endTime = "${now.hour}:${now.minute}:${now.second}";
         }
       }
       sendNotification(marker.markerId.value, "Schoolbus Notification",
@@ -206,13 +205,32 @@ class MapController extends GetxController {
   handleDriverHome() {
     print("========================================");
     DateTime now = DateTime.now();
-    reportController.report.value!.endTime = "${now.hour}:${now.minute}";
+    reportController.report.value!.endTime =
+        "${now.hour}:${now.minute}:${now.second}";
     print(reportController.report.value!.toJson());
-    print("========================================");
     // Send report to server
-    final response = ApiService().postData(
-        reportController.report.value!.toJson(), '/reports/create-report');
+    storeReport();
+    print("========================================");
     Get.offAllNamed('/driver-end');
+  }
+
+  storeReport() async {
+    var data = {
+      "driver_id": userController.currentUser.value!.id,
+      "date": reportController.report.value!.date,
+      "startTime": reportController.report.value!.startTime,
+      "endTime": reportController.report.value!.endTime,
+      "students": studentController!.myStudents
+          .map((student) => {"id": student.id, "end_time": student.endTime})
+          .toList()
+    };
+
+    final response = await ApiService().postData(data, '/reports/store');
+    if (response['success'] == true) {
+      print("Report stored successfully");
+    } else {
+      print("Report stored failed");
+    }
   }
 
   @override
@@ -237,7 +255,7 @@ class MapController extends GetxController {
     var report = Report(
       driverId: userController.currentUser.value!.id,
       date: "${now.year}/${now.month}/${now.day}",
-      startTime: "${now.hour}:${now.minute}",
+      startTime: "${now.hour}:${now.minute}:${now.second}",
       students: studentController!.myStudents,
     );
     reportController.report.value = report;
