@@ -16,6 +16,8 @@ class HomeController extends GetxController {
   final RxInt index = 0.obs;
   final RxString time = ''.obs;
 
+  List<StudentController> students = [];
+
   var imagePath = "assets/images/seat.png".obs;
 
   List<String> imageList = [

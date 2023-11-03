@@ -27,9 +27,6 @@ class MapController extends GetxController {
   LatLng sourceLocation = LatLng(13.8476, 100.57);
   LatLng destination = LatLng(13.8202, 100.564);
 
-  late Timer _timer;
-  late String _currentTime;
-
   List<Marker> markers = [];
   List<Step> steps = [];
 
@@ -206,12 +203,6 @@ class MapController extends GetxController {
     }
   }
 
-  String getCurrentTime() {
-    final now = DateTime.now();
-    final timeFormat = DateFormat("HH:mm");
-    return timeFormat.format(now);
-  }
-
   handleDriverHome() {
     print("========================================");
     DateTime now = DateTime.now();
@@ -230,11 +221,6 @@ class MapController extends GetxController {
     final userId = await authService.getId();
     await userController.fetchRoute(userId);
     // setCustomMarkerIcon();
-    _currentTime = getCurrentTime();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      _currentTime = getCurrentTime();
-      update();
-    });
     super.onInit();
   }
 

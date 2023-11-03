@@ -6,6 +6,7 @@ import 'package:school_bus/models/student_model.dart';
 
 import '../../../widgets/driver/custom_driver_drawer.dart';
 import '../controllers/check_controller.dart';
+import 'package:school_bus/app/routes/app_pages.dart';
 
 class CheckView extends GetView<CheckController> {
   CheckView({Key? key}) : super(key: key);
@@ -19,9 +20,11 @@ class CheckView extends GetView<CheckController> {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+               Get.toNamed(Routes.SETTING);
+            },
             icon: const Icon(
-              Icons.person,
+             Icons.settings,
             ),
           ),
           const SizedBox(
@@ -32,7 +35,7 @@ class CheckView extends GetView<CheckController> {
           color: Colors.black,
         ),
       ),
-      drawer: const CustomDriverDrawer(),
+      // drawer: const CustomDriverDrawer(),
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.all(8.0),

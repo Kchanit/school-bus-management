@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:school_bus/app/widgets/driver/custom_driver_drawer.dart';
 import '../controllers/reorder_student_controller.dart';
+import 'package:school_bus/app/routes/app_pages.dart';
 
 class ReorderStudentView extends GetView<ReorderStudentController> {
   const ReorderStudentView({Key? key}) : super(key: key);
@@ -16,9 +17,11 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+                Get.toNamed(Routes.SETTING);
+              },
             icon: const Icon(
-              Icons.person,
+              Icons.settings,
             ),
           ),
           const SizedBox(
@@ -29,7 +32,7 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
           color: Colors.black,
         ),
       ),
-      drawer: const CustomDriverDrawer(),
+      // drawer: const CustomDriverDrawer(),
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.only(
