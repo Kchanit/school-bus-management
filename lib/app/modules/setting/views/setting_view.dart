@@ -18,8 +18,8 @@ class SettingView extends GetView<SettingController> {
   myAlert(context) {
     return Get.defaultDialog(
       title: 'Please choose media to select.',
-      titlePadding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-      contentPadding: EdgeInsets.symmetric(horizontal: 20),
+      titlePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
       content: SizedBox(
         // height: MediaQuery.of(context).size.height / 6,
         child: Column(
@@ -103,7 +103,7 @@ class SettingView extends GetView<SettingController> {
                             .currentUser
                             .value!
                             .fullName,
-                        icon: Icon(Icons.person),
+                        icon: const Icon(Icons.person),
                         enable: false,
                         obscureText: false),
                     const SizedBox(
@@ -113,7 +113,7 @@ class SettingView extends GetView<SettingController> {
                         textEditingController: emailController,
                         labelText:
                             Get.find<UserController>().currentUser.value!.email,
-                        icon: Icon(Icons.mail_rounded),
+                        icon: const Icon(Icons.mail_rounded),
                         enable: false,
                         obscureText: false),
                     const SizedBox(

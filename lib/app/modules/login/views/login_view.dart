@@ -52,10 +52,12 @@ class LoginView extends GetView<LoginController> {
                         _emailTextField(controller.emailController),
                         Space.md,
                         _passwordTextField(controller.passwordController),
+                        Space.sm,
                         if (controller.errorMessage.value != '')
                           Text(
                             controller.errorMessage.value,
-                            style: const TextStyle(color: Colors.red),
+                            style:
+                                TextStyle(color: Colors.red[700], fontSize: 12),
                           ),
                         Space.lg,
                       ],

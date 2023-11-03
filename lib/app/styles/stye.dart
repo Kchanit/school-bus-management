@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class Style {
   static Color primaryColor = const Color.fromARGB(234, 3, 160, 239);
   static Color lightPrimaryColor = const Color.fromARGB(23, 3, 160, 239);
+  static Color secondaryColor = Color.fromARGB(255, 249, 168, 38);
+  static Color lightSecondaryColor = Color.fromARGB(176, 249, 168, 38);
   static Color greyColor = const Color.fromARGB(255, 219, 221, 226);
 
   static widthLg(context) {
