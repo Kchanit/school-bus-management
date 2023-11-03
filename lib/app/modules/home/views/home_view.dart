@@ -15,12 +15,12 @@ class HomeView extends GetView<HomeController> {
           backgroundColor: Colors.white,
           elevation: 0,
           actions: [
-          //   IconButton(
-          //   onPressed: () {
-          //     controller.refreshData();
-          //   },
-          //   icon: const Icon(Icons.refresh), 
-          // ),
+            IconButton(
+            onPressed: () {
+              controller.refresh();
+            },
+            icon: const Icon(Icons.refresh), 
+          ),
             IconButton(
               onPressed: () {
                 Get.toNamed(Routes.CHANGE_STATUS);
