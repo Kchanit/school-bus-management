@@ -54,7 +54,11 @@ class ReorderStudentController extends GetxController {
     print("Reorder student controller ready");
     authService.saveState("reorder");
     final userId = await authService.getId();
-    await userController.fetchRoute(userId);
+    // await userController.fetchRoute(userId);
     print("Reorder student controller ready");
+    studentController.myStudents.refresh();
+    for (var i = 0; i < studentController.myStudents.length; i++) {
+      print(studentController.myStudents[i].fullName);
+    }
   }
 }
