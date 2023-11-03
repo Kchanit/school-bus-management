@@ -58,21 +58,13 @@ class CheckController extends GetxController {
   }
 
   confirm() async {
+    studentController.myStudents.refresh(); // Refresh the observable
     final students = studentController.myStudents;
 
-    for (final student in students) {
-      if (student.status.value == StudentStatus.CHECKED) {
-        // updateStatus(student, StudentStatus.ON_THE_WAY);
-        // student.status.value = StudentStatus.ON_THE_WAY;
-        // print("STUDENT VALUE");
-        print(student.status.value);
-        // Send notification to parent
-      }
-    }
-    studentController.myStudents = studentController.myStudents
+    studentController.myStudents.value = students
         .where((student) => student.status.value == StudentStatus.CHECKED)
-        .toList()
-        .obs;
+        .toList();
+
     Get.toNamed('/reorder-student');
   }
 

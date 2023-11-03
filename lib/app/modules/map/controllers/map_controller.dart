@@ -112,32 +112,13 @@ class MapController extends GetxController {
   //   });
   // }
 
-  Future<Null> checkPreference() async {
-    // get the device firebasetoken
-    FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
-    String? token = await firebaseMessaging.getToken();
-    print("++++++++++++++++++++++");
-    print('token ======> $token');
-    // get current user data
-    User? currentUser = Get.find<UserController>().currentUser.value;
-    currentUser!.fbtoken = token;
-
-    var data = {
-      "fbtoken": currentUser.fbtoken,
-    };
-    var response = await ApiService().putData(data, '/users/${currentUser.id}');
-
-    if (response['success'] == true) {
-      print('User Updated Successfully');
-      print(response);
-    } else {
-      print('User Updated Failed');
-      print(response['message']);
-      Get.snackbar('Error', response['message']);
-    }
-  }
-
   void addPassengerMarkers() {
+    print("========================================");
+    print("addPassengerMarkers");
+    var students = studentController!.myStudents;
+    for (var student in students) {
+      print(student.fullName);
+    }
     for (int i = 0; i < studentController!.myStudents.length; i++) {
       print(
           "add markers ==========================> ${studentController?.myStudents[i].fullName}");
@@ -237,7 +218,7 @@ class MapController extends GetxController {
   void onInit() async {
     studentController = Get.find<StudentController>();
     final userId = await authService.getId();
-    await userController.fetchRoute(userId);
+    // await userController.fetchRoute(userId);
     // setCustomMarkerIcon();
     super.onInit();
   }
@@ -246,10 +227,10 @@ class MapController extends GetxController {
   void onReady() async {
     authService.saveState("map");
     studentController = Get.find<StudentController>();
-    addPassengerMarkers();
     getCurrentLocation();
     // getPolyPoints();
     super.onReady();
+    addPassengerMarkers();
     DateTime now = DateTime.now();
 
     var report = Report(

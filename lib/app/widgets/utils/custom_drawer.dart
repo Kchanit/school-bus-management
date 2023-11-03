@@ -26,7 +26,7 @@ class CustomDrawer extends StatelessWidget {
                 child: Row(
               children: [
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                       color: Colors.white),
                   child: Icon(

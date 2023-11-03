@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:school_bus/app/styles/space.dart';
+import 'package:school_bus/app/styles/stye.dart';
+import 'package:school_bus/app/widgets/utils/custom_button.dart';
 
 import '../controllers/change_status_controller.dart';
 
@@ -12,7 +15,10 @@ class ChangeStatusView extends GetView<ChangeStatusController> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('School Bus'),
+          title: const Text(
+            'School Bus',
+            style: TextStyle(fontSize: 20),
+          ),
           backgroundColor: Colors.white,
           elevation: 0,
           titleTextStyle: const TextStyle(color: Colors.black),
@@ -80,23 +86,29 @@ class ChangeStatusView extends GetView<ChangeStatusController> {
                       controller.status.value = false;
                     },
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: 
-                          MaterialStateProperty.all(Colors.yellow),
-                      // backgroundColor: controller.checkTime()
-                      //     ? MaterialStateProperty.all(Colors.yellow)
-                      //     : MaterialStateProperty.all(Colors.grey),
+                  Space.lg,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    child: CustomButton(
+                      buttonText: 'Confirm',
+                      onPressed: () {
+                        controller.saveData();
+                      },
                     ),
-                    onPressed: () {
-                      controller.saveData();
-                      
-                    },
-                    child: const Text('Confirm'),
-                  )
+                  ),
+                  // ElevatedButton(
+                  //   style: ButtonStyle(
+                  //     backgroundColor:
+                  //         MaterialStateProperty.all(Style.primaryColor),
+                  //     // backgroundColor: controller.checkTime()
+                  //     //     ? MaterialStateProperty.all(Colors.yellow)
+                  //     //     : MaterialStateProperty.all(Colors.grey),
+                  //   ),
+                  //   onPressed: () {
+                  //     controller.saveData();
+                  //   },
+                  //   child: const Text('Confirm'),
+                  // )
                 ],
               ),
             ),

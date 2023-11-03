@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:school_bus/app/services/auth_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
+import 'package:school_bus/models/student_model.dart';
 import 'package:school_bus/models/user_model.dart';
 import 'package:intl/intl.dart';
 
@@ -15,8 +16,7 @@ class HomeController extends GetxController {
   RxList<User> users = <User>[].obs;
   final RxInt index = 0.obs;
   final RxString time = ''.obs;
-
-  List<StudentController> students = [];
+Rx<StudentStatus> status = StudentStatus.NONE.obs;
 
   var imagePath = "assets/images/seat.png".obs;
 
@@ -66,19 +66,51 @@ class HomeController extends GetxController {
           TextButton(
             child: const Text('Close'),
             onPressed: () {
-              index.value++;
-              print("add index");
-              print(index.value);
-              getCurrentImagePath();
-              print(imagePath.value);
+              // index.value++;
+              // print("add index");
+              // print(index.value);
+              // getCurrentImagePath();
+              // print(imagePath.value);
               getCurrentTime();
-              print(time);
+              // print(time);
               Get.back();
             },
           ),
         ],
       ),
     );
+  }
+
+  void refresh() async
+  {
+     final userId = await authService.getId();
+    await userController.fetchParent(userId);
+    await userController.fetchStudent(userId);
+    await userController.fetchMyDriver(studentController.student.value!.id);
+    status.value = Get.find<StudentController>().student.value!.status.value;
+    print("refreshing!!!!!!!!!!!!!!!!!");
+    print(status.value);
+    print("====================================");
+    chekstudentstatus();
+  }
+
+  void chekstudentstatus()
+  { 
+    if (status.value == StudentStatus.CHECKED) {
+      print("index is 1");
+      index.value = 1;
+      imagePath.value =  "assets/images/kids.png";
+    } else if (status.value == StudentStatus.ON_THE_WAY) {
+      print("index is 2");
+      index.value = 2;
+      imagePath.value =  "assets/images/bus-bd.gif";
+    }  else if (status.value == StudentStatus.ARRIVED_AT_HOME) {
+      print("index is 3");
+      index.value = 3;
+      imagePath.value =  "assets/images/home.png";
+    } else {
+      print("NONE");
+    }
   }
 
   handleParentEnd() async {
@@ -100,6 +132,8 @@ class HomeController extends GetxController {
       await userController.fetchParent(userId);
       await userController.fetchStudent(userId);
       await userController.fetchMyDriver(studentController.student.value!.id);
+      Rx<StudentStatus> status = Get.find<StudentController>().student.value!.status;
+      chekstudentstatus();
     }
   }
 
