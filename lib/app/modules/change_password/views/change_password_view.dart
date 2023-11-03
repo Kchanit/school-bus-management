@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 
@@ -17,9 +18,12 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Password',
-            style: TextStyle(color: Colors.black),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: Colors.black),
+          title: Text(
+            'Profile',
+            style: TextStyle(color: Colors.grey[800]),
           ),
           actions: [
             CupertinoButton(
@@ -32,10 +36,33 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                 })
           ],
           centerTitle: true,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          iconTheme: const IconThemeData(color: Colors.black),
+          leading: IconButton(
+            icon: SvgPicture.asset('assets/images/arrow-left.svg'),
+            onPressed: () {
+              Get.back();
+            },
+          ),
         ),
+        // appBar: AppBar(
+        //   title: const Text(
+        //     'Password',
+        //     style: TextStyle(color: Colors.black),
+        //   ),
+        //   actions: [
+        //     CupertinoButton(
+        //         child: const Text(
+        //           'Done',
+        //           style: TextStyle(fontWeight: FontWeight.bold),
+        //         ),
+        //         onPressed: () {
+        //           controller.saveData();
+        //         })
+        //   ],
+        //   centerTitle: true,
+        //   backgroundColor: Colors.transparent,
+        //   elevation: 0,
+        //   iconTheme: const IconThemeData(color: Colors.black),
+        // ),
         body: Center(
           child: Column(
             children: [

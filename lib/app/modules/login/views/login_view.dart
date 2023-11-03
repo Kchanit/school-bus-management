@@ -20,14 +20,14 @@ class LoginView extends GetView<LoginController> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            'assets/images/arrow-left.svg',
-          ),
-          onPressed: () {
-            Get.offAndToNamed(Routes.INITIAL);
-          },
-        ),
+        // leading: IconButton(
+        //   icon: SvgPicture.asset(
+        //     'assets/images/arrow-left.svg',
+        //   ),
+        //   onPressed: () {
+        //     Get.offAndToNamed(Routes.INITIAL);
+        //   },
+        // ),
       ),
       body: SingleChildScrollView(
         child: Center(

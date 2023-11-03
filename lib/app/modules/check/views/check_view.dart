@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:school_bus/app/styles/space.dart';
 import 'package:school_bus/models/student_model.dart';
 
 import '../../../widgets/driver/custom_driver_drawer.dart';
@@ -21,10 +22,10 @@ class CheckView extends GetView<CheckController> {
         actions: [
           IconButton(
             onPressed: () {
-               Get.toNamed(Routes.SETTING);
+              Get.toNamed(Routes.SETTING);
             },
             icon: const Icon(
-             Icons.settings,
+              Icons.settings,
             ),
           ),
           const SizedBox(
@@ -133,7 +134,8 @@ class CheckView extends GetView<CheckController> {
                         controller.confirm();
                       },
                     );
-                  })
+                  }),
+              Space.lg
             ],
           ),
         ),

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:school_bus/app/widgets/driver/custom_driver_drawer.dart';
 import '../controllers/reorder_student_controller.dart';
 import 'package:school_bus/app/routes/app_pages.dart';
 
@@ -18,8 +17,8 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
         actions: [
           IconButton(
             onPressed: () {
-                Get.toNamed(Routes.SETTING);
-              },
+              Get.toNamed(Routes.SETTING);
+            },
             icon: const Icon(
               Icons.settings,
             ),
@@ -28,6 +27,7 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
             width: 6,
           )
         ],
+        automaticallyImplyLeading: false,
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
@@ -56,12 +56,12 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.people_alt_rounded,
                     size: 18,
                     color: Colors.black54,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
