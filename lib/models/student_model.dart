@@ -20,6 +20,7 @@ class Student {
   Rx<StudentStatus> status;
   int? order;
   bool isTakingBus;
+  String? endTime;
 
   Student({
     required this.id,
@@ -77,6 +78,7 @@ class Student {
       'status': statusToJson(status.value),
       'order': order,
       'is_taking_bus': isTakingBus,
+      'end_time': endTime,
     };
   }
 

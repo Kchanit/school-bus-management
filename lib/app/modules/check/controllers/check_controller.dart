@@ -26,8 +26,10 @@ class CheckController extends GetxController {
       final student = Student.fromJson(response['student']);
       print(
           "Update status of ${student.fullName} to ${student.status.toString().split('.').last} successfully");
-      sendNotification(student.id.toString(), "Schoolbus Notification",
-          "Student: ${student.fullName} has boarded the bus.");
+      if (status == StudentStatus.CHECKED) {
+        sendNotification(student.id.toString(), "Schoolbus Notification",
+            "Student: ${student.fullName} has boarded the bus.");
+      }
       return true;
     } else {
       sendNotification(student.value.id.toString(), "Schoolbus Notification",

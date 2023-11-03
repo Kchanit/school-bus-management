@@ -9,14 +9,17 @@ import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/app/services/auth_service.dart';
+import 'package:school_bus/controllers/report_controller.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/controllers/user_controller.dart';
+import 'package:school_bus/models/report_model.dart';
 // import 'package:school_bus/models/student_model.dart';
 import 'package:school_bus/models/user_model.dart';
 
 class MapController extends GetxController {
   final Completer<GoogleMapController> controller = Completer();
   final userController = Get.find<UserController>();
+  final reportController = Get.find<ReportController>();
   // final studentController = Get.find<StudentController>();
   final authService = AuthService();
   StudentController? studentController;
@@ -90,8 +93,10 @@ class MapController extends GetxController {
         "get Polypoints==============================================================");
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         FlutterConfigPlus.get('GG_API_KEY'),
-        PointLatLng(currentLocation.value!.latitude!, currentLocation.value!.longitude!),
-        PointLatLng(markers[0].position.latitude, markers[0].position.longitude));
+        PointLatLng(currentLocation.value!.latitude!,
+            currentLocation.value!.longitude!),
+        PointLatLng(
+            markers[0].position.latitude, markers[0].position.longitude));
     polylineCoordinates.clear();
     if (result.points.isNotEmpty) {
       print("point is NOT EMPTY and clear polyline");
@@ -160,19 +165,20 @@ class MapController extends GetxController {
   }
 
 // at destination
-void deleteMarker() {
-  if (markers.isNotEmpty) {
-    Marker marker = markers[0];
-    //find student name
-    String studentname = "";
-    for (var student in studentController!.myStudents) {
+  void deleteMarker() {
+    if (markers.isNotEmpty) {
+      Marker marker = markers[0];
+      //find student name
+      String studentname = "";
+      for (var student in studentController!.myStudents) {
         if (student.id.toString() == marker.markerId.value) {
           studentname = student.fullName;
+          DateTime now = DateTime.now();
+          student.endTime = "${now.hour}:${now.minute}";
         }
-    }
-    sendNotification(marker.markerId.value, 
-    "Schoolbus Notification", 
-    "Student: $studentname arrived at home");
+      }
+      sendNotification(marker.markerId.value, "Schoolbus Notification",
+          "Student: $studentname arrived at home");
 
       markers.removeAt(0); // Remove the first marker from the list
       print("Current marker ============================> ${markers}");
@@ -207,6 +213,14 @@ void deleteMarker() {
   }
 
   handleDriverHome() {
+    print("========================================");
+    DateTime now = DateTime.now();
+    reportController.report.value!.endTime = "${now.hour}:${now.minute}";
+    print(reportController.report.value!.toJson());
+    print("========================================");
+    // Send report to server
+    final response = ApiService().postData(
+        reportController.report.value!.toJson(), '/reports/create-report');
     Get.offAllNamed('/driver-end');
   }
 
@@ -232,6 +246,17 @@ void deleteMarker() {
     getCurrentLocation();
     // getPolyPoints();
     super.onReady();
+    DateTime now = DateTime.now();
+
+    var report = Report(
+      driverId: userController.currentUser.value!.id,
+      date: "${now.year}/${now.month}/${now.day}",
+      startTime: "${now.hour}:${now.minute}",
+      students: studentController!.myStudents,
+    );
+    reportController.report.value = report;
+    print("========================================");
+    print(reportController.report.value!.toJson());
   }
 
   @override
