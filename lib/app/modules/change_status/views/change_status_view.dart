@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:school_bus/app/styles/space.dart';
-import 'package:school_bus/app/styles/stye.dart';
 import 'package:school_bus/app/widgets/utils/custom_button.dart';
 
 import '../controllers/change_status_controller.dart';
@@ -45,26 +44,22 @@ class ChangeStatusView extends GetView<ChangeStatusController> {
                     height: 20,
                   ),
                   const Text(
-                    'เลือกรูปแบบการกลับ',
+                    'Select departure option',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  Space.sm,
                   const Text(
                     'Can be changed until 14:00',
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  Space.sm,
                   const Text(
-                    '* ถ้าไม่เลือกการกลับจะเป็นรูปแบบ By School Bus *',
+                    '* If you don\'t choose, it will be By school bus *',
                   ),
                   const SizedBox(
                     height: 25,
                   ),
                   RadioListTile<BusStatus>(
-                    title: const Text('By School Bus'),
+                    title: const Text('By school bus'),
                     value: BusStatus.bus,
                     selected: false,
                     groupValue: controller.status.value == true
@@ -76,7 +71,7 @@ class ChangeStatusView extends GetView<ChangeStatusController> {
                     },
                   ),
                   RadioListTile<BusStatus>(
-                    title: const Text('กลับด้วยตัวเอง'),
+                    title: const Text('Pick up your child'),
                     value: BusStatus.yourself,
                     groupValue: controller.status.value == true
                         ? BusStatus.bus

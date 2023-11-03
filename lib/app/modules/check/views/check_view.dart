@@ -43,14 +43,14 @@ class CheckView extends GetView<CheckController> {
           child: Column(
             children: [
               const Text(
-                'เช็ครายชื่อเด็ก',
+                'Student Check List',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 height: 20,
               ),
               const Text(
-                'กดเลือก รายชื่อที่ต้องการเช็ค',
+                'Press the name you want to check',
               ),
               const SizedBox(
                 height: 30,

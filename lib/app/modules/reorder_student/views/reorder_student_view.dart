@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school_bus/app/styles/space.dart';
 import '../controllers/reorder_student_controller.dart';
 import 'package:school_bus/app/routes/app_pages.dart';
 
@@ -41,14 +42,14 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
           child: Column(
             children: [
               const Text(
-                'ลำดับการส่ง',
+                'Order of Delivery',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 height: 20,
               ),
               const Text(
-                'กดค้างและเลื่อน เพื่อเปลี่ยนแปลงลำดับ',
+                'Press and hold, then drag to change the order',
               ),
               const SizedBox(
                 height: 30,
@@ -86,6 +87,8 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
                             style: const TextStyle(
                                 fontSize: 18, color: Colors.black),
                           ),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 14),
                           subtitle: Text('${student.address}'),
                           trailing: const Icon(Icons.drag_handle_rounded),
                         ),
@@ -93,6 +96,7 @@ class ReorderStudentView extends GetView<ReorderStudentController> {
                       .toList(),
                 ),
               ),
+              Space.lg,
               CupertinoButton.filled(
                   child: const Text('Confirm'),
                   onPressed: () {
