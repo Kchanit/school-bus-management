@@ -7,10 +7,12 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:school_bus/app/routes/app_pages.dart';
 import 'package:school_bus/app/styles/space.dart';
+import 'package:school_bus/app/widgets/utils/custom_light_button.dart';
 import 'package:school_bus/app/widgets/utils/custom_textfield.dart';
 import '../../../../controllers/user_controller.dart';
 import '../../../services/auth_service.dart';
 import '../../../styles/stye.dart';
+import '../../../widgets/utils/custom_error_light_button.dart';
 import '../controllers/setting_controller.dart';
 
 class SettingView extends GetView<SettingController> {
@@ -94,7 +96,7 @@ class SettingView extends GetView<SettingController> {
                   children: [
                     Container(
                       height: MediaQuery.of(context).size.height * 0.125,
-                      decoration: const BoxDecoration(color: Colors.blueAccent),
+                      decoration: BoxDecoration(color: Style.primaryColor),
                     ),
                     const SizedBox(
                       height: 100,
@@ -139,37 +141,20 @@ class SettingView extends GetView<SettingController> {
                       ),
                     ),
                     const SizedBox(
-                      height: 25,
+                      height: 220,
                     ),
-                    SizedBox(
-                      width: Style.widthMd(context),
-                      child: ListTile(
-                        title: Row(
-                          children: [
-                            const Text(
-                              'Logout',
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            SvgPicture.asset(
-                                'assets/images/box-arrow-right.svg')
-                          ],
-                        ),
-                        // selected: _selectedIndex == 2,
-                        onTap: () {
-                          // _onItemTapped(2);
+                    if (Get.find<UserController>().currentUser.value!.role ==
+                        'DRIVER')
+                      CustomErrorLightButton(
+                        buttonText: 'Logout',
+                        onPressed: () {
                           AuthService().logout();
                         },
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                              color: Colors.transparent, width: 1),
-                          borderRadius: BorderRadius.circular(5),
+                        icon: SvgPicture.asset(
+                          'assets/images/box-arrow-right.svg',
+                          color: Colors.red[700],
                         ),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 16),
                       ),
-                    ),
                   ],
                 ),
                 Column(
