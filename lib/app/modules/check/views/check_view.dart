@@ -93,9 +93,9 @@ class CheckView extends GetView<CheckController> {
                               onConfirm: () async {
                                 if (await controller.updateStatus(
                                     student.value, StudentStatus.CHECKED)) {
+                                  controller.checkedCount.value++;
                                   Get.back();
                                 }
-                                print(student.value.status.value);
                               },
                             );
                           },

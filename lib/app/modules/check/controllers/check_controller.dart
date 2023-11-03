@@ -10,7 +10,7 @@ class CheckController extends GetxController {
   final userController = Get.find<UserController>();
   final studentController = Get.find<StudentController>();
   final authService = AuthService();
-  var checkedCount = 0.obs;
+  RxInt checkedCount = 0.obs;
   Rx<StudentStatus> status = StudentStatus.NOT_CHECKED.obs;
 
   Future<bool> updateStatus(student, StudentStatus status) async {
@@ -26,14 +26,12 @@ class CheckController extends GetxController {
       final student = Student.fromJson(response['student']);
       print(
           "Update status of ${student.fullName} to ${student.status.toString().split('.').last} successfully");
-      sendNotification(student.id.toString(),
-                      "Schoolbus Notification",
-                      "Student: ${student.fullName} has boarded the bus.");
+      sendNotification(student.id.toString(), "Schoolbus Notification",
+          "Student: ${student.fullName} has boarded the bus.");
       return true;
     } else {
-      sendNotification(student.value.id.toString(),
-                      "Schoolbus Notification",
-                      "Student: ${student.value.fullName} has NOT boarded the bus.");
+      sendNotification(student.value.id.toString(), "Schoolbus Notification",
+          "Student: ${student.value.fullName} has NOT boarded the bus.");
       return false;
     }
   }

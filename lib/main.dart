@@ -66,6 +66,7 @@ void main() async {
       switch (state) {
         case 'driver-end':
           page = Routes.DRIVER_END;
+          break;
         case 'reorder':
           page = Routes.REORDER_STUDENT;
           break;
@@ -83,7 +84,7 @@ void main() async {
   runApp(
     GetMaterialApp(
       title: "Application",
-      initialRoute: Routes.LOGIN,
+      initialRoute: page,
       getPages: AppPages.routes,
     ),
   );
