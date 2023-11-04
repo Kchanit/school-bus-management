@@ -59,6 +59,7 @@ class PickAddressView extends GetView<PickAddressController> {
         Container(
           width: MediaQuery.of(context).size.width,
           height: 60,
+          padding: const EdgeInsets.symmetric(horizontal: 18),
           decoration: const BoxDecoration(
             color: Colors.blue,
           ),

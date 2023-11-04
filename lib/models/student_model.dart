@@ -60,6 +60,10 @@ class Student {
         return StudentStatus.CHECKED;
       case 'NOT_CHECKED':
         return StudentStatus.NOT_CHECKED;
+      case 'ON_THE_WAY':
+        return StudentStatus.ON_THE_WAY;
+      case 'ARRIVED_AT_HOME':
+        return StudentStatus.ARRIVED_AT_HOME;
       default:
         return StudentStatus.NONE;
     }

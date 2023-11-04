@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:school_bus/app/routes/app_pages.dart';
 import 'package:school_bus/app/services/api_service.dart';
 import 'package:school_bus/controllers/student_controller.dart';
 import 'package:school_bus/models/student_model.dart';
@@ -25,10 +26,10 @@ class ChangeStatusController extends GetxController {
         .putData(data, '/students/${student.id}/change-bus-status');
     if (response['success'] == true) {
       Get.snackbar('Success', response['message']);
-      if (student.isTakingBus){
-        Get.offAllNamed("/home");
+      if (student.isTakingBus) {
+        Get.offAllNamed(Routes.HOME);
       } else {
-        Get.offAllNamed('/parent-end');
+        Get.offAllNamed(Routes.PARENT_END);
       }
     } else {
       Get.snackbar('Error', response['message']);
