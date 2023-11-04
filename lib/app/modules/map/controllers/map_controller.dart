@@ -114,13 +114,6 @@ class MapController extends GetxController {
   // }
 
   void addPassengerMarkers() {
-    print("========================================");
-    print("addPassengerMarkers");
-    var students = studentController!.myStudents;
-    for (var student in students) {
-      print(student.fullName);
-      student.status.value = StudentStatus.ON_THE_WAY;
-    }
     for (int i = 0; i < studentController!.myStudents.length; i++) {
       print(
           "add markers ==========================> ${studentController?.myStudents[i].fullName}");
@@ -139,6 +132,8 @@ class MapController extends GetxController {
           studentController!.myStudents[i].id.toString(),
           "Schoolbus Notification",
           "Student: ${studentController!.myStudents[i].fullName} is on the way.");
+      studentController!.myStudents[i].status.value = StudentStatus.ON_THE_WAY;
+      saveData(studentController!.myStudents[i], StudentStatus.ON_THE_WAY);
     }
     print("list of marker (from addPassenger) =======> ${markers}");
   }
@@ -153,6 +148,7 @@ class MapController extends GetxController {
         if (student.id.toString() == marker.markerId.value) {
           studentname = student.fullName;
           student.status.value = StudentStatus.ARRIVED_AT_HOME;
+          saveData(student, StudentStatus.ARRIVED_AT_HOME);
           DateTime now = DateTime.now();
           student.endTime = "${now.hour}:${now.minute}:${now.second}";
         }
@@ -163,6 +159,23 @@ class MapController extends GetxController {
       markers.removeAt(0); // Remove the first marker from the list
       print("Current marker ============================> ${markers}");
       print("marker length ============================> ${markers.length}");
+    }
+  }
+
+  saveData(student, StudentStatus status) async {
+    final data = {
+      "status": status.toString().split('.').last,
+    };
+    student.status.value = status;
+    print(data);
+    final response = await ApiService()
+        .putData(data, '/students/${student.id}/update-status');
+    if (response['success'] == true) {
+      print(
+          "Update status of ${student.fullName} to ${student.status.toString().split('.').last} successfully");
+    } else {
+      print(
+          "Update status of ${student.fullName} to ${student.status.toString().split('.').last} failed");
     }
   }
 
