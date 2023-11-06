@@ -14,28 +14,30 @@ class _CustomMapState extends State<CustomMap> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
-      init: MapController(),
-      builder: (controller) => controller.currentLocation == null
-          ? const Center(
-              child: Text('Loading...'),
-            )
-          : Obx(() => GoogleMap(
-              initialCameraPosition: CameraPosition(
-                  target: LatLng(controller.currentLocation.value!.latitude!,
-                      controller.currentLocation.value!.longitude!),
-                  zoom: 14.5),
-              polylines: {
-                Polyline(
-                    polylineId: const PolylineId('route'),
-                    points: controller.polylineCoordinates,
-                    color: Colors.blue,
-                    width: 6)
-              },
-              markers: Set<Marker>.of(controller.markers),
-              onMapCreated: (mapController) {
-                controller.controller.complete(mapController);
-              },
-            ),
-    ));
+        init: MapController(),
+        builder: (controller) => controller.currentLocation == null
+            ? const Center(
+                child: Text('Loading...'),
+              )
+            : Obx(
+                () => GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                      target: LatLng(
+                          controller.currentLocation.value!.latitude!,
+                          controller.currentLocation.value!.longitude!),
+                      zoom: 14.5),
+                  polylines: {
+                    Polyline(
+                        polylineId: const PolylineId('route'),
+                        points: controller.polylineCoordinates,
+                        color: Colors.blue,
+                        width: 6)
+                  },
+                  markers: Set<Marker>.of(controller.markers),
+                  onMapCreated: (mapController) {
+                    controller.controller.complete(mapController);
+                  },
+                ),
+              ));
   }
 }

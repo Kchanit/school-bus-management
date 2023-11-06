@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:school_bus/app/modules/check/controllers/check_controller.dart';
 import 'package:school_bus/app/modules/home/controllers/home_controller.dart';
 import 'package:school_bus/app/modules/pick_address/controllers/pick_address_controller.dart';
 import 'package:school_bus/app/services/auth_service.dart';
@@ -31,6 +32,7 @@ void main() async {
   // Get.put(RegisterStudentController());
   // Get.put(RegisterAddressController());
   Get.put(PickAddressController());
+  // Get.put(CheckController());
   // Get.put(ChangePasswordController());
   // Get.put(ReorderStudentController());
 

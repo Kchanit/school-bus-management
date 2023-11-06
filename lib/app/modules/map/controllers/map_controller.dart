@@ -86,23 +86,25 @@ class MapController extends GetxController {
 
   void getPolyPoints() async {
     PolylinePoints polylinePoints = PolylinePoints();
-    print(
-        "get Polypoints==============================================================");
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        FlutterConfigPlus.get('GG_API_KEY'),
-        PointLatLng(currentLocation.value!.latitude!,
-            currentLocation.value!.longitude!),
-        PointLatLng(
-            markers[0].position.latitude, markers[0].position.longitude));
-    polylineCoordinates.clear();
-    if (result.points.isNotEmpty) {
-      print("point is NOT EMPTY and clear polyline");
-      result.points.forEach((PointLatLng point) =>
-          polylineCoordinates.add(LatLng(point.latitude, point.longitude)));
-      print("${polylineCoordinates}");
-    } else {
-      print("point is EMPTY");
-      print("add ${polylineCoordinates}");
+    if (markers.length != 2) {
+      print(
+          "get Polypoints==============================================================");
+      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+          FlutterConfigPlus.get('GG_API_KEY'),
+          PointLatLng(currentLocation.value!.latitude!,
+              currentLocation.value!.longitude!),
+          PointLatLng(
+              markers[0].position.latitude, markers[0].position.longitude));
+      polylineCoordinates.clear();
+      if (result.points.isNotEmpty) {
+        print("point is NOT EMPTY and clear polyline");
+        result.points.forEach((PointLatLng point) =>
+            polylineCoordinates.add(LatLng(point.latitude, point.longitude)));
+        print("${polylineCoordinates}");
+      } else {
+        print("point is EMPTY");
+        print("add ${polylineCoordinates}");
+      }
     }
   }
 
